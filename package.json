@@ -1,0 +1,32 @@
+{
+  "name": "connect_four_functional",
+  "version": "1.0.0",
+  "description": "a functional implementation of connect four",
+  "main": "index.js",
+  "scripts": {
+    "test": "jasmine"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tfpractice/connect_four_functional.git"
+  },
+  "keywords": [
+    "connect-four",
+    "functional-programming",
+    "graph-theory"
+  ],
+  "author": "theory f practice <jackson.brebnor@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tfpractice/connect_four_functional/issues"
+  },
+  "homepage": "https://github.com/tfpractice/connect_four_functional#readme",
+  "devDependencies": {
+    "jasmine": "^2.5.2",
+    "jasmine-expect": "^3.0.1"
+  },
+  "dependencies": {
+    "functional_graph_theory": "git://github.com/tfpractice/functional_graph_theory.git",
+    "game_grid": "git://github.com/tfpractice/gamegrid.git"
+  }
+}
