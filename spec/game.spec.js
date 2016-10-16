@@ -96,29 +96,46 @@ describe('Game', function() {
 	});
 	describe('isAvail', () => {
 		it('checks if the current cID has free nodes', () => {
-			Game.isAvail(myGame);
-			Game.setColumn(myGame)(3);
-
-			expect(Game.isAvail(myGame)).toBeTrue();
-			// expect(Game.cID(myGame)).toBe(3);
+			Game.setColumn(myGame)(0);
+			Game.column(myGame).map(Game.choose(myGame));
+			expect(Game.isAvail(myGame)).toBeFalse();
 		});
 	});
 
-	// 	// describe('completeTurn', () => {
-	// 	//     it('transfers nodes from the grid to the active player',
-	// 	//         () => {
-	// 	//             let n30 = Game.selectCell(myGame)(3, 0);
-	// 	//             Game.completeTurn(myGame);
-	// 	//             expect(Graph.contains(Game.grid(myGame))(
-	// 	//                 n30)).toBeFalse();
-	// 	//         });
+	describe('choose', () => {
+		it('calls the active players claim function', () => {
+			expect(Game.choose(myGame)).toBeFunction();
+		});
+	});
 
-	// 	//     it('switches the current player', () => {
-	// 	//         let oldPlayer = Game.active(myGame);
-	// 	//         let n40 = Game.selectCell(myGame)(4, 0);
-	// 	//         Game.completeTurn(myGame);
-	// 	//         expect(Game.active(myGame)).not.toBe(
-	// 	//             oldPlayer);
-	// 	//     });
-	// 	// });
+	describe('select', function() {
+		describe('when the current column is available', () => {
+			it('assigns the currentNode to the current player', function() {
+				let prev = Game.active(myGame);
+				let node = Game.next(myGame);
+				let gBoard = myGame.board;
+				Game.select(myGame);
+				expect(Board.nodesByPlayer(gBoard)(prev)).toContain(node);
+			});
+
+			it('toggles the players', function() {
+				let prev = Game.active(myGame);
+				Game.select(myGame);
+				expect(Game.active(myGame)).not.toBe(prev);
+			});
+		});
+		describe('when the current column is not available', () => {
+			it('returns undefined', function() {
+				Game.column(myGame).map(Game.choose(myGame));
+				expect(Game.select(myGame)).toBeUndefined();
+			});
+
+			it('does not toggle the players', function() {
+				Game.column(myGame).map(Game.choose(myGame));
+				let prev = Game.active(myGame);
+				Game.select(myGame);
+				expect(Game.active(myGame)).toBe(prev);
+			});
+		});
+	});
 });
