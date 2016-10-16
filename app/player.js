@@ -2,8 +2,7 @@ const GG = require('game_grid');
 const { Grid, Traversals, Connections } = GG;
 const { spawn: gSpawn, addNodes } = Grid;
 
-const spawn = (name = '', color = 'black') =>
-	({ name, color, score: 0, grid: gSpawn() });
+const spawn = (name = '') => ({ name, score: 0, grid: gSpawn() });
 
 const name = ({ name }) => name;
 const grid = ({ grid }) => grid;
