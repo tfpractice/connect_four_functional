@@ -21,6 +21,7 @@ const score = ({ score }) => score;
 const active = ({ players: [active, passive] }) => active;
 const passive = ({ players: [active, passive] }) => passive;
 const cID = ({ cID }) => cID;
+const column = ({ cID, board }) => nodesByColumn(board)(cID);
 // const nodes = ({cID, board})=> nodesByColumn(board)
 
 const isAvail = ({ players: [active], cID, board }) =>
@@ -72,6 +73,7 @@ module.exports = {
 	incScore,
 	togglePlayers,
 	cID,
+	column,
 	setColumn,
 	select,
 	isAvail,
