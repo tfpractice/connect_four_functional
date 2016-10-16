@@ -1,9 +1,80 @@
-const GG = require('game_grid');
 const Board = require('./board');
-const { Game: GGame, Grid, GameGraph } = GG;
-const { connectAdjacents } = GameGraph;
-const spawn = (active, passive) =>
-	GGame.spawn(active, passive, Board.spawn());
-// connectAdjacents(Grid.spawn(7, 6));
+const Player = require('./player');
+const { spawn: bSpawn } = Board;
 
-module.exports = { spawn };
+const spawn = (active, passive) => ({
+	players: [active, passive],
+	board: bSpawn(),
+	score: new Map([
+		[active, 0],
+		[passive, 0],
+	]),
+});
+
+const board = ({ board }) => board;
+const players = ({ players }) => players;
+const score = ({ score }) => score;
+const active = ({ players: [active, passive] }) => active;
+const passive = ({ players: [active, passive] }) => passive;
+// const current = ({ current }) => current;
+
+const activeScore = ({ players: [active, passive], score }) =>
+	score.get(active);
+
+const passiveScore = ({ players: [active, passive], score }) =>
+	score.get(passive);
+
+const playerScore = ({ score }) => (player) =>
+	score.get(player);
+
+const incScore = ({ score }) => (player) =>
+	score.set(player, score.get(player) + 1);
+
+// const togglePlayers = ({ players }) => {
+//  let [passive, active] = players;
+//  [players[1], players[0]] = [passive, active];
+// };
+
+// const setCurrent = (game) => (current) => {
+//  Object.assign(game, { current });
+// };
+
+// const selectCell = (game) => (column = 0, row = 0) => {
+//  setCurrent(game)(cellByPosition(grid(game))(column, row));
+// };
+
+// const completeTurn = (game) => {
+//  transferCells(grid(game))(pGraph(active(game)))(current(game));
+//  togglePlayers(game);
+// };
+
+// module.exports = {
+//  spawn,
+//  players,
+//  playerScore,
+//  incrementPlayerScore,
+//  activeScore,
+//  passiveScore,
+//  grid,
+//  score,
+//  active,
+//  completeTurn,
+//  passive,
+//  togglePlayers,
+//  selectCell,
+//  setCurrent,
+//  current,
+// };
+
+module.exports = {
+	spawn,
+	board,
+	players,
+	score,
+	active,
+	passive,
+	activeScore,
+	passiveScore,
+	playerScore,
+	incScore,
+};

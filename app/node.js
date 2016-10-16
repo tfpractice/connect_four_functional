@@ -3,9 +3,10 @@ const { spawn: cSpawn } = Cell;
 const { initCells, cIDs, nodesByColumn, fromElements, mergeEdges, } = Grid;
 
 const spawn = (c = 0, r = 0, player = null) =>
-	Object.assign(cSpawn(c, r), { player });
+    Object.assign(cSpawn(c, r), { player });
 
 const player = ({ player = null }) => player;
 const samePlayer = ({ player: p0 }) => ({ player: p1 }) => p0 === p1;
+// const claim = (node)=>
 
 module.exports = Object.assign({}, Cell, { spawn, player, samePlayer });

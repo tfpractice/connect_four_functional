@@ -11,8 +11,9 @@ const score = ({ score }) => score;
 const resetScore = (player) => player.wins = 0;
 const incrementScore = ({ score }) => ++score;
 const decrementScore = ({ score }) => --score;
-const claimNodes = ({ grid }) => (...nodes) =>
-	addNodes(grid)(...nodes);
+const claim = (player = null) => (node) => Object.assign(node, { player });
+const claimNodes = (player) => (...nodes) =>
+	addNodes(grid(player))(...(nodes.map(claim(player))));
 
 module.exports = {
 	spawn,
@@ -22,5 +23,6 @@ module.exports = {
 	resetScore,
 	incrementScore,
 	decrementScore,
+	claim,
 	claimNodes,
 };

@@ -1,7 +1,7 @@
 describe('Board', function() {
 	beforeAll(function() {
 		console.log('\n.........Board Spec.........');
-		({ Board } = app);
+		// ({ Board } = app);
 	});
 
 	beforeEach(function() {

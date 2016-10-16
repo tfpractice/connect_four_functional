@@ -47,6 +47,13 @@ describe('Player', function() {
 			expect(PR.score(dick)).toBe(0);
 		});
 	});
+	describe('claim', () => {
+		it('sets the object player attribute to the Player', function() {
+			let nd00 = Node.spawn(0, 0);
+			PR.claim(dick)(nd00);
+			expect(nd00.player).toBe(dick);
+		});
+	});
 	describe('claimNodes', () => {
 		it('adds each node to the players graph', function() {
 			let nd00 = Node.spawn(0, 0),

@@ -1,92 +1,104 @@
-// describe('Game', function() {
-// 	beforeAll(function() {
-// 		console.log('\n.........Game Spec.........');
-// 		P = Player;
-// 		// GR = Graph;
-// 	});
+describe('Game', function() {
+	beforeAll(function() {
+		console.log('\n.........Game Spec.........');
+		PR = Player;
+		// GR = Graph;
+	});
 
-// 	beforeEach(function() {
-// 		dick = P.spawn('Dick');
-// 		jane = P.spawn('Jane');
-// 		myGame = Game.spawn(jane, dick);
-// 	});
+	beforeEach(function() {
+		dick = PR.spawn('Dick');
+		jane = PR.spawn('Jane');
+		myGame = Game.spawn(jane, dick);
+	});
 
-// 	describe('grid', () => {
-// 		it('returns the grid of the game', () => {
-// 			// expect(Game.grid(myGame)).toBeObject();
-// 		});
-// 	});
-// 	// describe('players', () => {
-// 	//     it('returns the players attribute of the', () => {
-// 	//         expect(Game.players(myGame)).toBeArray();
-// 	//     });
-// 	// });
+	describe('spawn', function() {
+		it('creates a new object with players and a board', function() {
+			expect(myGame).toBeObject();
+			expect(myGame.players).toBeArray();
+			expect(myGame.board instanceof Map).toBeTrue();
+			expect(myGame.score instanceof Map).toBeTrue();
+		});
+	});
 
-// 	// describe('active', () => {
-// 	//     it('returns the games active ', () => {
-// 	//         expect(Game.active(myGame)).toBe(jane);
-// 	//     });
-// 	// });
-// 	// describe('score', () => {
-// 	//     it('retrieve a map of player scores', () => {
-// 	//         expect(Game.score(myGame) instanceof Map).toBeTrue();
-// 	//     });
-// 	// });
+	describe('board', () => {
+		it('returns the board of the game', () => {
+			expect(Game.board(myGame) instanceof Map).toBeTrue();
+		});
+	});
+	describe('players', () => {
+		it('returns the players attribute of the', () => {
+			expect(Game.players(myGame)).toBeArray();
+		});
+	});
 
-// 	// describe('playerScore', () => {
-// 	//     it('retrieves the players score', () => {
-// 	//         expect(Game.playerScore(myGame)(Game.active(
-// 	//             myGame))).toBe(0);
-// 	//     });
-// 	// });
-// 	// describe('activeScore', () => {
-// 	//     it('returns the active pplayers score', () => {
-// 	//         expect(Game.activeScore(myGame)).toBe(0);
-// 	//     });
-// 	// });
+	describe('active', () => {
+		it('returns the games active players', () => {
+			expect(Game.active(myGame)).toBe(jane);
+		});
+	});
+	describe('passive', () => {
+		it('returns the games passive player ', () => {
+			expect(Game.passive(myGame)).toBe(dick);
+		});
+	});
+	describe('score', () => {
+		it('retrieve a map of player scores', () => {
+			expect(Game.score(myGame) instanceof Map).toBeTrue();
+		});
+	});
 
-// 	// describe('passiveScore', () => {
-// 	//     it('returns the active pplayers score', () => {
-// 	//         expect(Game.passiveScore(myGame)).toBe(0);
-// 	//     });
-// 	// });
+	describe('playerScore', () => {
+		it('retrieves the players score', () => {
+			expect(Game.playerScore(myGame)(jane)).toBe(0);
+		});
+	});
+	describe('activeScore', () => {
+		it('returns the active pplayers score', () => {
+			expect(Game.activeScore(myGame)).toBe(0);
+		});
+	});
 
-// 	// describe('increment player score', () => {
-// 	//     it('increaeses the players score by one', () => {
-// 	//         Game.incrementPlayerScore(myGame)(Game.active(
-// 	//             myGame));
-// 	//         expect(Game.activeScore(myGame)).toBe(1);
-// 	//     });
-// 	// });
-// 	// describe('togglePlayers', () => {
-// 	//     it('switches the games active player ', () => {
-// 	//         Game.togglePlayers(myGame);
-// 	//         expect(Game.active(myGame)).toBe(dick);
-// 	//     });
-// 	// });
+	describe('passiveScore', () => {
+		it('returns the active pplayers score', () => {
+			expect(Game.passiveScore(myGame)).toBe(0);
+		});
+	});
 
-// 	// describe('selectCell', () => {
-// 	//     it('returns a node at the specified position', () => {
-// 	//         Game.selectCell(myGame)(3, 0);
-// 	//         expect(Game.current(myGame)).toBeObject();
-// 	//     });
-// 	// });
+	describe('incScore', () => {
+		it('increaeses the players score by one', () => {
+			Game.incScore(myGame)(jane);
+			expect(Game.activeScore(myGame)).toBe(1);
+		});
+	});
+	// 	// describe('togglePlayers', () => {
+	// 	//     it('switches the games active player ', () => {
+	// 	//         Game.togglePlayers(myGame);
+	// 	//         expect(Game.active(myGame)).toBe(dick);
+	// 	//     });
+	// 	// });
 
-// 	// describe('completeTurn', () => {
-// 	//     it('transfers nodes from the grid to the active player',
-// 	//         () => {
-// 	//             let n30 = Game.selectCell(myGame)(3, 0);
-// 	//             Game.completeTurn(myGame);
-// 	//             expect(Graph.contains(Game.grid(myGame))(
-// 	//                 n30)).toBeFalse();
-// 	//         });
+	// 	// describe('selectCell', () => {
+	// 	//     it('returns a node at the specified position', () => {
+	// 	//         Game.selectCell(myGame)(3, 0);
+	// 	//         expect(Game.current(myGame)).toBeObject();
+	// 	//     });
+	// 	// });
 
-// 	//     it('switches the current player', () => {
-// 	//         let oldPlayer = Game.active(myGame);
-// 	//         let n40 = Game.selectCell(myGame)(4, 0);
-// 	//         Game.completeTurn(myGame);
-// 	//         expect(Game.active(myGame)).not.toBe(
-// 	//             oldPlayer);
-// 	//     });
-// 	// });
-// });
+	// 	// describe('completeTurn', () => {
+	// 	//     it('transfers nodes from the grid to the active player',
+	// 	//         () => {
+	// 	//             let n30 = Game.selectCell(myGame)(3, 0);
+	// 	//             Game.completeTurn(myGame);
+	// 	//             expect(Graph.contains(Game.grid(myGame))(
+	// 	//                 n30)).toBeFalse();
+	// 	//         });
+
+	// 	//     it('switches the current player', () => {
+	// 	//         let oldPlayer = Game.active(myGame);
+	// 	//         let n40 = Game.selectCell(myGame)(4, 0);
+	// 	//         Game.completeTurn(myGame);
+	// 	//         expect(Game.active(myGame)).not.toBe(
+	// 	//             oldPlayer);
+	// 	//     });
+	// 	// });
+});
