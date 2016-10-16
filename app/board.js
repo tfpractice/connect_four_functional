@@ -1,15 +1,20 @@
-const { Grid, Traversals, Connections } = require('game_grid');
+const GG = require('game_grid');
+const Node = require('./node');
+const { Grid, Traversals, Connections } = GG;
+const { samePlayer } = Node;
 const { omniGraph } = Traversals;
-const { initCells, cIDs, nodesByColumn, fromElements, mergeEdges, } = Grid;
+const { nodes, initCells, cIDs, nodesByColumn, fromElements, } = Grid;
+// const {} = Grid;
 const spawn = () => initCells(7, 6);
 
-const merge = (g0 = new Map, g1 = new Map) =>
-    [...g1].filter(([k, v]) => !g0.has(k)).reduce(mergeEdges, g0);
+const nodesByPlayer = (graph) => (player = null) =>
+	nodes(graph).filter(samePlayer({ player }));
 
 const columns = (board) => [...cIDs(board)]
-    .map(nodesByColumn(board))
-    .map(cells => fromElements(...cells));
+	.map(nodesByColumn(board))
+	.map(cells => fromElements(...cells));
 // .map(omniGraph)
 // .reduce(merge, new Map);
 
-module.exports = { spawn, columns };
+module.exports = Object.assign({}, Grid, { spawn, columns, nodesByPlayer });
+// module.exports = { spawn, columns };
