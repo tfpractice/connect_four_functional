@@ -4,6 +4,7 @@ const { spawn: bSpawn } = Board;
 
 const spawn = (active, passive) => ({
 	players: [active, passive],
+	column: 0,
 	board: bSpawn(),
 	score: new Map([
 		[active, 0],
@@ -16,7 +17,7 @@ const players = ({ players }) => players;
 const score = ({ score }) => score;
 const active = ({ players: [active, passive] }) => active;
 const passive = ({ players: [active, passive] }) => passive;
-// const current = ({ current }) => current;
+const column = ({ column }) => column;
 
 const activeScore = ({ players: [active, passive], score }) =>
 	score.get(active);
@@ -33,9 +34,11 @@ const incScore = ({ score }) => (player) =>
 const togglePlayers = ({ players }) =>
 	[players[1], players[0]] = [players[0], players[1]];
 
+// const nextFromColumn = (col = 0) => next(nodesByColumn(col));
 
-// const setCurrent = (game) => (current) => {
-//  Object.assign(game, { current });
+
+// const setCurrent = (game) => (column) => {
+//  Object.assign(game, { column });
 // };
 
 // const selectCell = (game) => (column = 0, row = 0) => {
@@ -43,7 +46,7 @@ const togglePlayers = ({ players }) =>
 // };
 
 // const completeTurn = (game) => {
-//  transferCells(grid(game))(pGraph(active(game)))(current(game));
+//  transferCells(grid(game))(pGraph(active(game)))(column(game));
 //  togglePlayers(game);
 // };
 
@@ -59,4 +62,5 @@ module.exports = {
 	playerScore,
 	incScore,
 	togglePlayers,
+	column,
 };

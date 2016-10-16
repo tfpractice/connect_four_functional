@@ -46,6 +46,11 @@ describe('Game', function() {
 			expect(Game.score(myGame) instanceof Map).toBeTrue();
 		});
 	});
+	describe('column', function() {
+		it('retrieves the current column ID', function() {
+			expect(Game.column(myGame)).toBe(0);
+		});
+	});
 
 	describe('playerScore', () => {
 		it('retrieves the players score', () => {
