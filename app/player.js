@@ -3,7 +3,7 @@ const { Grid, Traversals, Connections } = GG;
 const { spawn: gSpawn, addNodes } = Grid;
 
 const spawn = (name = '', color = 'black') =>
-	({ name, color, tokens: [], score: 0, grid: gSpawn() });
+	({ name, color, score: 0, grid: gSpawn() });
 
 const name = ({ name }) => name;
 const grid = ({ grid }) => grid;

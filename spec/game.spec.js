@@ -2,7 +2,6 @@ describe('Game', function() {
 	beforeAll(function() {
 		console.log('\n.........Game Spec.........');
 		PR = Player;
-		// GR = Graph;
 	});
 
 	beforeEach(function() {
@@ -11,8 +10,8 @@ describe('Game', function() {
 		myGame = Game.spawn(jane, dick);
 	});
 
-	describe('spawn', function() {
-		it('creates a new object with players and a board', function() {
+	describe('spawn', () => {
+		it('creates a new object with players and a board', () => {
 			expect(myGame).toBeObject();
 			expect(myGame.players).toBeArray();
 			expect(myGame.board instanceof Map).toBeTrue();
@@ -46,14 +45,14 @@ describe('Game', function() {
 			expect(Game.score(myGame) instanceof Map).toBeTrue();
 		});
 	});
-	describe('cID', function() {
-		it('retrieves the current cID ID', function() {
+	describe('cID', () => {
+		it('retrieves the current cID ID', () => {
 			expect(Game.cID(myGame)).toBe(0);
 		});
 	});
 
 	describe('column', () => {
-		it('returns the nodes in the current cID', function() {
+		it('returns the nodes in the current cID', () => {
 			expect(Game.column(myGame)).toBeArray();
 		});
 	});
@@ -108,9 +107,9 @@ describe('Game', function() {
 		});
 	});
 
-	describe('select', function() {
+	describe('select', () => {
 		describe('when the current column is available', () => {
-			it('assigns the currentNode to the current player', function() {
+			it('assigns the currentNode to the current player', () => {
 				let prev = Game.active(myGame);
 				let node = Game.next(myGame);
 				let gBoard = myGame.board;
@@ -118,19 +117,19 @@ describe('Game', function() {
 				expect(Board.nodesByPlayer(gBoard)(prev)).toContain(node);
 			});
 
-			it('toggles the players', function() {
+			it('toggles the players', () => {
 				let prev = Game.active(myGame);
 				Game.select(myGame);
 				expect(Game.active(myGame)).not.toBe(prev);
 			});
 		});
 		describe('when the current column is not available', () => {
-			it('returns undefined', function() {
+			it('returns undefined', () => {
 				Game.column(myGame).map(Game.choose(myGame));
 				expect(Game.select(myGame)).toBeUndefined();
 			});
 
-			it('does not toggle the players', function() {
+			it('does not toggle the players', () => {
 				Game.column(myGame).map(Game.choose(myGame));
 				let prev = Game.active(myGame);
 				Game.select(myGame);
