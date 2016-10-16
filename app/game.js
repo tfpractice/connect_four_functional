@@ -20,6 +20,7 @@ const score = ({ score }) => score;
 const active = ({ players: [active, passive] }) => active;
 const passive = ({ players: [active, passive] }) => passive;
 const column = ({ column }) => column;
+const setColumn = (game) => (column = 0) => Object.assign(game, { column });
 
 const activeScore = ({ players: [active, passive], score }) =>
 	score.get(active);
@@ -43,9 +44,7 @@ const togglePlayers = ({ players }) =>
 //  Object.assign(game, { column });
 // };
 
-// const selectCell = (game) => (column = 0, row = 0) => {
-//  setCurrent(game)(cellByPosition(grid(game))(column, row));
-// };
+
 
 // const completeTurn = (game) => {
 //  transferCells(grid(game))(pGraph(active(game)))(column(game));
@@ -65,4 +64,5 @@ module.exports = {
 	incScore,
 	togglePlayers,
 	column,
+	setColumn,
 };

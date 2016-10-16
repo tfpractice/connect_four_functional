@@ -82,12 +82,12 @@ describe('Game', function() {
 		});
 	});
 
-	// 	// describe('selectCell', () => {
-	// 	//     it('returns a node at the specified position', () => {
-	// 	//         Game.selectCell(myGame)(3, 0);
-	// 	//         expect(Game.current(myGame)).toBeObject();
-	// 	//     });
-	// 	// });
+	describe('setColumn', () => {
+		it('returns a node at the specified position', () => {
+			Game.setColumn(myGame)(3);
+			expect(Game.column(myGame)).toBe(3);
+		});
+	});
 
 	// 	// describe('completeTurn', () => {
 	// 	//     it('transfers nodes from the grid to the active player',
