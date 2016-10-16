@@ -5,7 +5,7 @@ beforeAll(function() {
 	GG = require('game_grid');
 	// ({ Graph, utils, traversals } = GT);
 	// ({ Cell, Grid, GameGraph, Player: GP, Game } = GG);
-	({ Board, Game, Player } = app);
+	// ({ Board, Game, Player } = app);
 });
 
 beforeEach(function() {
