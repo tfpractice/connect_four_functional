@@ -20,11 +20,12 @@ describe('Column', function() {
 			expect(Col.next(cNodes0)).toBe(c0r0);
 		});
 	});
-	// it('is a grid with 7 columns and 6 rows', function() {
-	//     // console.log(myColumn);
-	//     // GameGraph.connectAdjacents(myColumn);
-	//     expect(myColumn instanceof Map).toBeTrue();
-	// });
+
+	describe('hasFree', function() {
+		it('checks if any of the nodes are free', function() {
+			expect(Col.hasFree(cNodes0)).toBeTrue();
+		});
+	});
 
 	// describe('columns', function() {
 	//     it('returns an array of columns', function() {

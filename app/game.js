@@ -1,5 +1,7 @@
 const Board = require('./board');
 const Player = require('./player');
+const Column = require('./column');
+const { hasFree } = Column;
 const { spawn: bSpawn } = Board;
 
 const spawn = (active, passive) => ({
