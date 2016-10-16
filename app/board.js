@@ -14,4 +14,3 @@ const next = (nodes) => nodes.find(isFree);
 const hasFree = (nodes) => nodes.some(isFree);
 
 module.exports = Object.assign({}, Grid, { spawn, next, hasFree, nodesByPlayer });
-// module.exports = { spawn, columns };
