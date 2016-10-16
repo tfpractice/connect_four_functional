@@ -52,6 +52,12 @@ describe('Game', function() {
 		});
 	});
 
+	describe('column', () => {
+		it('returns the nodes in the current cID', function() {
+			expect(Game.column(myGame)).toBeArray();
+		});
+	});
+
 	describe('playerScore', () => {
 		it('retrieves the players score', () => {
 			expect(Game.playerScore(myGame)(jane)).toBe(0);

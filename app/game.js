@@ -3,7 +3,7 @@ const Player = require('./player');
 const Column = require('./column');
 const { hasFree } = Column;
 const { claim } = Player;
-const { spawn: bSpawn, nodesByColumn: cNodes } = Board;
+const { spawn: bSpawn, nodesByColumn } = Board;
 
 const spawn = (active, passive) => ({
 	players: [active, passive],
@@ -22,10 +22,8 @@ const active = ({ players: [active, passive] }) => active;
 const passive = ({ players: [active, passive] }) => passive;
 const cID = ({ cID }) => cID;
 const column = ({ cID, board }) => nodesByColumn(board)(cID);
-// const nodes = ({cID, board})=> nodesByColumn(board)
 
-const isAvail = ({ players: [active], cID, board }) =>
-	hasFree(cNodes(board)(cID));
+const isAvail = (game) => hasFree(column(game));
 
 const setColumn = (game) => (cID = 0) =>
 	isAvail(game) && Object.assign(game, { cID });
@@ -46,7 +44,8 @@ const togglePlayers = ({ players }) =>
 	[players[1], players[0]] = [players[0], players[1]];
 
 const select = ({ players: [active], cID, board }) =>
-	hasFree(cNodes)(board)(cID) && claim(active)(next(cNodes(board)(cID)));
+	hasFree(nodesByColumn)(board)(cID) && claim(active)(next(nodesByColumn(board)(
+		cID)));
 
 
 // const setCurrent = (game) => (cID) => {
