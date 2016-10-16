@@ -16,7 +16,7 @@ describe('Board', function() {
 
 	describe('columns', function() {
 		it('returns an array of columns', function() {
-			console.log(Board.columns(myBoard));
+			// console.log(Board.columns(myBoard));
 			expect(Board.columns(myBoard)).toBeArray();
 		});
 	});
