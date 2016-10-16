@@ -23,11 +23,4 @@ describe('Board', function() {
 			expect(Board.nodesByPlayer(myBoard)()).toBeArray();
 		});
 	});
-
-	// describe('columns', function() {
-	// 	it('returns an array of columns', function() {
-	// 		// console.log(Board.columns(myBoard));
-	// 		expect(Board.columns(myBoard)).toBeArray();
-	// 	});
-	// });
 });

@@ -4,17 +4,17 @@ const { Grid, Traversals, Connections } = GG;
 const { samePlayer } = Node;
 const { omniGraph } = Traversals;
 const { nodes, initCells, cIDs, nodesByColumn, fromElements, } = Grid;
-// const {} = Grid;
+
 const spawn = () => initCells(7, 6);
 
 const nodesByPlayer = (graph) => (player = null) =>
 	nodes(graph).filter(samePlayer({ player }));
 
-const columns = (board) => [...cIDs(board)]
-	.map(nodesByColumn(board))
-	.map(cells => fromElements(...cells));
+// const columns = (board) => [...cIDs(board)]
+// 	.map(nodesByColumn(board))
+// 	.map(cells => fromElements(...cells));
 // .map(omniGraph)
 // .reduce(merge, new Map);
 
-module.exports = Object.assign({}, Grid, { spawn, columns, nodesByPlayer });
+module.exports = Object.assign({}, Grid, { spawn, nodesByPlayer });
 // module.exports = { spawn, columns };
