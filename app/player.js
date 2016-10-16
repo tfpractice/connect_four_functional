@@ -1,6 +1,6 @@
 const GG = require('game_grid');
 const { Grid, Traversals, Connections } = GG;
-const { spawn: gSpawn } = Grid;
+const { spawn: gSpawn, addNodes } = Grid;
 
 const spawn = (name = '', color = 'black') =>
 	({ name, color, tokens: [], score: 0, grid: gSpawn() });
@@ -11,7 +11,8 @@ const score = ({ score }) => score;
 const resetScore = (player) => player.wins = 0;
 const incrementScore = ({ score }) => ++score;
 const decrementScore = ({ score }) => --score;
-// const claimCells = ({ graph }) => addNodes(graph);
+const claimNodes = ({ grid }) => (...nodes) =>
+	addNodes(grid)(...nodes);
 
 module.exports = {
 	spawn,
@@ -21,5 +22,5 @@ module.exports = {
 	resetScore,
 	incrementScore,
 	decrementScore,
-	// claimCells,
+	claimNodes,
 };

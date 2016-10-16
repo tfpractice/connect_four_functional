@@ -1,7 +1,7 @@
 describe('Player', function() {
 	beforeAll(function() {
 		console.log('\n.........Player Spec.........');
-		({ Player: PR } = app);
+		({ Player: PR, Node } = app);
 	});
 
 	beforeEach(function() {
@@ -45,6 +45,14 @@ describe('Player', function() {
 		it('retrieves the decrementScore attribute', () => {
 			PR.resetScore(dick);
 			expect(PR.score(dick)).toBe(0);
+		});
+	});
+	describe('claimNodes', () => {
+		it('adds each node to the players graph', function() {
+			let nd00 = Node.spawn(0, 0),
+				nd01 = Node.spawn(0, 1);
+			PR.claimNodes(dick)(nd00, nd01);
+			expect(PR.grid(dick).size).toBe(2);
 		});
 	});
 });
