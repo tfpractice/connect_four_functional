@@ -46,9 +46,9 @@ describe('Game', function() {
 			expect(Game.score(myGame) instanceof Map).toBeTrue();
 		});
 	});
-	describe('column', function() {
-		it('retrieves the current column ID', function() {
-			expect(Game.column(myGame)).toBe(0);
+	describe('cID', function() {
+		it('retrieves the current cID ID', function() {
+			expect(Game.cID(myGame)).toBe(0);
 		});
 	});
 
@@ -85,7 +85,16 @@ describe('Game', function() {
 	describe('setColumn', () => {
 		it('returns a node at the specified position', () => {
 			Game.setColumn(myGame)(3);
-			expect(Game.column(myGame)).toBe(3);
+			expect(Game.cID(myGame)).toBe(3);
+		});
+	});
+	describe('isAvail', () => {
+		it('checks if the current cID has free nodes', () => {
+			Game.isAvail(myGame);
+			Game.setColumn(myGame)(3);
+
+			expect(Game.isAvail(myGame)).toBeTrue();
+			// expect(Game.cID(myGame)).toBe(3);
 		});
 	});
 
