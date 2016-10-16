@@ -5,7 +5,13 @@ describe('Node', function() {
 	});
 
 	beforeEach(function() {
+		dick = { name: 'Dick' };
+		jane = { name: 'Jane' };
 		myNode = Node.spawn(2, 3);
+		jN00 = Node.spawn(0, 0, jane);
+		jN01 = Node.spawn(0, 1, jane);
+		dN55 = Node.spawn(5, 5, dick);
+		dN54 = Node.spawn(5, 4, dick);
 	});
 
 	describe('spawn', () => {
@@ -18,6 +24,13 @@ describe('Node', function() {
 	describe('player', function() {
 		it('retrieves the player attribute', function() {
 			expect(Node.player(myNode)).toBeNull();
+		});
+	});
+
+	describe('samePlayer', () => {
+		it('compares the player attributes', function() {
+			expect(Node.samePlayer(jN00)(dN55)).toBeFalse();
+			expect(Node.samePlayer(jN00)(jN01)).toBeTrue();
 		});
 	});
 

@@ -8,4 +8,4 @@ const spawn = (c = 0, r = 0, player = null) =>
 const player = ({ player = null }) => player;
 const samePlayer = ({ player: p0 }) => ({ player: p1 }) => p0 === p1;
 
-module.exports = Object.assign({}, Cell, { spawn, player });
+module.exports = Object.assign({}, Cell, { spawn, player, samePlayer });
