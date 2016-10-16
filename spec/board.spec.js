@@ -27,6 +27,12 @@ describe('Board', function() {
 		});
 	});
 
+	describe('playerGraph', function() {
+		it('returns a graph of all nodes claimed by a player', function() {
+			expect(Board.playerGraph(myBoard)(jane)).toBeTrue();
+		});
+	});
+
 	describe('next', function() {
 		it('returns the next free node', function() {
 			expect(Board.next(col0)).toBe(c0r0);
