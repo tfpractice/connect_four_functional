@@ -3,7 +3,8 @@ const Node = require('./node');
 const { Grid, Traversals, Connections } = GG;
 const { samePlayer } = Node;
 const { omniGraph } = Traversals;
-const { nodes, initCells, cIDs, nodesByColumn, fromElements, } = Grid;
+const { nodes, nodesByColumn, fromElements, } = Grid;
+const { cellArray, initCells, cIDs, } = Grid;
 
 const spawn = () => initCells(7, 6);
 

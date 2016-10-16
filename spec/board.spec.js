@@ -12,7 +12,6 @@ describe('Board', function() {
 
 	describe('spawn', () => {
 		it('is a grid with 7 columns and 6 rows', function() {
-			console.log(myBoard);
 			expect(myBoard instanceof Map).toBeTrue();
 			expect(Board.cIDs(myBoard).size).toBe(7);
 			expect(Board.rIDs(myBoard).size).toBe(6);
