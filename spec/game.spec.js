@@ -70,12 +70,12 @@ describe('Game', function() {
 			expect(Game.activeScore(myGame)).toBe(1);
 		});
 	});
-	// 	// describe('togglePlayers', () => {
-	// 	//     it('switches the games active player ', () => {
-	// 	//         Game.togglePlayers(myGame);
-	// 	//         expect(Game.active(myGame)).toBe(dick);
-	// 	//     });
-	// 	// });
+	describe('togglePlayers', () => {
+		it('switches the games active player ', () => {
+			Game.togglePlayers(myGame);
+			expect(Game.active(myGame)).toBe(dick);
+		});
+	});
 
 	// 	// describe('selectCell', () => {
 	// 	//     it('returns a node at the specified position', () => {

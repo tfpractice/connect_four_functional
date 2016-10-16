@@ -30,10 +30,9 @@ const playerScore = ({ score }) => (player) =>
 const incScore = ({ score }) => (player) =>
 	score.set(player, score.get(player) + 1);
 
-// const togglePlayers = ({ players }) => {
-//  let [passive, active] = players;
-//  [players[1], players[0]] = [passive, active];
-// };
+const togglePlayers = ({ players }) =>
+	[players[1], players[0]] = [players[0], players[1]];
+
 
 // const setCurrent = (game) => (current) => {
 //  Object.assign(game, { current });
@@ -48,24 +47,6 @@ const incScore = ({ score }) => (player) =>
 //  togglePlayers(game);
 // };
 
-// module.exports = {
-//  spawn,
-//  players,
-//  playerScore,
-//  incrementPlayerScore,
-//  activeScore,
-//  passiveScore,
-//  grid,
-//  score,
-//  active,
-//  completeTurn,
-//  passive,
-//  togglePlayers,
-//  selectCell,
-//  setCurrent,
-//  current,
-// };
-
 module.exports = {
 	spawn,
 	board,
@@ -77,4 +58,5 @@ module.exports = {
 	passiveScore,
 	playerScore,
 	incScore,
+	togglePlayers,
 };

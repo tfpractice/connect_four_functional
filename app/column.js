@@ -1,5 +1,6 @@
-const { Grid, Traversals, Connections } = require('game_grid');
-const { omniGraph } = Traversals;
-const { initCells, cIDs, nodesByColumn, fromElements, mergeEdges, } = Grid;
+const Node = require('./node');
+const { isFree } = Node;
 
-// const column (id)
+const next = (nodes) => nodes.find(isFree);
+
+module.exports = { next };

@@ -34,10 +34,10 @@ describe('Node', function() {
 		});
 	});
 
-	describe('columns', () => {
-		it('returns an array of columns', () => {
-			// console.log(Node.columns(myNode));
-			// expect(Node.columns(myNode)).toBeArray();
+	describe('isFree', () => {
+		it('checks is player attr is falsy', () => {
+			expect(Node.isFree(myNode)).toBeTrue();
+			expect(Node.isFree(jN00)).toBeFalse();
 		});
 	});
 });
