@@ -14,9 +14,9 @@ const { colComponents: cComps, rowComponents: rComps } = Traversals;
 const { posComponents: pComps, negComponents: nComps, } = Traversals;
 
 const spawn = (active, passive) => ({
-	players: [active, passive],
 	cID: 0,
 	board: bSpawn(),
+	players: [active, passive],
 	// score: new Map([
 	// 	[active, 0],
 	// 	[passive, 0],
@@ -28,6 +28,8 @@ const spawn = (active, passive) => ({
 
 const board = ({ board }) => board;
 const players = ({ players }) => players;
+const cID = ({ cID }) => cID;
+
 // const score = ({ score }) => score;
 // const components = ({ components }) => components;
 const graphs = ({ players, board }) => players.map(pGraph(board));
@@ -39,7 +41,7 @@ const graphs = ({ players, board }) => players.map(pGraph(board));
 
 const active = ({ players: [active, passive] }) => active;
 const passive = ({ players: [active, passive] }) => passive;
-const cID = ({ cID }) => cID;
+const togglePlayers = ({ players: arr }) => [arr[1], arr[0]] = [arr[0], arr[1]];
 
 const column = ({ cID, board }) => nodesByColumn(board)(cID);
 const setColumn = (game) => (cID = 0) => Object.assign(game, { cID });
@@ -49,7 +51,6 @@ const setColumn = (game) => (cID = 0) => Object.assign(game, { cID });
 // const playerScore = ({ score }) => (player) => score.get(player);
 // const incScore = ({ score }) => (plr) => score.set(plr, score.get(plr) + 1);
 
-const togglePlayers = ({ players: arr }) => [arr[1], arr[0]] = [arr[0], arr[1]];
 
 // const next = (game) => Board.next(column(game));
 // const isAvail = (game) => hasFree(column(game));
