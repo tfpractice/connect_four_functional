@@ -21,10 +21,9 @@ const spawn = (active, passive) => ({
 		[active, 0],
 		[passive, 0],
 	]),
-	components: new Map([
-		[active, new Set],
-		[passive, new Set],
-	]),
+	components: new Map()
+		.set(active, splitComps(pGraph()(active)))
+		.set(passive, splitComps(pGraph()(passive))),
 });
 
 const board = ({ board }) => board;
@@ -33,6 +32,7 @@ const score = ({ score }) => score;
 const components = ({ components }) => components;
 const graphs = ({ players, board }) => players.map(pGraph(board));
 
+// const splitC = (map) => (p) => (g) => map.set(p, split(pGraph(g)(p)));
 const upComps = (game) => players(game).reduce(allComps, game);
 const allComps = (game, p) =>
 	components(game).set(p, splitComps(pGraph(board(game))(p))) && game;

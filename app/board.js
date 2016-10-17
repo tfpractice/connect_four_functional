@@ -15,7 +15,7 @@ const hasFree = (nodes) => nodes.some(isFree);
 const nodesByPlayer = (graph) => (player = null) =>
 	nodes(graph).filter(samePlayer({ player }));
 
-const playerGraph = (graph) => (p) => fElems(...nodesByPlayer(graph)(p));
+const playerGraph = (gr = new Map) => (p) => fElems(...nodesByPlayer(gr)(p));
 const splitComps = (graph) =>
 	new Map()
 	.set('row', rComps(graph))
