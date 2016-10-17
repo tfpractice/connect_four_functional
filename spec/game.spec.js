@@ -15,7 +15,7 @@ describe('Game', function() {
 			expect(myGame).toBeObject();
 			expect(myGame.players).toBeArray();
 			expect(myGame.board instanceof Map).toBeTrue();
-			expect(myGame.score instanceof Map).toBeTrue();
+			// expect(myGame.score instanceof Map).toBeTrue();
 		});
 	});
 
@@ -52,9 +52,9 @@ describe('Game', function() {
 	});
 	describe('graphs', function() {
 		it('returns a graph of each players nodes', function() {
-			console.log(Game.graphs(myGame));
+			// console.log(Game.graphs(myGame));
 
-			console.log(Game.upComps(myGame));
+			// console.log(Game.upComps(myGame));
 		});
 	});
 
