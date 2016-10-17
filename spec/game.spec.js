@@ -40,6 +40,16 @@ describe('Game', function() {
 			expect(Game.passive(myGame)).toBe(dick);
 		});
 	});
+	describe('graphs', function() {
+		it('returns a graph of each players nodes', function() {
+			console.log(Game.graphs(myGame));
+			expect(Game.graphs(myGame) instanceof Map).toBeTrue();
+			// console.log(Game.graphs(myGame));
+
+			// console.log(Game.upComps(myGame));
+		});
+	});
+
 	describe('score', () => {
 		it('retrieve a map of player scores', () => {
 			// expect(Game.score(myGame) instanceof Map).toBeTrue();
@@ -48,13 +58,6 @@ describe('Game', function() {
 	describe('components', () => {
 		it('retrieve a map of player scores', () => {
 			// expect(Game.components(myGame) instanceof Map).toBeTrue();
-		});
-	});
-	describe('graphs', function() {
-		it('returns a graph of each players nodes', function() {
-			// console.log(Game.graphs(myGame));
-
-			// console.log(Game.upComps(myGame));
 		});
 	});
 

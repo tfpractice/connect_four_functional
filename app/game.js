@@ -1,47 +1,39 @@
-const Utils = require('functional_graph_theory').Utils;
-const Column = require('./column');
+const { Utils: { Commands, Queries } } = require('functional_graph_theory');
 const { Traversals } = require('game_grid');
+const Column = require('./column');
 const Board = require('./board');
 const Player = require('./player');
-const { Commands: Comms, Queries: Query } = Utils;
-const { spreadK, addMap } = Comms;
+const { spreadK, addMap, tuple, } = Commands;
 const { hasFree } = Column;
 const { claim } = Player;
-const { spawn: bSpawn, nodesByColumn, playerGraph: pGraph, splitComps } = Board
-;
+const { spawn: grid, playerGraph: pGraph } = Board;
+const { nodesByColumn, splitComps: cSplit } = Board;
 const { components: comps } = Traversals;
 const { colComponents: cComps, rowComponents: rComps } = Traversals;
 const { posComponents: pComps, negComponents: nComps, } = Traversals;
 
-const spawn = (active, passive) => ({
-	cID: 0,
-	board: bSpawn(),
-	players: [active, passive],
-	// score: new Map([
-	// 	[active, 0],
-	// 	[passive, 0],
-	// ]),
-	// components: new Map()
-	// 	.set(active, splitComps(pGraph()(active)))
-	// 	.set(passive, splitComps(pGraph()(passive))),
-});
-
+const spawn = (p0, p1) => ({ cID: 0, board: grid(), players: [p0, p1] });
+const cID = ({ cID }) => cID;
 const board = ({ board }) => board;
 const players = ({ players }) => players;
-const cID = ({ cID }) => cID;
-
-// const score = ({ score }) => score;
-// const components = ({ components }) => components;
-const graphs = ({ players, board }) => players.map(pGraph(board));
-
-// const splitC = (map) => (p) => (g) => map.set(p, split(pGraph(g)(p)));
-// const upComps = (game) => players(game).reduce(allComps, game);
-// const allComps = (game, p) =>
-// 	components(game).set(p, splitComps(pGraph(board(game))(p))) && game;
-
 const active = ({ players: [active, passive] }) => active;
 const passive = ({ players: [active, passive] }) => passive;
 const togglePlayers = ({ players: arr }) => [arr[1], arr[0]] = [arr[0], arr[1]];
+
+const keyCurry = (fn) => (key) => tuple(fn(key))(key);
+
+// const score = ({ score }) => score;
+// const components = ({ components }) => components;
+const gMap = (gm = new Map, [p, board]) => gm.set(p, pGraph(board)(p));
+const graphs = ({ players, board }) =>
+	players.map(tuple(board)).reduce(gMap, new Map);
+const cmap = (gm = new Map, [p, board]) =>
+	gm.set(p, pGraph(board)(p));
+
+const splitC = (map) => (p) => (g) => map.set(p, split(pGraph(g)(p)));
+// const upComps = (game) => players(game).reduce(allComps, game);
+// const allComps = (game, p) =>
+// 	components(game).set(p, splitComps(pGraph(board(game))(p))) && game;
 
 const column = ({ cID, board }) => nodesByColumn(board)(cID);
 const setColumn = (game) => (cID = 0) => Object.assign(game, { cID });
@@ -79,7 +71,7 @@ module.exports = {
 	// next,
 	// select,
 	// components,
-	// graphs,
+	graphs,
 	// upComps,
 	// allComps,
 };
