@@ -1,9 +1,17 @@
+const Utils = require('functional_graph_theory').Utils;
+const Column = require('./column');
+const { Traversals } = require('game_grid');
 const Board = require('./board');
 const Player = require('./player');
-const Column = require('./column');
+const { Commands: Comms, Queries: Query } = Utils;
+const { spreadK, addMap } = Comms;
 const { hasFree } = Column;
 const { claim } = Player;
-const { spawn: bSpawn, nodesByColumn, } = Board;
+const { spawn: bSpawn, nodesByColumn, playerGraph: pGraph, splitComps } = Board
+;
+const { components: comps } = Traversals;
+const { colComponents: cComps, rowComponents: rComps } = Traversals;
+const { posComponents: pComps, negComponents: nComps, } = Traversals;
 
 const spawn = (active, passive) => ({
 	players: [active, passive],
@@ -13,11 +21,22 @@ const spawn = (active, passive) => ({
 		[active, 0],
 		[passive, 0],
 	]),
+	components: new Map([
+		[active, new Set],
+		[passive, new Set],
+	]),
 });
 
 const board = ({ board }) => board;
 const players = ({ players }) => players;
 const score = ({ score }) => score;
+const components = ({ components }) => components;
+const graphs = ({ players, board }) => players.map(pGraph(board));
+
+const upComps = (game) => players(game).reduce(allComps, game);
+const allComps = (game, p) =>
+	components(game).set(p, splitComps(pGraph(board(game))(p))) && game;
+
 const active = ({ players: [active, passive] }) => active;
 const passive = ({ players: [active, passive] }) => passive;
 const cID = ({ cID }) => cID;
@@ -58,4 +77,8 @@ module.exports = {
 	choose,
 	next,
 	select,
+	components,
+	graphs,
+	upComps,
+	allComps,
 };

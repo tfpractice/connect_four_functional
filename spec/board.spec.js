@@ -29,7 +29,7 @@ describe('Board', function() {
 
 	describe('playerGraph', function() {
 		it('returns a graph of all nodes claimed by a player', function() {
-			expect(Board.playerGraph(myBoard)(jane)).toBeTrue();
+			expect(Board.playerGraph(myBoard)(jane) instanceof Map).toBeTrue();
 		});
 	});
 

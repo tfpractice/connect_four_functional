@@ -45,6 +45,19 @@ describe('Game', function() {
 			expect(Game.score(myGame) instanceof Map).toBeTrue();
 		});
 	});
+	describe('components', () => {
+		it('retrieve a map of player scores', () => {
+			expect(Game.components(myGame) instanceof Map).toBeTrue();
+		});
+	});
+	describe('graphs', function() {
+		it('returns a graph of each players nodes', function() {
+			console.log(Game.graphs(myGame));
+
+			console.log(Game.upComps(myGame));
+		});
+	});
+
 	describe('cID', () => {
 		it('retrieves the current cID ID', () => {
 			expect(Game.cID(myGame)).toBe(0);
