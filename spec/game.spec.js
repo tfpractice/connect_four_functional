@@ -81,73 +81,73 @@ describe('Game', function() {
 		});
 	});
 
-	describe('passiveScore', () => {
-		it('returns the active pplayers score', () => {
-			expect(Game.passiveScore(myGame)).toBe(0);
-		});
-	});
+	// describe('passiveScore', () => {
+	// 	it('returns the active pplayers score', () => {
+	// 		expect(Game.passiveScore(myGame)).toBe(0);
+	// 	});
+	// });
 
-	describe('incScore', () => {
-		it('increaeses the players score by one', () => {
-			Game.incScore(myGame)(jane);
-			expect(Game.activeScore(myGame)).toBe(1);
-		});
-	});
-	describe('togglePlayers', () => {
-		it('switches the games active player ', () => {
-			Game.togglePlayers(myGame);
-			expect(Game.active(myGame)).toBe(dick);
-		});
-	});
+	// describe('incScore', () => {
+	// 	it('increaeses the players score by one', () => {
+	// 		Game.incScore(myGame)(jane);
+	// 		expect(Game.activeScore(myGame)).toBe(1);
+	// 	});
+	// });
+	// describe('togglePlayers', () => {
+	// 	it('switches the games active player ', () => {
+	// 		Game.togglePlayers(myGame);
+	// 		expect(Game.active(myGame)).toBe(dick);
+	// 	});
+	// });
 
-	describe('setColumn', () => {
-		it('returns a node at the specified position', () => {
-			Game.setColumn(myGame)(3);
-			expect(Game.cID(myGame)).toBe(3);
-		});
-	});
-	describe('isAvail', () => {
-		it('checks if the current cID has free nodes', () => {
-			Game.setColumn(myGame)(0);
-			Game.column(myGame).map(Game.choose(myGame));
-			expect(Game.isAvail(myGame)).toBeFalse();
-		});
-	});
+	// describe('setColumn', () => {
+	// 	it('returns a node at the specified position', () => {
+	// 		Game.setColumn(myGame)(3);
+	// 		expect(Game.cID(myGame)).toBe(3);
+	// 	});
+	// });
+	// describe('isAvail', () => {
+	// 	it('checks if the current cID has free nodes', () => {
+	// 		Game.setColumn(myGame)(0);
+	// 		Game.column(myGame).map(Game.choose(myGame));
+	// 		expect(Game.isAvail(myGame)).toBeFalse();
+	// 	});
+	// });
 
-	describe('choose', () => {
-		it('calls the active players claim function', () => {
-			expect(Game.choose(myGame)).toBeFunction();
-		});
-	});
+	// describe('choose', () => {
+	// 	it('calls the active players claim function', () => {
+	// 		expect(Game.choose(myGame)).toBeFunction();
+	// 	});
+	// });
 
-	describe('select', () => {
-		describe('when the current column is available', () => {
-			it('assigns the currentNode to the current player', () => {
-				let prev = Game.active(myGame);
-				let node = Game.next(myGame);
-				let gBoard = myGame.board;
-				Game.select(myGame);
-				expect(Board.nodesByPlayer(gBoard)(prev)).toContain(node);
-			});
+	// describe('select', () => {
+	// 	describe('when the current column is available', () => {
+	// 		it('assigns the currentNode to the current player', () => {
+	// 			let prev = Game.active(myGame);
+	// 			let node = Game.next(myGame);
+	// 			let gBoard = myGame.board;
+	// 			Game.select(myGame);
+	// 			expect(Board.nodesByPlayer(gBoard)(prev)).toContain(node);
+	// 		});
 
-			it('toggles the players', () => {
-				let prev = Game.active(myGame);
-				Game.select(myGame);
-				expect(Game.active(myGame)).not.toBe(prev);
-			});
-		});
-		describe('when the current column is not available', () => {
-			it('returns undefined', () => {
-				Game.column(myGame).map(Game.choose(myGame));
-				expect(Game.select(myGame)).toBeUndefined();
-			});
+	// 		it('toggles the players', () => {
+	// 			let prev = Game.active(myGame);
+	// 			Game.select(myGame);
+	// 			expect(Game.active(myGame)).not.toBe(prev);
+	// 		});
+	// 	});
+	// 	describe('when the current column is not available', () => {
+	// 		it('returns undefined', () => {
+	// 			Game.column(myGame).map(Game.choose(myGame));
+	// 			expect(Game.select(myGame)).toBeUndefined();
+	// 		});
 
-			it('does not toggle the players', () => {
-				Game.column(myGame).map(Game.choose(myGame));
-				let prev = Game.active(myGame);
-				Game.select(myGame);
-				expect(Game.active(myGame)).toBe(prev);
-			});
-		});
-	});
+	// 		it('does not toggle the players', () => {
+	// 			Game.column(myGame).map(Game.choose(myGame));
+	// 			let prev = Game.active(myGame);
+	// 			Game.select(myGame);
+	// 			expect(Game.active(myGame)).toBe(prev);
+	// 		});
+	// });
+	// });
 });
