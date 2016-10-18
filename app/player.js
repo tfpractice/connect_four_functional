@@ -15,8 +15,6 @@ const resetScore = (player) => player.wins = 0;
 const incrementScore = ({ score }) => ++score;
 const decrementScore = ({ score }) => --score;
 const claim = (player = null) => (n) => n && Object.assign(n, { player });
-const claimNodes = (player) => (...nodes) =>
-	addNodes(grid(player))(...(nodes.map(claim(player))));
 
 const rowComps = (plr) => (graph) => rComps(playerGraph(graph)(plr));
 const colComps = (plr) => (graph) => cComps(playerGraph(graph)(plr));
@@ -32,7 +30,6 @@ module.exports = {
 	incrementScore,
 	decrementScore,
 	claim,
-	claimNodes,
 	rowComps,
 	colComps,
 	posComps,
