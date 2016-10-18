@@ -1,3 +1,4 @@
+module.exports.Utils = require('./utils');
 module.exports.Node = require('./node');
 module.exports.Column = require('./column');
 module.exports.Board = require('./board');

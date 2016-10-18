@@ -15,35 +15,45 @@ describe('Board', function() {
 	});
 
 	describe('spawn', () => {
-		it('is a grid with 7 columns and 6 rows', function() {
+		it('is a grid with 7 columns and 6 rows', () => {
 			expect(myBoard instanceof Map).toBeTrue();
 			expect(Board.cIDs(myBoard).size).toBe(7);
 			expect(Board.rIDs(myBoard).size).toBe(6);
 		});
 	});
-	describe('nodesByPlayer', function() {
-		it('returns an array of nodes with a speacified player', function() {
+	describe('nodesByPlayer', () => {
+		it('returns an array of nodes with a speacified player', () => {
 			expect(Board.nodesByPlayer(myBoard)()).toBeArray();
 		});
 	});
 
-	describe('playerGraph', function() {
-		it('returns a graph of all nodes claimed by a player', function() {
+	describe('playerGraph', () => {
+		it('returns a graph of all nodes claimed by a player', () => {
 			expect(Board.playerGraph(myBoard)(jane) instanceof Map).toBeTrue();
 		});
 	});
 
-	describe('next', function() {
-		it('returns the next free node', function() {
+	describe('next', () => {
+		it('returns the next free node', () => {
 			expect(Board.next(col0)).toBe(c0r0);
 		});
 	});
 
-	describe('hasFree', function() {
-		it('checks if any of the nodes are free', function() {
+	describe('hasFree', () => {
+		it('checks if any of the nodes are free', () => {
 			col1.map(Player.claim(dick));
 			expect(Board.hasFree(col0)).toBeTrue();
 			expect(Board.hasFree(col1)).toBeFalse();
+		});
+	});
+	describe('allComps', () => {
+		it('returns an array of components', () => {
+			expect(Board.allComps(myBoard)).toBeArray();
+		});
+	});
+	describe('splitComps', function() {
+		it('returns a map of all connected components by direction', () => {
+			expect(Board.splitComps(myBoard) instanceof Map).toBeTrue();
 		});
 	});
 });

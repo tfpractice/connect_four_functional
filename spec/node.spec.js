@@ -12,6 +12,7 @@ describe('Node', function() {
 		jN01 = Node.spawn(0, 1, jane);
 		dN55 = Node.spawn(5, 5, dick);
 		dN54 = Node.spawn(5, 4, dick);
+		// console.log('' + myNode);
 	});
 
 	describe('spawn', () => {

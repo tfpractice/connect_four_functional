@@ -1,5 +1,6 @@
 const GG = require('game_grid');
 const Node = require('./node');
+const { Commands: { flatTuple, spreadV, flatten } } = require('./utils');
 const { Grid, Traversals, Connections } = GG;
 const { samePlayer, isFree } = Node;
 const { nodes, nodesByColumn, fromElements: fElems, } = Grid;
@@ -23,6 +24,10 @@ const splitComps = (graph) =>
 	.set('pos', pComps(graph))
 	.set('neg', nComps(graph));
 
+const allComps = (graph) =>
+	[rComps, cComps, pComps, nComps].map(f => f(graph)).reduce(flatten, []);
+const cSplit = splitComps;
+// const cSplit = cSplit;
 module.exports = Object.assign({}, Grid, {
 	spawn,
 	next,
@@ -30,4 +35,6 @@ module.exports = Object.assign({}, Grid, {
 	nodesByPlayer,
 	playerGraph,
 	splitComps,
+	allComps,
+	cSplit,
 });
