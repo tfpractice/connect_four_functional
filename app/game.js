@@ -1,16 +1,11 @@
 const { Commands, Queries } = require('./utils');
 const { Traversals } = require('game_grid');
-const Column = require('./column');
 const Board = require('./board');
 const Player = require('./player');
 const { spread, spreadK, spreadV, spreadKV, addMap, tuple, kvMap } = Commands;
-const { hasFree } = Column;
 const { claim } = Player;
-const { spawn: grid, playerGraph: pGraph } = Board;
+const { spawn: grid, playerGraph: pGraph, hasFree } = Board;
 const { nodesByColumn, splitComps, allComps, winComp } = Board;
-const { components: comps } = Traversals;
-const { colComponents: cComps, rowComponents: rComps } = Traversals;
-const { posComponents: pComps, negComponents: nComps, } = Traversals;
 
 const spawn = (p0, p1) => ({ cID: 0, board: grid(), players: [p0, p1] });
 const cID = ({ cID = 0 }) => cID;
@@ -28,14 +23,8 @@ const components = (game) => kvMap(graphs(game))(splitComps);
 const togglePlayers = ({ players: arr }) => [arr[1], arr[0]] = [arr[0], arr[1]];
 const setColumn = (game) => (cID = 0) => Object.assign(game, { cID });
 const select = (game) => claim(active(game))(next(game)) && togglePlayers(game);
-const winner = (game) =>
-	components(game).any(m => spreadV(m).any(s => s.size > 3));
-
-const moreThan = (num) => (coll = new Set) => coll.size > num;
-
-const hasWinningSet = (board) => (plr) =>
-	allComps(pGraph(board)(plr)).some(moreThan(3));
-const findWinnner = ({ players, board }) => players.find(hasWinningSet(board));
+const hasWinComp = (board) => (plr) => winComp(pGraph(board)(plr))(3);
+const winner = ({ players, board }) => players.find(hasWinComp(board));
 
 module.exports = {
 	spawn,
@@ -49,8 +38,8 @@ module.exports = {
 	column,
 	setColumn,
 	select,
-	hasWinningSet,
+	hasWinComp,
 	next,
 	components,
-	// findWSet,
+	winner,
 };

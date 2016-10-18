@@ -17,20 +17,15 @@ const nodesByPlayer = (graph) => (player = null) =>
 	nodes(graph).filter(samePlayer({ player }));
 
 const playerGraph = (gr = new Map) => (p) => fElems(...nodesByPlayer(gr)(p));
-const splitComps = (graph) =>
-	new Map()
-	.set('row', rComps(graph))
-	.set('col', cComps(graph))
-	.set('pos', pComps(graph))
-	.set('neg', nComps(graph));
-
 const allComps = (graph) =>
 	[rComps, cComps, pComps, nComps].map(f => f(graph)).reduce(flatten, []);
-const cSplit = splitComps;
+
+const splitComps = (g) => new Map()
+	.set('row', rComps(g)).set('col', cComps(g))
+	.set('pos', pComps(g)).set('neg', nComps(g));
 
 const moreThan = (num) => (coll = new Set) => coll.size > num;
 const winComp = (graph) => (n = 1) => allComps(graph).some(moreThan(n));
-// const cSplit = cSplit;
 module.exports = Object.assign({}, Grid, {
 	spawn,
 	next,
@@ -39,6 +34,5 @@ module.exports = Object.assign({}, Grid, {
 	playerGraph,
 	splitComps,
 	allComps,
-	cSplit,
 	winComp,
 });
