@@ -28,8 +28,8 @@ describe('Game', function() {
 			expect(Game.players(myGame)).toBeArray();
 		});
 	});
-	describe('playerMap', function() {
-		it('returns a new set of Players', function() {
+	describe('playerMap', () => {
+		it('returns a new set of Players', () => {
 			expect(Game.playerMap(myGame.players) instanceof Map).toBeTrue();
 		});
 	});
@@ -72,10 +72,17 @@ describe('Game', function() {
 		});
 	});
 	describe('hasWinComp', () => {
-		it('checks if the players component has more than three', function() {
+		it('checks if the players component has more than three', () => {
 			expect(Game.hasWinComp(myGame.board)(myGame.players[0])).toBeFalse();
 		});
 	});
+	describe('winner', () => {
+		it('returns the player who has the winnnig component', () => {
+			Game.column(myGame).map(Player.claim(Game.active(myGame)));
+			expect(Game.winner(myGame)).toBe(jane);
+		});
+	});
+
 	describe('select', () => {
 		describe('when the current column is available', () => {
 			it('assigns the currentNode to the current player', () => {
@@ -83,17 +90,6 @@ describe('Game', function() {
 				let node = Game.next(myGame);
 				let gBoard = myGame.board;
 				Game.select(myGame);
-				for (var i = Board.nodes(myGame.board).length; i >= 0; i--) {
-					// console.log(i);
-					// console.log(Game.next(myGame));
-					if (!Game.next(myGame)) Game.setColumn(myGame)(myGame.CID + 1);
-					Game.select(myGame);
-				}
-
-				let myComps = Comms.spreadV(Game.components(myGame));
-
-				let myGraphs = graphs(myGame);
-
 				expect(Board.nodesByPlayer(gBoard)(prev)).toContain(node);
 			});
 			it('toggles the players', () => {

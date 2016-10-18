@@ -1,9 +1,6 @@
-const { Commands, Queries } = require('./utils');
-const { Traversals } = require('game_grid');
+const { Commands: { spreadKV, kvMap } } = require('./utils');
 const Board = require('./board');
-const Player = require('./player');
-const { spread, spreadK, spreadV, spreadKV, addMap, tuple, kvMap } = Commands;
-const { claim } = Player;
+const { claim } = require('./player');
 const { spawn: grid, playerGraph: pGraph, hasFree } = Board;
 const { nodesByColumn, splitComps, allComps, winComp } = Board;
 
@@ -17,8 +14,14 @@ const passive = ({ players: [active, passive] }) => passive;
 const column = ({ cID, board }) => nodesByColumn(board)(cID);
 const next = (game) => Board.next(column(game));
 const playerMap = (players) => new Map(spreadKV(new Set(players)));
+
 const graphs = ({ players: p, board: b }) => kvMap(playerMap(p))(pGraph(b));
+const actGraph = ({ players: [act, pass], board }) => pGraph(board)(act);
+const passGraph = ({ players: [act, pass], board }) => pGraph(board)(pas);
+
 const components = (game) => kvMap(graphs(game))(splitComps);
+const actComps = (game) => allComps(actGraph(game));
+const passComps = (game) => allComps(passGraph(game));
 
 const togglePlayers = ({ players: arr }) => [arr[1], arr[0]] = [arr[0], arr[1]];
 const setColumn = (game) => (cID = 0) => Object.assign(game, { cID });
@@ -42,4 +45,8 @@ module.exports = {
 	next,
 	components,
 	winner,
+	actGraph,
+	passGraph,
+	actComps,
+	passComps,
 };
