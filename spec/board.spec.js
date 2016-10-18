@@ -56,4 +56,10 @@ describe('Board', function() {
 			expect(Board.splitComps(myBoard) instanceof Map).toBeTrue();
 		});
 	});
+
+	describe('winComp', () => {
+		it('checks if the players component has more than three', function() {
+			expect(Board.winComp(myBoard)(3)).toBeTrue();
+		});
+	});
 });

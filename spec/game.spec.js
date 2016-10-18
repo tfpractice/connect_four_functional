@@ -71,6 +71,11 @@ describe('Game', function() {
 			expect(Game.cID(myGame)).toBe(3);
 		});
 	});
+	describe('hasWinningSet', () => {
+		it('checks if the players component has more than three', function() {
+			expect(Game.hasWinningSet(myGame.board)(myGame.players[0])).toBeFalse();
+		});
+	});
 	describe('select', () => {
 		describe('when the current column is available', () => {
 			it('assigns the currentNode to the current player', () => {

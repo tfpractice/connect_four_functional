@@ -27,6 +27,9 @@ const splitComps = (graph) =>
 const allComps = (graph) =>
 	[rComps, cComps, pComps, nComps].map(f => f(graph)).reduce(flatten, []);
 const cSplit = splitComps;
+
+const moreThan = (num) => (coll = new Set) => coll.size > num;
+const winComp = (graph) => (n = 1) => allComps(graph).some(moreThan(n));
 // const cSplit = cSplit;
 module.exports = Object.assign({}, Grid, {
 	spawn,
@@ -37,4 +40,5 @@ module.exports = Object.assign({}, Grid, {
 	splitComps,
 	allComps,
 	cSplit,
+	winComp,
 });
