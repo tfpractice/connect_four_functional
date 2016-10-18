@@ -1,7 +1,7 @@
 const { Grid, Traversals } = require('game_grid');
 const { Commands: { flatTuple, spreadV, flatten } } = require('./utils');
 const { samePlayer, isFree } = require('./node');
-const { nodes, initCells, fromElements: fElems, } = Grid;
+const { nodes, initCells, fromElements } = Grid;
 const { colComponents: cComps, rowComponents: rComps } = Traversals;
 const { posComponents: pComps, negComponents: nComps, } = Traversals;
 
@@ -12,7 +12,8 @@ const hasFree = (nodes) => nodes.some(isFree);
 const nodesByPlayer = (graph) => (player = null) =>
 	nodes(graph).filter(samePlayer({ player }));
 
-const playerGraph = (gr = new Map) => (p) => fElems(...nodesByPlayer(gr)(p));
+const playerGraph = (gr = new Map) => (p) =>
+	fromElements(...nodesByPlayer(gr)(p));
 
 const allComps = (graph) =>
 	[rComps, cComps, pComps, nComps].map(f => f(graph)).reduce(flatten, []);
