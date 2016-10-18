@@ -25,7 +25,7 @@ const splitComps = (g) => new Map()
 	.set('pos', pComps(g)).set('neg', nComps(g));
 
 const moreThan = (num) => (coll = new Set) => coll.size > num;
-const winComp = (graph) => (n = 1) => allComps(graph).some(moreThan(n));
+const winComp = (graph, n = 3) => allComps(graph).some(moreThan(n));
 module.exports = Object.assign({}, Grid, {
 	spawn,
 	next,

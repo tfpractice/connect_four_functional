@@ -23,7 +23,7 @@ const components = (game) => kvMap(graphs(game))(splitComps);
 const togglePlayers = ({ players: arr }) => [arr[1], arr[0]] = [arr[0], arr[1]];
 const setColumn = (game) => (cID = 0) => Object.assign(game, { cID });
 const select = (game) => claim(active(game))(next(game)) && togglePlayers(game);
-const hasWinComp = (board) => (plr) => winComp(pGraph(board)(plr))(3);
+const hasWinComp = (board) => (plr) => winComp(pGraph(board)(plr), 3);
 const winner = ({ players, board }) => players.find(hasWinComp(board));
 
 module.exports = {

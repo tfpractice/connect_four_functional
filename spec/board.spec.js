@@ -48,6 +48,7 @@ describe('Board', function() {
 	});
 	describe('allComps', () => {
 		it('returns an array of components', () => {
+			// console.log(Board.allComps(myBoard).map(STR.compString));
 			expect(Board.allComps(myBoard)).toBeArray();
 		});
 	});
@@ -59,7 +60,7 @@ describe('Board', function() {
 
 	describe('winComp', () => {
 		it('checks if the players component has more than three', function() {
-			expect(Board.winComp(myBoard)(3)).toBeTrue();
+			expect(Board.winComp(myBoard, 3)).toBeTrue();
 		});
 	});
 });

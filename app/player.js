@@ -6,10 +6,9 @@ const { components: comps } = Traversals;
 const { colComponents: cComps, rowComponents: rComps } = Traversals;
 const { posComponents: pComps, negComponents: nComps, } = Traversals;
 
-const spawn = (name = '') => ({ name, score: 0, grid: gSpawn() });
+const spawn = (name = '') => ({ name, score: 0 });
 
 const name = ({ name }) => name;
-const grid = ({ grid }) => grid;
 const score = ({ score }) => score;
 const resetScore = (player) => player.wins = 0;
 const incrementScore = ({ score }) => ++score;
@@ -24,7 +23,6 @@ const negComps = (plr) => (graph) => nComps(playerGraph(graph)(plr));
 module.exports = {
 	spawn,
 	name,
-	grid,
 	score,
 	resetScore,
 	incrementScore,
