@@ -26,7 +26,6 @@
     "jasmine-expect": "^3.0.1"
   },
   "dependencies": {
-    "functional_graph_theory": "git://github.com/tfpractice/functional_graph_theory.git",
     "game_grid": "git://github.com/tfpractice/gamegrid.git"
   }
 }

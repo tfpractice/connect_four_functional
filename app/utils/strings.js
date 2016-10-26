@@ -1,4 +1,4 @@
-const { Utils: { Strings } } = require('functional_graph_theory');
+const { Utils: { Strings } } = require('game_grid');
 const { spread, spreadV, spreadKV, addMap } = require('./commands');
 
 const compString = (set) => '\n' + `${spread(set).join(' => ')}`;

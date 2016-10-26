@@ -1,4 +1,4 @@
-const { Utils } = require('functional_graph_theory');
+const { Utils } = require('game_grid');
 const Commands = require('./commands');
 const Strings = require('./strings');
 

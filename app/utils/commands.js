@@ -1,4 +1,4 @@
-const { Utils: { Commands } } = require('functional_graph_theory');
+const { Utils: { Commands } } = require('game_grid');
 const { spread, spreadV, addMap } = Commands;
 
 const flatten = (a, b) => [...a, ...b];
