@@ -22,10 +22,33 @@
   },
   "homepage": "https://github.com/tfpractice/connect_four_functional#readme",
   "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-core": "^6.21.0",
+    "babel-eslint": "^7.1.1",
+    "babel-plugin-external-helpers": "^6.18.0",
+    "babel-plugin-module-resolver": "^2.4.0",
+    "babel-preset-latest": "^6.16.0",
+    "coveralls": "^2.11.15",
+    "eslint": "^3.13.0",
+    "eslint-config-airbnb-base": "^11.0.0",
+    "eslint-import-resolver-babel-module": "^2.2.1",
+    "eslint-plugin-import": "^2.2.0",
     "jasmine": "^2.5.2",
-    "jasmine-expect": "^3.0.1"
+    "jasmine-expect": "^3.0.1",
+    "jest": "^18.1.0",
+    "jest-cli": "^18.1.0",
+    "rimraf": "^2.5.4",
+    "rollup": "^0.41.1",
+    "rollup-plugin-babel": "^2.7.1",
+    "rollup-plugin-commonjs": "^7.0.0",
+    "rollup-plugin-filesize": "^1.0.1",
+    "rollup-plugin-node-resolve": "^2.0.0",
+    "rollup-plugin-progress": "^0.2.1",
+    "rollup-plugin-replace": "^1.1.1",
+    "rollup-plugin-uglify": "^1.0.1",
+    "rollup-plugin-visualizer": "^0.1.5"
   },
   "dependencies": {
-    "game_grid": "git://github.com/tfpractice/gamegrid.git"
+    "game_grid": "^2.0.0"
   }
 }
