@@ -2,10 +2,19 @@
   "name": "connect_four_functional",
   "version": "1.0.0",
   "description": "a functional implementation of connect four",
-  "main": "index.js",
+  "main": "dist/bundle.cjs.js",
+  "browser": "dist/bundle.umd.js",
+  "module": "dist/bundle.es6.js",
+  "modules.root": "src",
   "scripts": {
-    "test": "jasmine"
-  },
+    "prebuild": "rimraf dist",
+    "build": "yarn run build:umd && yarn run build:es6",
+    "build:es6": "NODE_ENV=production rollup -c rollup.es6.config.js",
+    "build:umd": "NODE_ENV=production rollup -c rollup.config.js",
+    "build:dev": "rollup -c rollup.es6.config.js",
+    "coverage": "yarn test && cat coverage/lcov.info | coveralls",
+    "test": "NODE_ENV=test jest"
+    },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/tfpractice/connect_four_functional.git"
