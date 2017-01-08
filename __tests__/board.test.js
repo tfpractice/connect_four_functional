@@ -1,4 +1,9 @@
-// describe('Board', function() {
+import 'jasmine-expect';
+xdescribe('Board', () => {
+  it('returns a new map with altered keys', () => {
+    expect(true).toBeTruthy();
+  });
+
 // 	beforeAll(function() {
 // 		console.log('\n.........Board Spec.........');
 // 		// ({ Board } = app);
@@ -63,4 +68,4 @@
 // 			expect(Board.winComp(myBoard, 3)).toBeTrue();
 // 		});
 // 	});
-// });
+});

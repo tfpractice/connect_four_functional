@@ -42,7 +42,6 @@
     "eslint-config-airbnb-base": "^11.0.0",
     "eslint-import-resolver-babel-module": "^2.2.1",
     "eslint-plugin-import": "^2.2.0",
-    "game_grid": "^2.0.0",
     "jasmine": "^2.5.2",
     "jasmine-expect": "^3.0.1",
     "jest": "^18.1.0",
@@ -56,8 +55,7 @@
     "rollup-plugin-progress": "^0.2.1",
     "rollup-plugin-replace": "^1.1.1",
     "rollup-plugin-uglify": "^1.0.1",
-    "rollup-plugin-visualizer": "^0.1.5",
-    "turmeric-utils": "^2.0.0"
+    "rollup-plugin-visualizer": "^0.1.5"
   },
   "jest": {
     "collectCoverage": "true",
@@ -73,5 +71,9 @@
       "jasmine-expect"
     ]
   },
-  "dependencies": {}
+  "dependencies": {
+    "game_grid": "^2.0.3-1",
+    "graph-curry": "^1.2.1",
+    "turmeric-utils": "^2.0.0"
+  }
 }

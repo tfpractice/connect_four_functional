@@ -1,4 +1,5 @@
 import { collections } from 'turmeric-utils';
+import { node } from 'game_grid';
 
 var slicedToArray = function () {
   function sliceIterator(arr, i) {
@@ -38,7 +39,7 @@ var slicedToArray = function () {
   };
 }();
 
-var addMap = collections.addMap;
+var addBinMap = collections.addBinMap;
 var spread = collections.spread;
 
 
@@ -52,9 +53,43 @@ var kvMap = function kvMap() {
           v = _ref2$ === undefined ? k : _ref2$;
 
       return [k, fn(v)];
-    }).reduce(addMap, new Map());
+    }).reduce(addBinMap, new Map());
   };
 };
+
+var node$1 = (function () {
+  var c = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+  var r = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+  var player = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+  return Object.assign(node(c, r), { player: player });
+});
+
+var player = function player(_ref) {
+  var _ref$player = _ref.player,
+      player = _ref$player === undefined ? null : _ref$player;
+  return player;
+};
+var isFree = function isFree(_ref2) {
+  var _ref2$player = _ref2.player,
+      player = _ref2$player === undefined ? null : _ref2$player;
+  return player == null;
+};
+var samePlayer = function samePlayer(_ref3) {
+  var p0 = _ref3.player;
+  return function (_ref4) {
+    var p1 = _ref4.player;
+    return p0 === p1;
+  };
+};
+
+// module.exports = Object.assign({}, Cell, { spawn, isFree, player, samePlayer });
+
+var node$2 = Object.freeze({
+	default: node$1,
+	player: player,
+	isFree: isFree,
+	samePlayer: samePlayer
+});
 
 // const { Traversals, Connections } = require('game_grid');
 // exports.Connections = Connections;
@@ -66,5 +101,13 @@ var kvMap = function kvMap() {
 // module.exports.Player = require('./player');
 // module.exports.Game = require('./game');
 
-export { kvMap };
+
+
+var src$1 = Object.freeze({
+	Node: node$2,
+	node: node$1,
+	kvMap: kvMap
+});
+
+export { node$2 as Node, node$1 as node, kvMap };export default src$1;
 //# sourceMappingURL=bundle.es6.js.map

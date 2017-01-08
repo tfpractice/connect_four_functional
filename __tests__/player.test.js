@@ -1,4 +1,9 @@
-// describe('Player', function() {
+import 'jasmine-expect';
+xdescribe('Player', () => {
+  it('returns a new map with altered keys', () => {
+    expect(true).toBeTruthy();
+  });
+
 // 	beforeAll(function() {
 // 		console.log('\n.........Player Spec.........');
 // 		({ Player: PR, Node } = app);
@@ -55,4 +60,4 @@
 // 			expect(nd00.player).toBe(dick);
 // 		});
 // 	});
-// });
+});

@@ -1,4 +1,9 @@
-// describe('Game', function() {
+import 'jasmine-expect';
+xdescribe('Game', () => {
+  it('returns a new map with altered keys', () => {
+    expect(true).toBeTruthy();
+  });
+
 // 	beforeAll(function() {
 // 		console.log('\n.........Game Spec.........');
 // 		PR = Player, B = Board, G = Game;
@@ -111,4 +116,4 @@
 // 			});
 // 		});
 // 	});
-// });
+});

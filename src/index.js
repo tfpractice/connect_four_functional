@@ -9,3 +9,6 @@
 // module.exports.Game = require('./game');
 
 export * from './utils';
+export { default as node, } from './node';
+import * as Node from './node';
+export { Node, };
