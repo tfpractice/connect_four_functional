@@ -32,40 +32,43 @@ describe('Player', () => {
     });
   });
 
-// 	describe('name ', () => {
-// 		it('retrieves the name attribute', () => {
-// 			expect(PR.name(dick)).toBe('Dick');
-// 		});
-// 	});
+  describe('name ', () => {
+    it('retrieves the name attribute', () => {
+      expect(name(dick)).toBe('Dick');
+    });
+  });
+
 //
-// 	describe('score ', () => {
-// 		it('retrieves the score attribute', () => {
-// 			expect(PR.score(dick)).toBe(0);
-// 		});
-// 	});
-// 	describe('resetScore ', () => {
-// 		it('retrieves the resetScore attribute', () => {
-// 			PR.resetScore(dick);
-// 			expect(PR.score(dick)).toBe(0);
-// 		});
-// 	});
+  describe('score ', () => {
+    it('retrieves the score attribute', () => {
+      expect(score(dick)).toBe(0);
+    });
+  });
+
+  describe('resetScore ', () => {
+    it('retrieves the resetScore attribute', () => {
+      resetScore(dick);
+      expect(score(dick)).toBe(0);
+    });
+  });
+
 // 	describe('incrementScore ', () => {
 // 		it('retrieves the incrementScore attribute', () => {
-// 			PR.resetScore(dick);
-// 			expect(PR.score(dick)).toBe(0);
+// 			resetScore(dick);
+// 			expect(score(dick)).toBe(0);
 // 		});
 // 	});
 // 	describe('decrementScore ', () => {
 // 		it('retrieves the decrementScore attribute', () => {
-// 			PR.resetScore(dick);
-// 			expect(PR.score(dick)).toBe(0);
+// 			resetScore(dick);
+// 			expect(score(dick)).toBe(0);
 // 		});
 // 	});
 // 	describe('claim', () => {
 // 		it('sets the object player attribute to the Player', () => {
 // 			let nd00 = Node.spawn(0, 0);
-// 			PR.claim(dick)(nd00);
-// 			PR.claim(dick)();
+// 			claim(dick)(nd00);
+// 			claim(dick)();
 // 			expect(nd00.player).toBe(dick);
 // 		});
 // 	});
