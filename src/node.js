@@ -6,5 +6,3 @@ Object.assign(node(c, r), { player });
 export const player = ({ player = null }) => player;
 export const isFree = ({ player = null }) => player == null;
 export const samePlayer = ({ player: p0 }) => ({ player: p1 }) => p0 === p1;
-
-// module.exports = Object.assign({}, Cell, { spawn, isFree, player, samePlayer });

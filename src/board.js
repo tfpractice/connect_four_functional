@@ -1,37 +1,46 @@
-const { Grid, Traversals } = require('game_grid');
-const { Commands: { flatTuple, spreadV, flatten } } = require('./utils');
-const { samePlayer, isFree } = require('./node');
-const { nodes, initCells, fromElements } = Grid;
-const { colComponents: cComps, rowComponents: rComps } = Traversals;
-const { posComponents: pComps, negComponents: nComps, } = Traversals;
+import { collections, } from 'turmeric-utils';
+import { fromElements, nodes, } from 'graph-curry';
+import { colComponents, genNodes as generate, grid, negComponents,
+   posComponents, rowComponents, } from 'game_grid';
+import node, { isFree, samePlayer, } from './node';
+const { flatten, flatTuple, spreadV, } = collections;
 
-const spawn = () => initCells(7, 6);
-const next = (nodes) => nodes.find(isFree);
-const hasFree = (nodes) => nodes.some(isFree);
+const flattenBin = (a = [], b = []) => flatten(a)(b);
 
-const nodesByPlayer = (graph) => (player = null) =>
-	nodes(graph).filter(samePlayer({ player }));
+export default fromElements;
 
-const playerGraph = (gr = new Map) => (p) =>
-	fromElements(...nodesByPlayer(gr)(p));
+export const genNodes = (cols = 7, rows = 6) =>
+generate(cols, rows).map(n => node(n.column, n.row));
 
-const allComps = (graph) =>
-	[rComps, cComps, pComps, nComps].map(f => f(graph)).reduce(flatten, []);
+export const initNodes = (c = 7, r = 6) => fromElements(...genNodes(c, r));
+export const next = nodes => nodes.find(isFree);
+export const hasFree = nodes => nodes.some(isFree);
 
-const splitComps = (g) => new Map()
-	.set('row', rComps(g)).set('col', cComps(g))
-	.set('pos', pComps(g)).set('neg', nComps(g));
+export const nodesByPlayer = graph => (player = null) =>
+  nodes(graph).filter(samePlayer({ player }));
 
-const moreThan = (num) => (coll = new Set) => coll.size > num;
-const winComp = (graph, n = 3) => allComps(graph).some(moreThan(n));
+export const playerGraph = (gr = new Map) => p =>
+  fromElements(...nodesByPlayer(gr)(p));
 
-module.exports = Object.assign({}, Grid, {
-	spawn,
-	next,
-	hasFree,
-	nodesByPlayer,
-	playerGraph,
-	splitComps,
-	allComps,
-	winComp,
-});
+export const allComps = graph => [
+  colComponents, negComponents, posComponents, rowComponents,
+].map(f => f(graph)).reduce(flattenBin, []);
+
+export const splitComps = g => new Map()
+  .set('row', rowComponents(g)).set('col', colComponents(g))
+  .set('pos', posComponents(g)).set('neg', negComponents(g));
+
+export const moreThan = num => (coll = new Set) => coll.size > num;
+export const winComp = (graph, n = 3) => allComps(graph).some(moreThan(n));
+
+//
+// module.exports = Object.assign({}, Grid, {
+//   spawn,
+//   next,
+//   hasFree,
+//   nodesByPlayer,
+//   playerGraph,
+//   splitComponents,
+//   allComps,
+//   winegComp,
+// });

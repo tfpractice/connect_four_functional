@@ -82,8 +82,6 @@ var samePlayer = function samePlayer(_ref3) {
   };
 };
 
-// module.exports = Object.assign({}, Cell, { spawn, isFree, player, samePlayer });
-
 var node$2 = Object.freeze({
 	default: node$1,
 	player: player,
