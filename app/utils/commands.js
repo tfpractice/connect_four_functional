@@ -1,8 +1,6 @@
-const { Utils: { Commands } } = require('game_grid');
-const { spread, spreadV, addMap } = Commands;
+import { collections, } from 'turmeric-utils';
 
-const flatten = (a, b) => [...a, ...b];
-const kvMap = (map = new Map) => (fn) =>
-	spread(map).map(([k, v = k]) => [k, fn(v)]).reduce(addMap, new Map);
+const { addMap, spread, spreadV, flatten } = collections;
 
-module.exports = Object.assign({}, Commands, { kvMap, flatten });
+export const kvMap = (map = new Map) => fn =>
+  spread(map).map(([ k, v = k ]) => [ k, fn(v) ]).reduce(addMap, new Map);

@@ -12,7 +12,7 @@ export default {
     moduleId: 'connect_four_functional',
     moduleName: 'connect_four_functional',
     exports: 'named',
-    external: [ 'game_grid' ],
+    external: [ 'game_grid', 'turmeric-utils' ],
     sourceMap: true,
     plugins: [
       progress({ clearLine: false, }),
