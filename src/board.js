@@ -32,15 +32,3 @@ export const splitComps = g => new Map()
 
 export const moreThan = num => (coll = new Set) => coll.size > num;
 export const winComp = (graph, n = 3) => allComps(graph).some(moreThan(n));
-
-//
-// module.exports = Object.assign({}, Grid, {
-//   spawn,
-//   next,
-//   hasFree,
-//   nodesByPlayer,
-//   playerGraph,
-//   splitComponents,
-//   allComps,
-//   winegComp,
-// });

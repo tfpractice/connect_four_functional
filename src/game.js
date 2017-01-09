@@ -1,52 +1,48 @@
-const { Commands: { spreadKV, kvMap } } = require('./utils');
-const Board = require('./board');
-const { claim } = require('./player');
-const { spawn: grid, playerGraph: pGraph, hasFree } = Board;
-const { nodesByColumn, splitComps, allComps, winComp } = Board;
 
-const spawn = (p0, p1) => ({ cID: 0, board: grid(), players: [p0, p1] });
-const cID = ({ cID = 0 }) => cID;
-const board = ({ board }) => board;
-const players = ({ players }) => players;
-const active = ({ players: [active, passive] }) => active;
-const passive = ({ players: [active, passive] }) => passive;
+import { kvMap, } from './utils';
+import { collections, } from 'turmeric-utils';
+import { nodesByColumn, } from 'game_grid';
+import player, { claim, } from './player';
+import makeBoard, { allComps, next as bnext, genNodes, hasFree, playerGraph as pGraph,
+   splitComps, winComp, } from './board';
+const { spreadKV } = collections;
 
-const column = ({ cID, board }) => nodesByColumn(board)(cID);
-const next = (game) => Board.next(column(game));
-const playerMap = (players) => new Map(spreadKV(new Set(players)));
+const initGame = () => ({
+  cID: 0,
+  nodes: genNodes(),
+  players: [ player('player0'), player('player1') ],
+});
 
-const graphs = ({ players: p, board: b }) => kvMap(playerMap(p))(pGraph(b));
-const actGraph = ({ players: [act, pass], board }) => pGraph(board)(act);
-const passGraph = ({ players: [act, pass], board }) => pGraph(board)(pas);
+export default ({ cID = 0, nodes = genNodes(), players = initGame().players }) =>
+ ({ cID, nodes, players, });
 
-const components = (game) => kvMap(graphs(game))(splitComps);
-const actComps = (game) => allComps(actGraph(game));
-const passComps = (game) => allComps(passGraph(game));
+export const setPlayers = players => (g = initGame()) =>
+Object.assign({}, g, players);
+export const cID = ({ cID = 0 }) => cID;
+export const board = ({ nodes }) => makeBoard(...nodes);
+export const players = ({ players }) => players;
+export const active = ({ players: [ active, passive ] }) => active;
+export const passive = ({ players: [ active, passive ] }) => passive;
 
-const togglePlayers = ({ players: arr }) => [arr[1], arr[0]] = [arr[0], arr[1]];
-const setColumn = (game) => (cID = 0) => Object.assign(game, { cID });
-const select = (game) => claim(active(game))(next(game)) && togglePlayers(game);
-const hasWinComp = (board) => (plr) => winComp(pGraph(board)(plr), 3);
-const winner = ({ players, board }) => players.find(hasWinComp(board));
+export const column = ({ cID, nodes }) => nodesByColumn(board({ nodes }))(cID);
+export const next = game => bnext(column(game));
+export const playerMap = players => new Map(spreadKV(new Set(players)));
 
-module.exports = {
-	spawn,
-	board,
-	players,
-	playerMap,
-	active,
-	passive,
-	togglePlayers,
-	cID,
-	column,
-	setColumn,
-	select,
-	hasWinComp,
-	next,
-	components,
-	winner,
-	actGraph,
-	passGraph,
-	actComps,
-	passComps,
-};
+export const graphs = ({ players: p, nodes }) =>
+  kvMap(playerMap(p))(pGraph(board({ nodes })));
+export const actGraph = ({ players: [ act, pass ], nodes }) =>
+  pGraph(board({ nodes }))(act);
+export const passGraph = ({ players: [ act, pass ], nodes }) =>
+  pGraph(board({ nodes }))(pas);
+
+export const components = game => kvMap(graphs(game))(splitComps);
+export const actComps = game => allComps(actGraph(game));
+export const passComps = game => allComps(passGraph(game));
+
+export const togglePlayers = ({ players: arr }) =>
+[ arr[1], arr[0] ] = [ arr[0], arr[1] ];
+
+export const setColumn = game => (cID = 0) => Object.assign(game, { cID });
+export const select = game => claim(active(game))(next(game)) && togglePlayers(game);
+export const hasWinComp = brd => plr => winComp(pGraph(brd)(plr), 3);
+export const winner = ({ players, nodes }) => players.find(hasWinComp(board({ nodes })));

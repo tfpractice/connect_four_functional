@@ -1,5 +1,5 @@
 import { collections } from 'turmeric-utils';
-import { colComponents, genNodes, negComponents, node, posComponents, rowComponents } from 'game_grid';
+import { colComponents, genNodes, negComponents, node, nodesByColumn, posComponents, rowComponents } from 'game_grid';
 
 var addMap = collections.addMap;
 var get$$1 = collections.get;
@@ -12,7 +12,7 @@ var spawn = function spawn(edges) {
   return new Map(edges);
 };
 var copy = spawn;
-var fromElements$1 = function fromElements() {
+var fromElements = function fromElements() {
   for (var _len = arguments.length, elems = Array(_len), _key = 0; _key < _len; _key++) {
     elems[_key] = arguments[_key];
   }
@@ -135,7 +135,7 @@ var genNodes$1 = function genNodes$$1() {
 var initNodes = function initNodes() {
   var c = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 7;
   var r = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 6;
-  return fromElements$1.apply(undefined, toConsumableArray(genNodes$1(c, r)));
+  return fromElements.apply(undefined, toConsumableArray(genNodes$1(c, r)));
 };
 var next = function next(nodes$$1) {
   return nodes$$1.find(isFree);
@@ -154,7 +154,7 @@ var nodesByPlayer = function nodesByPlayer(graph) {
 var playerGraph = function playerGraph() {
   var gr = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new Map();
   return function (p) {
-    return fromElements$1.apply(undefined, toConsumableArray(nodesByPlayer(gr)(p)));
+    return fromElements.apply(undefined, toConsumableArray(nodesByPlayer(gr)(p)));
   };
 };
 
@@ -179,22 +179,10 @@ var winComp = function winComp(graph) {
   return allComps(graph).some(moreThan(n));
 };
 
-//
-// module.exports = Object.assign({}, Grid, {
-//   spawn,
-//   next,
-//   hasFree,
-//   nodesByPlayer,
-//   playerGraph,
-//   splitComponents,
-//   allComps,
-//   winegComp,
-// });
-
 
 
 var board = Object.freeze({
-	default: fromElements$1,
+	default: fromElements,
 	genNodes: genNodes$1,
 	initNodes: initNodes,
 	next: next,
@@ -268,26 +256,171 @@ var kvMap = function kvMap() {
   };
 };
 
-// const { Traversals, Connections } = require('game_grid');
-// exports.Connections = Connections;
-// exports.Traversals = Traversals;
-//
-// module.exports.Utils = require('./utils');
-// module.exports.Node = require('./node');
-// module.exports.Board = require('./board');
-// module.exports.Player = require('./player');
-// module.exports.Game = require('./game');
+var spreadKV$1 = collections.spreadKV;
+
+
+var initGame = function initGame() {
+  return {
+    cID: 0,
+    nodes: genNodes$1(),
+    players: [player$1('player0'), player$1('player1')]
+  };
+};
+
+var game = (function (_ref) {
+  var _ref$cID = _ref.cID,
+      cID = _ref$cID === undefined ? 0 : _ref$cID,
+      _ref$nodes = _ref.nodes,
+      nodes = _ref$nodes === undefined ? genNodes$1() : _ref$nodes,
+      _ref$players = _ref.players,
+      players = _ref$players === undefined ? initGame().players : _ref$players;
+  return { cID: cID, nodes: nodes, players: players };
+});
+
+var setPlayers = function setPlayers(players) {
+  return function () {
+    var g = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initGame();
+    return Object.assign({}, g, players);
+  };
+};
+var cID = function cID(_ref2) {
+  var _ref2$cID = _ref2.cID,
+      cID = _ref2$cID === undefined ? 0 : _ref2$cID;
+  return cID;
+};
+var board$1 = function board(_ref3) {
+  var nodes = _ref3.nodes;
+  return fromElements.apply(undefined, toConsumableArray(nodes));
+};
+var players = function players(_ref4) {
+  var players = _ref4.players;
+  return players;
+};
+var active = function active(_ref5) {
+  var _ref5$players = slicedToArray$1(_ref5.players, 2),
+      active = _ref5$players[0],
+      passive = _ref5$players[1];
+
+  return active;
+};
+var passive = function passive(_ref6) {
+  var _ref6$players = slicedToArray$1(_ref6.players, 2),
+      active = _ref6$players[0],
+      passive = _ref6$players[1];
+
+  return passive;
+};
+
+var column = function column(_ref7) {
+  var cID = _ref7.cID,
+      nodes = _ref7.nodes;
+  return nodesByColumn(board$1({ nodes: nodes }))(cID);
+};
+var next$1 = function next$$1(game) {
+  return next(column(game));
+};
+var playerMap = function playerMap(players) {
+  return new Map(spreadKV$1(new Set(players)));
+};
+
+var graphs = function graphs(_ref8) {
+  var p = _ref8.players,
+      nodes = _ref8.nodes;
+  return kvMap(playerMap(p))(playerGraph(board$1({ nodes: nodes })));
+};
+var actGraph = function actGraph(_ref9) {
+  var _ref9$players = slicedToArray$1(_ref9.players, 2),
+      act = _ref9$players[0],
+      pass = _ref9$players[1],
+      nodes = _ref9.nodes;
+
+  return playerGraph(board$1({ nodes: nodes }))(act);
+};
+var passGraph = function passGraph(_ref10) {
+  var _ref10$players = slicedToArray$1(_ref10.players, 2),
+      act = _ref10$players[0],
+      pass = _ref10$players[1],
+      nodes = _ref10.nodes;
+
+  return playerGraph(board$1({ nodes: nodes }))(pas);
+};
+
+var components$1 = function components(game) {
+  return kvMap(graphs(game))(splitComps);
+};
+var actComps = function actComps(game) {
+  return allComps(actGraph(game));
+};
+var passComps = function passComps(game) {
+  return allComps(passGraph(game));
+};
+
+var togglePlayers = function togglePlayers(_ref11) {
+  var _ref12;
+
+  var arr = _ref11.players;
+  return _ref12 = [arr[0], arr[1]], arr[1] = _ref12[0], arr[0] = _ref12[1], _ref12;
+};
+
+var setColumn = function setColumn(game) {
+  return function () {
+    var cID = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+    return Object.assign(game, { cID: cID });
+  };
+};
+var select = function select(game) {
+  return claim(active(game))(next$1(game)) && togglePlayers(game);
+};
+var hasWinComp = function hasWinComp(brd) {
+  return function (plr) {
+    return winComp(playerGraph(brd)(plr), 3);
+  };
+};
+var winner = function winner(_ref13) {
+  var players = _ref13.players,
+      nodes = _ref13.nodes;
+  return players.find(hasWinComp(board$1({ nodes: nodes })));
+};
+
+
+
+var game$1 = Object.freeze({
+	default: game,
+	setPlayers: setPlayers,
+	cID: cID,
+	board: board$1,
+	players: players,
+	active: active,
+	passive: passive,
+	column: column,
+	next: next$1,
+	playerMap: playerMap,
+	graphs: graphs,
+	actGraph: actGraph,
+	passGraph: passGraph,
+	components: components$1,
+	actComps: actComps,
+	passComps: passComps,
+	togglePlayers: togglePlayers,
+	setColumn: setColumn,
+	select: select,
+	hasWinComp: hasWinComp,
+	winner: winner
+});
+
 
 
 var src$1 = Object.freeze({
 	Board: board,
+	Game: game$1,
 	Node: node$2,
 	Player: player$2,
-	board: fromElements$1,
+	board: fromElements,
 	node: node$1,
 	player: player$1,
+	game: game,
 	kvMap: kvMap
 });
 
-export { board as Board, node$2 as Node, player$2 as Player, fromElements$1 as board, node$1 as node, player$1 as player, kvMap };export default src$1;
+export { board as Board, game$1 as Game, node$2 as Node, player$2 as Player, fromElements as board, node$1 as node, player$1 as player, game, kvMap };export default src$1;
 //# sourceMappingURL=bundle.es6.js.map
