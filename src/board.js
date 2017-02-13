@@ -7,13 +7,11 @@ const { fromElements: gElems, nodes, } = Graph;
 const { genNodes: gen, grid, } = Grid;
 const { colComponents: colC, negComponents: negC, posComponents: posC, rowComponents: rowC, } = Components;
 
-// export default gElems;
-
 export const genNodes = (c = 7, r = 6) => gen(c, r).map(setPlayer());
 export const board = gElems;
 export const initNodes = grid;
-export const next = nodes => nodes.find(isFree);
-export const hasFree = nodes => nodes.some(isFree);
+export const next = nArr => nArr.find(isFree);
+export const hasFree = nArr => nArr.some(isFree);
 
 export const nodesByPlayer = graph => (player = null) =>
   nodes(graph).filter(samePlayer({ player }));
