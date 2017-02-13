@@ -73,7 +73,7 @@
   },
   "dependencies": {
     "fenugreek-collections": "^1.1.0",
-    "game_grid": "^3.0.0",
+    "game_grid": "^3.1.0",
     "graph-curry": "^2.0.0",
     "turmeric-utils": "^2.0.0"
   }

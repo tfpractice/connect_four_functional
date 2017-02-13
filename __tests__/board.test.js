@@ -54,7 +54,7 @@ describe('Board', () => {
   });
   describe('allComps', () => {
     it('returns an array of components', () => {
-      expect(allComps(myBoard)).toBeArray();
+      expect([ ...allComps(myBoard) ]).toBeArray();
     });
   });
   describe('splitComps', () => {

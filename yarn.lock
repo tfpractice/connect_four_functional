@@ -1501,9 +1501,9 @@ function-bind@^1.0.2:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/function-bind/-/function-bind-1.1.0.tgz#16176714c801798e4e8f2cf7f7529467bb4a5771"
 
-game_grid@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/game_grid/-/game_grid-3.0.0.tgz#526c02310bf06d82f85df97a8af227871350c813"
+game_grid@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/game_grid/-/game_grid-3.1.0.tgz#6d784b323c6be94af9d0adcf4f24bb4d491181b6"
   dependencies:
     graph-curry "^2.0.0"
 
