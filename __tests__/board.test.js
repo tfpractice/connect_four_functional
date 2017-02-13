@@ -1,7 +1,11 @@
 import 'jasmine-expect';
-import { fromElements, nodes, } from 'graph-curry';
-import { cIDs, nodesByColumn, rIDs, } from 'game_grid';
-import board, { allComps, genNodes, hasFree, initNodes, next, nodesByPlayer,
+import { Graph, } from 'graph-curry';
+const { fromElements, nodes, } = Graph;
+
+import { Grid, } from 'game_grid';
+const { cIDs, nodesByColumn, rIDs, } = Grid;
+
+import { allComps, board, genNodes, hasFree, initNodes, next, nodesByPlayer,
    playerGraph, splitComps, winComp, } from 'src/board';
 import player, { claim, } from 'src/player';
 
