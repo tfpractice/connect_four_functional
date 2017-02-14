@@ -11,7 +11,7 @@ const jane = player('Jane', 0, 1);
 const myPlayers = [ dick, jane ];
 const myGame = game(myPlayers);
 
-const graphs = g => players(g).map(playerGraph(board(g)));
+// const graphs = g => players(g).map(playerGraph(board(g)));
 
 describe('Game', () => {
   describe('game', () => {
