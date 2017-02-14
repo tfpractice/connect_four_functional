@@ -1,7 +1,8 @@
 import 'jasmine-expect';
-import { actComps, actGraph, active, board, cID, colNodes, column, components,
-  game, hasWinComp, next, nodes, passComps, passGraph, passive, playerMap,
-  players, select, setColumn, setNodes, setPlayers, togglePlayers, winner, } from 'src/game';
+import { actComps, actGraph, active, actNodes, board, cID, colNodes, column,
+  components, game, hasWinComp, next, nodes, passComps, passGraph, passive,
+  passNodes, playerMap, players, select, setColumn, setNodes, setPlayers,
+  togglePlayers, winner, } from 'src/game';
 
 import { claim, player, } from 'src/player';
 import { playerGraph, } from 'src/board';
@@ -10,6 +11,10 @@ const dick = player('Dick', 0, 0);
 const jane = player('Jane', 0, 1);
 const myPlayers = [ dick, jane ];
 const myGame = game(myPlayers);
+const col0 = colNodes(myGame);
+const col1 = colNodes(setColumn(1)(myGame));
+const [ c0r0, c0r1, c0r2, c0r3, c0r4, c0r5 ] = col0;
+const [ c1r0, c1r1, c1r2, c1r3, c1r4, c1r5 ] = col1;
 
 // const graphs = g => players(g).map(playerGraph(board(g)));
 
@@ -77,17 +82,31 @@ describe('Game', () => {
       expect(next(myGame)).toBeObject();
     });
   });
-
+  
   describe('playerMap', () => {
     it('returns a new Map of Players with the same keys and values', () => {
       expect(playerMap(myGame.players) instanceof Map).toBeTrue();
     });
   });
-
+  
   describe('togglePlayers', () => {
     it('switches the games active player ', () => {
       togglePlayers(myGame);
       expect(active(myGame)).toBe(dick);
+    });
+  });
+  describe('actNodes', () => {
+    it('returns an array of the nodes belonging to the active player', () => {
+      colNodes(myGame).map(claim(dick));
+      expect(actNodes(myGame)).toBeArray();
+      expect(actNodes(myGame)[0].player).toBe(dick.id);
+    });
+  });
+  describe('passNodes', () => {
+    it('returns an array of the nodes belonging to the passive player', () => {
+      colNodes(myGame).map(claim(jane));
+      expect(passNodes(myGame)).toBeArray();
+      expect(passNodes(myGame)[0].player).toBe(jane.id);
     });
   });
   
@@ -97,34 +116,6 @@ describe('Game', () => {
   //   });
   // });
   //
-  // describe('cID', () => {
-  //   it('retrieves the current cID ID', () => {
-  //     expect(cID(myGame)).toBe(0);
-  //   });
-  // });
-  // describe('column', () => {
-  //   it('returns the nodes in the current cID', () => {
-  //     expect(column(myGame)).toBeArray();
-  //   });
-  // });
-  //
-  // describe('setColumn', () => {
-  //   it('returns a node at the specified position', () => {
-  //     setColumn(myGame)(3);
-  //     expect(cID(myGame)).toBe(3);
-  //   });
-  // });
-  // describe('hasWinComp', () => {
-  //   it('checks if the players component has more than three', () => {
-  //     expect(hasWinComp(myGame.board)(myGame.players[0])).toBeFalse();
-  //   });
-  // });
-  // describe('winner', () => {
-  //   it('returns the player who has the winnnig component', () => {
-  //     column(myGame).map(claim(active(myGame)));
-  //     expect(winner(myGame)).toBe(jane);
-  //   });
-  // });
   
 //
 // 	describe('select', () => {
