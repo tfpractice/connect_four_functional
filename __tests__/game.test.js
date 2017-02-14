@@ -72,6 +72,11 @@ describe('Game', () => {
       expect(colNodes(myGame)[0].column).toBe(0);
     });
   });
+  describe('next', () => {
+    it('returns the next free node in the games current column', () => {
+      expect(next(myGame)).toBeObject();
+    });
+  });
 
   // describe('playerMap', () => {
   //   it('returns a new set of Players', () => {
