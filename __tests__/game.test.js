@@ -84,24 +84,13 @@ describe('Game', () => {
     });
   });
 
-  //
-  // describe('active', () => {
-  //   it('returns the games active players', () => {
-  //     expect(active(myGame)).toBe(jane);
-  //   });
-  // });
-  // describe('passive', () => {
-  //   it('returns the games passive player ', () => {
-  //     expect(passive(myGame)).toBe(dick);
-  //   });
-  // });
-  // describe('togglePlayers', () => {
-  //   it('switches the games active player ', () => {
-  //     togglePlayers(myGame);
-  //     expect(active(myGame)).toBe(dick);
-  //   });
-  // });
-  //
+  describe('togglePlayers', () => {
+    it('switches the games active player ', () => {
+      togglePlayers(myGame);
+      expect(active(myGame)).toBe(dick);
+    });
+  });
+  
   // describe('components', () => {
   //   it('retrieve a map of player scores', () => {
   //     expect(components(myGame) instanceof Map).toBeTrue();

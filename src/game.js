@@ -31,6 +31,8 @@ export const board = ({ nodes } = init) => makeBoard(...nodes);
 export const colNodes = ({ cID: column, nodes }) => nodes.filter(sameCol({ column }));
 export const next = game => bNext(colNodes(game));
 
+export const togglePlayers = g => setPlayers([ passive(g), active(g) ])(g);
+
 export const playerMap = players => asMap(asSet(players));
 export const column = ({ cID, nodes }) => nodesByColumn(board({ nodes }))(cID);
 
@@ -44,9 +46,6 @@ export const passGraph = ({ players: [ act, pass ], nodes }) =>
 export const components = game => kvMap(graphs(game))(splitComps);
 export const actComps = game => allComps(actGraph(game));
 export const passComps = game => allComps(passGraph(game));
-
-export const togglePlayers = ({ players: arr }) =>
-[ arr[1], arr[0] ] = [ arr[0], arr[1] ];
 
 export const select = game => claim(active(game))(next(game)) && togglePlayers(game);
 export const hasWinComp = brd => plr => winComp(pGraph(brd)(plr), 3);
