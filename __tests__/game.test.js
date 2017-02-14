@@ -78,11 +78,12 @@ describe('Game', () => {
     });
   });
 
-  // describe('playerMap', () => {
-  //   it('returns a new set of Players', () => {
-  //     expect(playerMap(myGame.players) instanceof Map).toBeTrue();
-  //   });
-  // });
+  describe('playerMap', () => {
+    it('returns a new Map of Players with the same keys and values', () => {
+      expect(playerMap(myGame.players) instanceof Map).toBeTrue();
+    });
+  });
+
   //
   // describe('active', () => {
   //   it('returns the games active players', () => {

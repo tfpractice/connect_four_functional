@@ -1,4 +1,4 @@
-import { map, spreadKV, } from 'fenugreek-collections';
+import { asMap, asSet, map, spreadKV, } from 'fenugreek-collections';
 import { Components, Grid, Node, } from 'game_grid';
 import { kvMap, } from './utils';
 import { claim, player, } from './player';
@@ -30,7 +30,8 @@ export const setPlayers = pArr => g => game(pArr, nodes(g), cID(g));
 export const board = ({ nodes } = init) => makeBoard(...nodes);
 export const colNodes = ({ cID: column, nodes }) => nodes.filter(sameCol({ column }));
 export const next = game => bNext(colNodes(game));
-export const playerMap = players => new Map(spreadKV(new Set(players)));
+
+export const playerMap = players => asMap(asSet(players));
 export const column = ({ cID, nodes }) => nodesByColumn(board({ nodes }))(cID);
 
 export const graphs = ({ players: p, nodes }) =>
