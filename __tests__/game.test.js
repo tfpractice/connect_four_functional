@@ -25,15 +25,17 @@ describe('Game', () => {
   
   describe('nodes', () => {
     it('returns the nodes of the game', () => {
-      console.log(nodes(myGame));
       expect(nodes(myGame)).toBeArray();
     });
   });
   
   describe('players', () => {
     it('returns the players attribute of the', () => {
-      console.log(players(myGame));
       expect(players(myGame)).toBeArray();
+    });
+  }); describe('cID', () => {
+    it('returns the games column ID', () => {
+      expect(cID(myGame)).toBe(0);
     });
   });
 
