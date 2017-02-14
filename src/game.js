@@ -1,13 +1,15 @@
 import { map, spreadKV, } from 'fenugreek-collections';
+import { Components, Grid, } from 'game_grid';
+
 import { kvMap, } from './utils';
 
-import { Components, Grid, } from 'game_grid';
-import player, { claim, } from './player';
+import { claim, player, } from './player';
 import makeBoard, { next as bnext, genNodes, hasFree, playerGraph as pGraph,
     winComp, } from './board';
 
 const { nodesByColumn, } = Grid;
 const { allComps, splitComps } = Components;
+
 const initGame = () => ({
   cID: 0,
   nodes: genNodes(),

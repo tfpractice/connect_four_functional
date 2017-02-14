@@ -1,4 +1,4 @@
-import { flattenBin, spread, } from 'fenugreek-collections';
+import { asSet, flattenBin, spread, } from 'fenugreek-collections';
 import { Graph, } from 'graph-curry';
 import { Components, Grid, } from 'game_grid';
 import { isFree, node, samePlayer, setPlayer, } from './node';
@@ -19,5 +19,5 @@ export const nodesByPlayer = graph => (player = null) =>
 
 export const playerGraph = g => p => gElems(...nodesByPlayer(g)(p));
 
-export const moreThan = num => (coll = new Set) => coll.size > num;
+export const moreThan = num => coll => asSet(coll).size > num;
 export const winComp = (g, n = 3) => spread(omniComps(g)).some(moreThan(n));
