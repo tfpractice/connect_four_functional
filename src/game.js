@@ -24,8 +24,8 @@ export const active = ({ players: [ active, passive ] } = init) => active;
 export const passive = ({ players: [ active, passive ] } = init) => passive;
 
 export const setNodes = nArr => g => game(players(g), nArr, cID(g));
-export const setCol = cID => g => game(players(g), nodes(g), cID);
-export const setPlayers = players => (g = init) => Object.assign({}, g, players);
+export const setColumn = cID => g => game(players(g), nodes(g), cID);
+export const setPlayers = pArr => g => game(pArr, nodes(g), cID(g));
 
 export const column = ({ cID, nodes }) => nodesByColumn(board({ nodes }))(cID);
 export const next = game => bnext(column(game));
@@ -45,7 +45,6 @@ export const passComps = game => allComps(passGraph(game));
 export const togglePlayers = ({ players: arr }) =>
 [ arr[1], arr[0] ] = [ arr[0], arr[1] ];
 
-export const setColumn = game => (cID = 0) => Object.assign(game, { cID });
 export const select = game => claim(active(game))(next(game)) && togglePlayers(game);
 export const hasWinComp = brd => plr => winComp(pGraph(brd)(plr), 3);
 export const winner = ({ players, nodes }) => players.find(hasWinComp(board({ nodes })));
