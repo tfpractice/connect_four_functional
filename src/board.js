@@ -1,7 +1,7 @@
 import { asSet, flattenBin, spread, } from 'fenugreek-collections';
 import { Graph, } from 'graph-curry';
 import { Components, Grid, } from 'game_grid';
-import { isFree, node, samePlayer, setPlayer, } from './node';
+import { copy as copyN, isFree, node, samePlayer, setPlayer, } from './node';
 
 const { fromElements: gElems, nodes, } = Graph;
 const { genNodes: gen, grid, } = Grid;
@@ -10,7 +10,7 @@ const { omniComps, } = Components;
 export const board = gElems;
 export const initNodes = grid;
 
-export const genNodes = (c = 7, r = 6) => gen(c, r).map(setPlayer());
+export const genNodes = (c = 7, r = 6) => gen(c, r).map(copyN);
 export const next = nArr => nArr.find(isFree);
 export const hasFree = nArr => nArr.some(isFree);
 
