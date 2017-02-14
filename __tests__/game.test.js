@@ -1,7 +1,7 @@
 import 'jasmine-expect';
-import { actComps, actGraph, active, board, cID, column, components, game,
-  hasWinComp, next, nodes, passComps, passGraph, passive, playerMap, players,
-  select, setColumn, setNodes, setPlayers, togglePlayers, winner, } from 'src/game';
+import { actComps, actGraph, active, board, cID, colNodes, column, components,
+  game, hasWinComp, next, nodes, passComps, passGraph, passive, playerMap,
+  players, select, setColumn, setNodes, setPlayers, togglePlayers, winner, } from 'src/game';
 
 import { claim, player, } from 'src/player';
 import { playerGraph, } from 'src/board';
@@ -64,6 +64,12 @@ describe('Game', () => {
   describe('setPlayers', () => {
     it('returns a new game with the specified players', () => {
       expect(players(setPlayers([])(myGame))).toBeArray();
+    });
+  });
+  describe('colNodes', () => {
+    it('returns an array of nodes in the current column', () => {
+      expect(colNodes(myGame)).toBeArray();
+      expect(colNodes(myGame)[0].column).toBe(0);
     });
   });
 

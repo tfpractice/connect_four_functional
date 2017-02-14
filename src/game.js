@@ -1,11 +1,12 @@
 import { map, spreadKV, } from 'fenugreek-collections';
-import { Components, Grid, } from 'game_grid';
+import { Components, Grid, Node, } from 'game_grid';
 import { kvMap, } from './utils';
 import { claim, player, } from './player';
 import { next as bnext, genNodes, hasFree, board as makeBoard, playerGraph as pGraph,
     winComp, } from './board';
 
 const { nodesByColumn, } = Grid;
+const { sameCol, } = Node;
 const { allComps, splitComps } = Components;
 const dCol = 0;
 const dPlr = [ player('player0', 0, 0), player('player1', 0, 1) ];
@@ -17,7 +18,6 @@ export const game = (players = dPlr, nodes = dNodes, cID = 0) =>
   ({ players, nodes, cID });
 
 export const cID = ({ cID } = init) => cID;
-export const board = ({ nodes } = init) => makeBoard(...nodes);
 export const nodes = ({ nodes } = init) => nodes;
 export const players = ({ players } = init) => players;
 export const active = ({ players: [ active, passive ] } = init) => active;
@@ -27,6 +27,8 @@ export const setNodes = nArr => g => game(players(g), nArr, cID(g));
 export const setColumn = cID => g => game(players(g), nodes(g), cID);
 export const setPlayers = pArr => g => game(pArr, nodes(g), cID(g));
 
+export const board = ({ nodes } = init) => makeBoard(...nodes);
+export const colNodes = ({ cID: column, nodes }) => nodes.filter(sameCol({ column }));
 export const column = ({ cID, nodes }) => nodesByColumn(board({ nodes }))(cID);
 export const next = game => bnext(column(game));
 export const playerMap = players => new Map(spreadKV(new Set(players)));
