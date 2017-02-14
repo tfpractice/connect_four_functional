@@ -29,12 +29,11 @@ export const setPlayers = pArr => g => game(pArr, nodes(g), cID(g));
 
 export const board = ({ nodes } = init) => makeBoard(...nodes);
 export const colNodes = ({ cID: column, nodes }) => nodes.filter(sameCol({ column }));
+export const column = ({ cID, nodes }) => nodesByColumn(board({ nodes }))(cID);
 export const next = game => bNext(colNodes(game));
 
 export const togglePlayers = g => setPlayers([ passive(g), active(g) ])(g);
-
 export const playerMap = players => asMap(asSet(players));
-export const column = ({ cID, nodes }) => nodesByColumn(board({ nodes }))(cID);
 
 export const graphs = ({ players: p, nodes }) =>
   kvMap(playerMap(p))(pGraph(board({ nodes })));
