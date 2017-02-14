@@ -1,12 +1,13 @@
-
+import { map, spreadKV, } from 'fenugreek-collections';
 import { kvMap, } from './utils';
-import { collections, } from 'turmeric-utils';
-import { nodesByColumn, } from 'game_grid';
-import player, { claim, } from './player';
-import makeBoard, { allComps, next as bnext, genNodes, hasFree, playerGraph as pGraph,
-   splitComps, winComp, } from './board';
-const { spreadKV } = collections;
 
+import { Components, Grid, } from 'game_grid';
+import player, { claim, } from './player';
+import makeBoard, { next as bnext, genNodes, hasFree, playerGraph as pGraph,
+    winComp, } from './board';
+
+const { nodesByColumn, } = Grid;
+const { allComps, splitComps } = Components;
 const initGame = () => ({
   cID: 0,
   nodes: genNodes(),

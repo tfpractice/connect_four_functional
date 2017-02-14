@@ -5,8 +5,8 @@ const { fromElements, nodes, } = Graph;
 import { Grid, } from 'game_grid';
 const { cIDs, nodesByColumn, rIDs, } = Grid;
 
-import { allComps, board, genNodes, hasFree, initNodes, next, nodesByPlayer,
-   playerGraph, splitComps, winComp, } from 'src/board';
+import { board, genNodes, hasFree, initNodes, next, nodesByPlayer,
+   playerGraph, winComp, } from 'src/board';
 import player, { claim, } from 'src/player';
 
 const dick = player('Dick');
@@ -50,16 +50,6 @@ describe('Board', () => {
       col1.map(claim(dick));
       expect(hasFree(col0)).toBeTrue();
       expect(hasFree(col1)).toBeFalse();
-    });
-  });
-  describe('allComps', () => {
-    it('returns an array of components', () => {
-      expect([ ...allComps(myBoard) ]).toBeArray();
-    });
-  });
-  describe('splitComps', () => {
-    it('returns a map of all connected components by direction', () => {
-      expect(splitComps(myBoard) instanceof Map).toBeTrue();
     });
   });
 

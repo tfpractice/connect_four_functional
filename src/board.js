@@ -7,9 +7,10 @@ const { fromElements: gElems, nodes, } = Graph;
 const { genNodes: gen, grid, } = Grid;
 const { omniComps, } = Components;
 
-export const genNodes = (c = 7, r = 6) => gen(c, r).map(setPlayer());
 export const board = gElems;
 export const initNodes = grid;
+
+export const genNodes = (c = 7, r = 6) => gen(c, r).map(setPlayer());
 export const next = nArr => nArr.find(isFree);
 export const hasFree = nArr => nArr.some(isFree);
 
@@ -17,8 +18,6 @@ export const nodesByPlayer = graph => (player = null) =>
   nodes(graph).filter(samePlayer({ player }));
 
 export const playerGraph = g => p => gElems(...nodesByPlayer(g)(p));
-
-export const allComps = omniComps;
 
 export const splitComps = Components.splitComps;
 
