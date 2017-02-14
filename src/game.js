@@ -35,13 +35,13 @@ export const next = game => bNext(colNodes(game));
 
 export const togglePlayers = g => setPlayers([ passive(g), active(g) ])(g);
 export const playerMap = players => asMap(asSet(players));
+
 export const actNodes = g => nodes(g).filter(samePlayer({ player: id(active(g)) }));
 export const passNodes = g => nodes(g).filter(samePlayer({ player: id(passive(g)) }));
 
-export const actGraph = ({ players: [ act, pass ], nodes }) =>
-  pGraph(board({ nodes }))(act);
-export const passGraph = ({ players: [ act, pass ], nodes }) =>
-  pGraph(board({ nodes }))(pas);
+export const actGraph = g => makeBoard(...actNodes(g));
+export const passGraph = g => makeBoard(...passNodes(g));
+
 export const graphs = ({ players: p, nodes }) =>
     kvMap(playerMap(p))(pGraph(board({ nodes })));
     

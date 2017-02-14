@@ -1,6 +1,6 @@
 import 'jasmine-expect';
-import { actComps, actGraph, active, actNodes, board, cID, colNodes, column,
-  components, game, hasWinComp, next, nodes, passComps, passGraph, passive,
+import { actComps, actGraph, active, actNodes, board, cID, colNodes, column, components,
+  game, hasWinComp, next, nodes, passComps, passGraph, passive,
   passNodes, playerMap, players, select, setColumn, setNodes, setPlayers,
   togglePlayers, winner, } from 'src/game';
 
@@ -107,6 +107,24 @@ describe('Game', () => {
       colNodes(myGame).map(claim(jane));
       expect(passNodes(myGame)).toBeArray();
       expect(passNodes(myGame)[0].player).toBe(jane.id);
+    });
+  });
+  
+  describe('actGraph', () => {
+    it('returns a Graph of the nodes belonging to the active player', () => {
+      colNodes(myGame).map(claim(dick));
+      console.log(actGraph(myGame));
+      expect(actGraph(myGame) instanceof Map).toBeTrue();
+
+      // expect(actGraph(myGame)[0].player).toBe(dick.id);
+    });
+  });
+  describe('passGraph', () => {
+    it('returns  a Graph of the nodes  belonging to the passive player', () => {
+      colNodes(myGame).map(claim(jane));
+      expect(passGraph(myGame) instanceof Map).toBeTrue();
+
+      // expect(passGraph(myGame)[0].player).toBe(jane.id);
     });
   });
   

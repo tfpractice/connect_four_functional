@@ -8,6 +8,8 @@ const { genNodes: gen, grid, } = Grid;
 const { omniComps, } = Components;
 
 export const board = gElems;
+
+// export const grid = gElems;
 export const initNodes = grid;
 
 export const genNodes = (c = 7, r = 6) => gen(c, r).map(copyN);
