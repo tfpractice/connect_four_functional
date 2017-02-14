@@ -28,14 +28,27 @@ describe('Game', () => {
       expect(nodes(myGame)).toBeArray();
     });
   });
+  describe('cID', () => {
+    it('returns the games column ID', () => {
+      expect(cID(myGame)).toBe(0);
+    });
+  });
   
   describe('players', () => {
     it('returns the players attribute of the', () => {
       expect(players(myGame)).toBeArray();
     });
-  }); describe('cID', () => {
-    it('returns the games column ID', () => {
-      expect(cID(myGame)).toBe(0);
+  });
+  describe('active', () => {
+    it('returns the games current player', () => {
+      expect(active(myGame)).toBeObject();
+      expect(active(myGame)).toBe(dick);
+    });
+  });
+  describe('passive', () => {
+    it('returns the players attribute of the', () => {
+      expect(passive(myGame)).toBeObject();
+      expect(passive(myGame)).toBe(jane);
     });
   });
 

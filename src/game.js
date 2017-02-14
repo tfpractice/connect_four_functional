@@ -20,8 +20,8 @@ export const cID = ({ cID } = init) => cID;
 export const board = ({ nodes } = init) => makeBoard(...nodes);
 export const nodes = ({ nodes } = init) => nodes;
 export const players = ({ players } = init) => players;
-export const active = ({ players: [ active, passive ] }) => active;
-export const passive = ({ players: [ active, passive ] }) => passive;
+export const active = ({ players: [ active, passive ] } = init) => active;
+export const passive = ({ players: [ active, passive ] } = init) => passive;
 export const setPlayers = players => (g = init) => Object.assign({}, g, players);
 
 export const column = ({ cID, nodes }) => nodesByColumn(board({ nodes }))(cID);
