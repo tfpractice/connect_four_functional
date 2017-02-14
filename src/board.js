@@ -13,6 +13,7 @@ export const initNodes = grid;
 export const genNodes = (c = 7, r = 6) => gen(c, r).map(copyN);
 export const next = nArr => nArr.find(isFree);
 export const hasFree = nArr => nArr.some(isFree);
+export const copy = g => board(nodes(g));
 
 export const nodesByPlayer = graph => (player = null) =>
   nodes(graph).filter(samePlayer({ player }));
