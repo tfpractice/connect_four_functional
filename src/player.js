@@ -1,5 +1,4 @@
 export const playerInit = { name: '', score: 0, id: null };
-export default (name = '', score = 0) => ({ name, score });
 
 export const player = (name = '', score = 0, id = name) => ({ name, score, id });
 export const name = ({ name } = playerInit) => name;

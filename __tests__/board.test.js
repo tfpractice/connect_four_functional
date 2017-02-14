@@ -7,7 +7,7 @@ const { cIDs, nodesByColumn, rIDs, } = Grid;
 
 import { board, genNodes, hasFree, initNodes, next, nodesByPlayer,
    playerGraph, winComp, } from 'src/board';
-import player, { claim, } from 'src/player';
+import { claim, player, } from 'src/player';
 
 const dick = player('Dick');
 const jane = player('Jane');
@@ -48,6 +48,7 @@ describe('Board', () => {
   describe('hasFree', () => {
     it('checks if any of the nodes are free', () => {
       col1.map(claim(dick));
+      console.log(col1.map(claim(dick)));
       expect(hasFree(col0)).toBeTrue();
       expect(hasFree(col1)).toBeFalse();
     });

@@ -13,7 +13,7 @@ const { allComps, splitComps } = Components;
 const initGame = () => ({
   cID: 0,
   nodes: genNodes(),
-  players: [ player('player0'), player('player1') ],
+  players: [ player('player0', 0, 0), player('player1', 0, 1) ],
 });
 
 export default ({ cID = 0, nodes = genNodes(), players = initGame().players }) =>

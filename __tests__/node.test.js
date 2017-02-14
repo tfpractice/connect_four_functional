@@ -1,5 +1,4 @@
 import 'jasmine-expect';
-
 import { isFree, node, player, samePlayer, setPlayer, } from 'src/node';
 const dick = { name: 'Dick', id: 'Dick' };
 const jane = { name: 'Jane', id: 'Jane' };
@@ -32,8 +31,6 @@ describe('Node', () => {
   }); describe('setPlayer', () => {
     it('compares the player attributes', () => {
       expect(player(setPlayer(jane)(myNode))).toBe('Jane');
-      
-      // expect(samePlayer(jN00)(jN01)).toBeTrue();
     });
   });
   

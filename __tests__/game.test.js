@@ -18,12 +18,12 @@ import game, { actComps,
   togglePlayers,
   winner, } from 'src/game';
 
-import player, { claim, } from 'src/player';
+import { claim, player, } from 'src/player';
 import { playerGraph, } from 'src/board';
 
 const dick = player('Dick');
 const jane = player('Jane');
-const myPlayers = [ dick, jane ];
+const myPlayers = [dick, jane];
 const myGame = game({ players: myPlayers });
 
 console.log('myGame', myGame);
@@ -37,13 +37,13 @@ describe('Game', () => {
       expect(myGame.board instanceof Map).toBeTrue();
     });
   });
-
+  
   describe('board', () => {
     it('returns the board of the game', () => {
       expect(board(myGame) instanceof Map).toBeTrue();
     });
   });
-
+  
   describe('players', () => {
     it('returns the players attribute of the', () => {
       expect(players(myGame)).toBeArray();
@@ -54,7 +54,7 @@ describe('Game', () => {
       expect(playerMap(myGame.players) instanceof Map).toBeTrue();
     });
   });
-
+  
   describe('active', () => {
     it('returns the games active players', () => {
       expect(active(myGame)).toBe(jane);
@@ -71,13 +71,13 @@ describe('Game', () => {
       expect(active(myGame)).toBe(dick);
     });
   });
-
+  
   describe('components', () => {
     it('retrieve a map of player scores', () => {
       expect(components(myGame) instanceof Map).toBeTrue();
     });
   });
-
+  
   describe('cID', () => {
     it('retrieves the current cID ID', () => {
       expect(cID(myGame)).toBe(0);
@@ -88,7 +88,7 @@ describe('Game', () => {
       expect(column(myGame)).toBeArray();
     });
   });
-
+  
   describe('setColumn', () => {
     it('returns a node at the specified position', () => {
       setColumn(myGame)(3);
@@ -106,7 +106,7 @@ describe('Game', () => {
       expect(winner(myGame)).toBe(jane);
     });
   });
-
+  
 //
 // 	describe('select', () => {
 // 		describe('when the current column is available', () => {

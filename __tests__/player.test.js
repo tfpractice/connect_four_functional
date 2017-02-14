@@ -1,6 +1,6 @@
 import 'jasmine-expect';
-
-import player, { claim, decrementScore, incrementScore, name, resetScore, score, } from 'src/player';
+import { claim, decrementScore, id, incrementScore, name, player, resetScore,
+   score, setID, setName, setScore, } from 'src/player';
 const dick = player('Dick');
 const jane = player('Jane');
 
@@ -42,6 +42,10 @@ describe('Player', () => {
   describe('score ', () => {
     it('retrieves the score attribute', () => {
       expect(score(dick)).toBe(0);
+    });
+  }); describe('id ', () => {
+    it('retrieves the id attribute', () => {
+      expect(id(dick)).toBe('Dick');
     });
   });
 
