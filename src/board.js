@@ -19,7 +19,5 @@ export const nodesByPlayer = graph => (player = null) =>
 
 export const playerGraph = g => p => gElems(...nodesByPlayer(g)(p));
 
-export const splitComps = Components.splitComps;
-
 export const moreThan = num => (coll = new Set) => coll.size > num;
 export const winComp = (g, n = 3) => spread(omniComps(g)).some(moreThan(n));

@@ -17,8 +17,7 @@ const initGame = () => ({
 export default ({ cID = 0, nodes = genNodes(), players = initGame().players }) =>
  ({ cID, nodes, players, });
 
-export const setPlayers = players => (g = initGame()) =>
-Object.assign({}, g, players);
+export const setPlayers = players => (g = initGame()) => Object.assign({}, g, players);
 export const cID = ({ cID = 0 }) => cID;
 export const board = ({ nodes }) => makeBoard(...nodes);
 export const players = ({ players }) => players;
