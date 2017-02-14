@@ -48,7 +48,6 @@ describe('Board', () => {
   describe('hasFree', () => {
     it('checks if any of the nodes are free', () => {
       col1.map(claim(dick));
-      console.log(col1.map(claim(dick)));
       expect(hasFree(col0)).toBeTrue();
       expect(hasFree(col1)).toBeFalse();
     });

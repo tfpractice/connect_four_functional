@@ -1,111 +1,99 @@
 import 'jasmine-expect';
-import game, { actComps,
-  actGraph,
-  active,
-  board,
-  cID,
-  column,
-  components,
-  hasWinComp,
-  next,
-  passComps,
-  passGraph,
-  passive,
-  playerMap,
-  players,
-  select,
-  setColumn,
-  togglePlayers,
-  winner, } from 'src/game';
+import { actComps, actGraph, active, board, cID, column, components, game,
+   hasWinComp, next, nodes, passComps, passGraph, passive, playerMap, players,
+   select, setColumn, togglePlayers, winner, } from 'src/game';
 
 import { claim, player, } from 'src/player';
 import { playerGraph, } from 'src/board';
 
-const dick = player('Dick');
-const jane = player('Jane');
-const myPlayers = [dick, jane];
-const myGame = game({ players: myPlayers });
+const dick = player('Dick', 0, 0);
+const jane = player('Jane', 0, 1);
+const myPlayers = [ dick, jane ];
+const myGame = game(myPlayers);
 
-console.log('myGame', myGame);
 const graphs = g => players(g).map(playerGraph(board(g)));
 
 describe('Game', () => {
-  describe('spawn', () => {
-    it('creates a new object with players and a board', () => {
+  describe('game', () => {
+    it('creates a new object with players, nodes, and a  colID', () => {
       expect(myGame).toBeObject();
       expect(myGame.players).toBeArray();
-      expect(myGame.board instanceof Map).toBeTrue();
+      expect(myGame.nodes).toBeArray();
+      expect(myGame.cID).toBe(0);
     });
   });
   
-  describe('board', () => {
-    it('returns the board of the game', () => {
-      expect(board(myGame) instanceof Map).toBeTrue();
+  describe('nodes', () => {
+    it('returns the nodes of the game', () => {
+      console.log(nodes(myGame));
+      expect(nodes(myGame)).toBeArray();
     });
   });
   
   describe('players', () => {
     it('returns the players attribute of the', () => {
+      console.log(players(myGame));
       expect(players(myGame)).toBeArray();
     });
   });
-  describe('playerMap', () => {
-    it('returns a new set of Players', () => {
-      expect(playerMap(myGame.players) instanceof Map).toBeTrue();
-    });
-  });
-  
-  describe('active', () => {
-    it('returns the games active players', () => {
-      expect(active(myGame)).toBe(jane);
-    });
-  });
-  describe('passive', () => {
-    it('returns the games passive player ', () => {
-      expect(passive(myGame)).toBe(dick);
-    });
-  });
-  describe('togglePlayers', () => {
-    it('switches the games active player ', () => {
-      togglePlayers(myGame);
-      expect(active(myGame)).toBe(dick);
-    });
-  });
-  
-  describe('components', () => {
-    it('retrieve a map of player scores', () => {
-      expect(components(myGame) instanceof Map).toBeTrue();
-    });
-  });
-  
-  describe('cID', () => {
-    it('retrieves the current cID ID', () => {
-      expect(cID(myGame)).toBe(0);
-    });
-  });
-  describe('column', () => {
-    it('returns the nodes in the current cID', () => {
-      expect(column(myGame)).toBeArray();
-    });
-  });
-  
-  describe('setColumn', () => {
-    it('returns a node at the specified position', () => {
-      setColumn(myGame)(3);
-      expect(cID(myGame)).toBe(3);
-    });
-  });
-  describe('hasWinComp', () => {
-    it('checks if the players component has more than three', () => {
-      expect(hasWinComp(myGame.board)(myGame.players[0])).toBeFalse();
-    });
-  });
-  describe('winner', () => {
-    it('returns the player who has the winnnig component', () => {
-      column(myGame).map(claim(active(myGame)));
-      expect(winner(myGame)).toBe(jane);
-    });
-  });
+
+  // describe('playerMap', () => {
+  //   it('returns a new set of Players', () => {
+  //     expect(playerMap(myGame.players) instanceof Map).toBeTrue();
+  //   });
+  // });
+  //
+  // describe('active', () => {
+  //   it('returns the games active players', () => {
+  //     expect(active(myGame)).toBe(jane);
+  //   });
+  // });
+  // describe('passive', () => {
+  //   it('returns the games passive player ', () => {
+  //     expect(passive(myGame)).toBe(dick);
+  //   });
+  // });
+  // describe('togglePlayers', () => {
+  //   it('switches the games active player ', () => {
+  //     togglePlayers(myGame);
+  //     expect(active(myGame)).toBe(dick);
+  //   });
+  // });
+  //
+  // describe('components', () => {
+  //   it('retrieve a map of player scores', () => {
+  //     expect(components(myGame) instanceof Map).toBeTrue();
+  //   });
+  // });
+  //
+  // describe('cID', () => {
+  //   it('retrieves the current cID ID', () => {
+  //     expect(cID(myGame)).toBe(0);
+  //   });
+  // });
+  // describe('column', () => {
+  //   it('returns the nodes in the current cID', () => {
+  //     expect(column(myGame)).toBeArray();
+  //   });
+  // });
+  //
+  // describe('setColumn', () => {
+  //   it('returns a node at the specified position', () => {
+  //     setColumn(myGame)(3);
+  //     expect(cID(myGame)).toBe(3);
+  //   });
+  // });
+  // describe('hasWinComp', () => {
+  //   it('checks if the players component has more than three', () => {
+  //     expect(hasWinComp(myGame.board)(myGame.players[0])).toBeFalse();
+  //   });
+  // });
+  // describe('winner', () => {
+  //   it('returns the player who has the winnnig component', () => {
+  //     column(myGame).map(claim(active(myGame)));
+  //     expect(winner(myGame)).toBe(jane);
+  //   });
+  // });
   
 //
 // 	describe('select', () => {

@@ -1,30 +1,28 @@
 import { map, spreadKV, } from 'fenugreek-collections';
 import { Components, Grid, } from 'game_grid';
-
 import { kvMap, } from './utils';
-
 import { claim, player, } from './player';
-import makeBoard, { next as bnext, genNodes, hasFree, playerGraph as pGraph,
+import { next as bnext, genNodes, hasFree, board as makeBoard, playerGraph as pGraph,
     winComp, } from './board';
 
 const { nodesByColumn, } = Grid;
 const { allComps, splitComps } = Components;
+const dCol = 0;
+const dPlr = [ player('player0', 0, 0), player('player1', 0, 1) ];
+const dNodes = genNodes();
 
-const initGame = () => ({
-  cID: 0,
-  nodes: genNodes(),
-  players: [ player('player0', 0, 0), player('player1', 0, 1) ],
-});
+const init = ({ cID: 0, nodes: genNodes(), players: dPlr, });
 
-export default ({ cID = 0, nodes = genNodes(), players = initGame().players }) =>
- ({ cID, nodes, players, });
+export const game = (players = dPlr, nodes = dNodes, cID = 0) =>
+  ({ players, nodes, cID });
 
-export const setPlayers = players => (g = initGame()) => Object.assign({}, g, players);
-export const cID = ({ cID = 0 }) => cID;
-export const board = ({ nodes }) => makeBoard(...nodes);
-export const players = ({ players }) => players;
+export const cID = ({ cID } = init) => cID;
+export const board = ({ nodes } = init) => makeBoard(...nodes);
+export const nodes = ({ nodes } = init) => nodes;
+export const players = ({ players } = init) => players;
 export const active = ({ players: [ active, passive ] }) => active;
 export const passive = ({ players: [ active, passive ] }) => passive;
+export const setPlayers = players => (g = init) => Object.assign({}, g, players);
 
 export const column = ({ cID, nodes }) => nodesByColumn(board({ nodes }))(cID);
 export const next = game => bnext(column(game));
