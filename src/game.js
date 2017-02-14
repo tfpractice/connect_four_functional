@@ -22,6 +22,8 @@ export const nodes = ({ nodes } = init) => nodes;
 export const players = ({ players } = init) => players;
 export const active = ({ players: [ active, passive ] } = init) => active;
 export const passive = ({ players: [ active, passive ] } = init) => passive;
+
+export const setNodes = nArr => g => game(players(g), nArr, cID(g));
 export const setPlayers = players => (g = init) => Object.assign({}, g, players);
 
 export const column = ({ cID, nodes }) => nodesByColumn(board({ nodes }))(cID);
