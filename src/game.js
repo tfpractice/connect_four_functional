@@ -8,7 +8,6 @@ const { colNodes: gCols, colNodes: cNodes } = Grid;
 
 import * as Board from './board';
 
-// const { sameCol, } = Node;
 const { omniComps, splitComps } = Components;
 const {
  byAdj, byCol, byNVec, byPosition, byPVec, byRow, columns, colAdj,
@@ -55,6 +54,10 @@ export const passGraph = g => playerGraph(g)(passive(g));
 export const actComps = game => omniComps(actGraph(game));
 export const passComps = game => omniComps(passGraph(game));
 
-export const select = game => claim(active(game))(next(game)) && togglePlayers(game);
+export const select = (game) => {
+  claim(active(game))(next(game));
+  console.log(nodes(g));
+  return togglePlayers(game);
+};
 export const hasWinComp = brd => plr => winComp(pGraph(brd)(plr), 3);
 export const winner = ({ players, nodes }) => players.find(hasWinComp(board({ nodes })));
