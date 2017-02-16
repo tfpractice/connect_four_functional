@@ -1503,8 +1503,8 @@ function-bind@^1.0.2:
   resolved "https://registry.yarnpkg.com/function-bind/-/function-bind-1.1.0.tgz#16176714c801798e4e8f2cf7f7529467bb4a5771"
 
 game_grid@^4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/game_grid/-/game_grid-4.0.1.tgz#7980bd4accb43f339180ab4c44feb91fa1c62606"
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/game_grid/-/game_grid-4.0.2.tgz#d9723f42f8180f49ff676e0cbf6be8d5e0e16d3f"
   dependencies:
     fenugreek-collections "^1.1.1"
     graph-curry "^2.1.0"
