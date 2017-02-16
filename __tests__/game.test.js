@@ -9,12 +9,12 @@ import { claim, } from 'src/node';
 
 const dick = player('Dick', 0, 0);
 const jane = player('Jane', 0, 1);
-const myPlayers = [dick, jane];
+const myPlayers = [ dick, jane ];
 const myGame = game(myPlayers);
 const col0 = colNodes(myGame);
 const col1 = colNodes(setColumn(1)(myGame));
-const [c0r0, c0r1, c0r2, c0r3, c0r4, c0r5] = col0;
-const [c1r0, c1r1, c1r2, c1r3, c1r4, c1r5] = col1;
+const [ c0r0, c0r1, c0r2, c0r3, c0r4, c0r5 ] = col0;
+const [ c1r0, c1r1, c1r2, c1r3, c1r4, c1r5 ] = col1;
 
 describe('Game', () => {
   describe('game', () => {
@@ -143,7 +143,7 @@ describe('Game', () => {
     });
   });
   describe('select', () => {
-    describe('when the current column is available', () => {
+    describe('when the games next node is Free', () => {
       it('assigns the currentNode to the current player', () => {
         const prev = active(myGame);
         const myNext = next(myGame);
