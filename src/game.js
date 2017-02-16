@@ -54,7 +54,7 @@ export const passGraph = g => playerGraph(g)(passive(g));
 export const actComps = game => omniComps(actGraph(game));
 export const passComps = game => omniComps(passGraph(game));
 
-export const claimNext = game => next(game) && claim(id(active(game)))(next(game));
+export const claimNext = game => claim(id(active(game)))(next(game));
 export const select = (game) => {
   // setNodes(replace(setPlayer(active(game))(next(game)))(nodes(game)))(game);
   // setNodes(replace(setPlayer(active(game))())(nodes(game)))(game);
