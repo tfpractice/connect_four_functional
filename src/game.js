@@ -58,7 +58,7 @@ export const select = (game) => {
   setNodes(replace(setPlayer(active(game))(next(game)))(nodes(game)))(game);
 
   // claim(active(game))(next(game));
-  console.log(nodes(game));
+  // console.log(nodes(game));
   return togglePlayers(game);
 };
 export const hasWinComp = brd => plr => winComp(pGraph(brd)(plr), 3);
