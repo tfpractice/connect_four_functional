@@ -41,7 +41,6 @@ describe('Player', () => {
     });
   });
 
-//
   describe('score ', () => {
     it('retrieves the score attribute', () => {
       expect(score(dick)).toBe(0);

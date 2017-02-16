@@ -1,12 +1,32 @@
 {
-    "presets": [["latest", { "es2015": { "modules": false } }]],
-    "env": { "test": { "presets": [["latest"]] } },
-    "plugins": [["module-resolver", {
-            "root": ["./"],
-            "alias": {
-              "connect-four": "./index",
-              "src": "src",
-            }
-        }],
-    ],
+  "presets": [
+    [
+      "latest",
+      {
+        "es2015": {
+          "modules": false
+        }
+      }
+    ]
+  ],
+  "env": {
+    "test": {
+      "presets": [
+        "latest"
+      ]
+    }
+  },
+  "plugins": [
+    [
+      "module-resolver",
+      {
+        "root": [
+          "./"
+        ],
+        "alias": {
+          "src": "./src"
+        }
+      }
+    ]
+  ]
 }
