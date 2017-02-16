@@ -2,12 +2,13 @@ import { asMap, asSet, map, spreadKV, } from 'fenugreek-collections';
 import { Components, Grid, Node, } from 'game_grid';
 import { kvMap, } from './utils';
 import { claim, id, player, } from './player';
-import { next as bNext, genNodes, hasFree, board as makeBoard, nodesByPlayer,
-playerGraph as pGraph, winComp, } from './board';
+import { genNodes, board as makeBoard, nodesByPlayer, playerGraph as pGraph, winComp, } from './board';
 import { samePlayer, } from './node';
 const { nodesByColumn, } = Grid;
 const { sameCol, } = Node;
 const { omniComps, splitComps } = Components;
+
+import { byPlayer, hasFree, nextFree, } from './filter';
 
 const dCol = 0;
 const dPlr = [ player('player0', 0, 0), player('player1', 0, 1) ];
