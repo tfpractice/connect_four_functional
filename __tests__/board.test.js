@@ -11,7 +11,7 @@ import { claim, player, } from 'src/player';
 
 const dick = player('Dick');
 const jane = player('Jane');
-const myBoard = board(...genNodes());
+const myBoard = board();
 const myNodes = nodes(myBoard);
 const col0 = colNodes(myBoard)(0);
 const col1 = colNodes(myBoard)(1);
