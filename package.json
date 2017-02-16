@@ -40,7 +40,7 @@
     "coveralls": "^2.11.15",
     "eslint": "^3.13.0",
     "eslint-config-airbnb-base": "^11.0.0",
-    "eslint-import-resolver-babel-module": "^2.2.1",
+    "eslint-import-resolver-babel-module": "^3.0.0",
     "eslint-plugin-import": "^2.2.0",
     "jasmine": "^2.5.2",
     "jasmine-expect": "^3.0.1",
@@ -55,7 +55,7 @@
     "rollup-plugin-progress": "^0.2.1",
     "rollup-plugin-replace": "^1.1.1",
     "rollup-plugin-uglify": "^1.0.1",
-    "rollup-plugin-visualizer": "^0.1.5"
+    "rollup-plugin-visualizer": "^0.2.0"
   },
   "jest": {
     "collectCoverage": "true",
@@ -73,7 +73,7 @@
   },
   "dependencies": {
     "fenugreek-collections": "^1.1.0",
-    "game_grid": "^3.1.0",
+    "game_grid": "^4.0.1",
     "graph-curry": "^2.0.0",
     "turmeric-utils": "^2.0.0"
   }
