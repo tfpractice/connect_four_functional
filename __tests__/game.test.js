@@ -1,12 +1,12 @@
 import 'jasmine-expect';
-import { actComps, actGraph, active, actNodes, board, cID, colNodes,
-  column, components, game, hasWinComp, next, nodes,
-  passComps, passGraph, passive, passNodes,
-   playerGraph, playerMap, playerNodes, players, select, setColumn, setNodes,
+import { actComps, actGraph, active, actNodes, board, colNodes, column,
+   game, hasWinComp, next, nodes, passComps, passGraph, passive, passNodes,
+   playerGraph, playerNodes, players, select, setColumn, setNodes,
   setPlayers, togglePlayers, winner, } from 'src/game';
 
 import { claim, player, } from 'src/player';
 
+// playerMapcomponents,
 // import { playerGraph, } from 'src/board';
 
 const dick = player('Dick', 0, 0);
@@ -26,7 +26,7 @@ describe('Game', () => {
       expect(myGame).toBeObject();
       expect(myGame.players).toBeArray();
       expect(myGame.nodes).toBeArray();
-      expect(myGame.cID).toBe(0);
+      expect(myGame.column).toBe(0);
     });
   });
   
@@ -35,9 +35,9 @@ describe('Game', () => {
       expect(nodes(myGame)).toBeArray();
     });
   });
-  describe('cID', () => {
+  describe('column', () => {
     it('returns the games column ID', () => {
-      expect(cID(myGame)).toBe(0);
+      expect(column(myGame)).toBe(0);
     });
   });
   
@@ -59,92 +59,98 @@ describe('Game', () => {
     });
   });
 
-  // describe('setNodes', () => {
-  //   it('returns a new game with the specified nodes', () => {
-  //     expect(nodes(setNodes([])(myGame))).toBeArray();
-  //   });
-  // });
-  // describe('setColumn', () => {
-  //   it('returns a new game with the specified columnID', () => {
-  //     expect(cID(setColumn(3)(myGame))).toBe(3);
-  //   });
-  // });
-  // describe('setPlayers', () => {
-  //   it('returns a new game with the specified players', () => {
-  //     expect(players(setPlayers([])(myGame))).toBeArray();
-  //   });
-  // });
+  describe('setNodes', () => {
+    it('returns a new game with the specified nodes', () => {
+      expect(nodes(setNodes([])(myGame))).toBeArray();
+    });
+  });
+
+  describe('setColumn', () => {
+    it('returns a new game with the specified columnID', () => {
+      expect(column(setColumn(3)(myGame))).toBe(3);
+    });
+  });
+
+  describe('setPlayers', () => {
+    it('returns a new game with the specified players', () => {
+      expect(players(setPlayers([])(myGame))).toBeArray();
+    });
+  });
+
   // describe('board', () => {
   //   it('returns a graph of the games nodes', () => {
   //     expect(board(myGame) instanceof Map).toBeTrue();
   //   });
   // });
-  // describe('colNodes', () => {
-  //   it('returns an array of nodes in the current column', () => {
-  //     expect(colNodes(myGame)).toBeArray();
-  //
-  //     // expect(colNodes(myGame)[0].column).toBe(0);
-  //   });
-  // });
-  // describe('next', () => {
-  //   it('returns the next free node in the games current column', () => {
-  //     expect(next(myGame)).toBeObject();
-  //   });
-  // });
-  //
+  describe('colNodes', () => {
+    it('returns an array of nodes in the current column', () => {
+      expect(colNodes(myGame)).toBeArray();
+      expect(colNodes(myGame)[0].column).toBe(0);
+    });
+  });
+
+  describe('next', () => {
+    it('returns the next free node in the games current column', () => {
+      expect(next(myGame)).toBeObject();
+    });
+  });
+  
   // describe('playerMap', () => {
   //   it('returns a new Map of Players with the same keys and values', () => {
   //     expect(playerMap(myGame.players) instanceof Map).toBeTrue();
   //   });
   // });
   //
-  // describe('togglePlayers', () => {
-  //   it('switches the games active player ', () => {
-  //     togglePlayers(myGame);
-  //     expect(active(myGame)).toBe(dick);
-  //   });
-  // });
-  // describe('playerNodes', () => {
-  //   it('returns an array of the nodes claimed by a player', () => {
-  //     colNodes(myGame).map(claim(dick));
-  //     expect(playerNodes(myGame)(dick)).toBeArray();
-  //
-  //     // expect(playerNodes(myGame)(dick)[0].player).toBe(dick.id);
-  //   });
-  // });
-  // describe('actNodes', () => {
-  //   it('returns an array of the nodes belonging to the active player', () => {
-  //     colNodes(myGame).map(claim(dick));
-  //     expect(actNodes(myGame)).toBeArray();
-  //
-  //     // expect(actNodes(myGame)[0].player).toBe(dick.id);
-  //   });
-  // });
-  // describe('passNodes', () => {
-  //   it('returns an array of the nodes belonging to the passive player', () => {
-  //     colNodes(myGame).map(claim(jane));
-  //     console.log(passNodes(myGame)[0]);
-  //     expect(passNodes(myGame)).toBeArray();
-  //
-  //     // expect(passNodes(myGame)[0].player).toBe(jane.id);
-  //   });
-  // });
-  //
-  // describe('playerGraph', () => {
-  //   it('returns a map of the nodes claime d by the specified player', () => {
-  //     colNodes(myGame).map(claim(dick));
-  //     expect(playerGraph(myGame)(dick) instanceof Map).toBeTrue();
-  //   });
-  // });
-  //
-  // describe('actGraph', () => {
-  //   it('returns a Graph of the nodes belonging to the active player', () => {
-  //     colNodes(myGame).map(claim(dick));
-  //     expect(actGraph(myGame) instanceof Map).toBeTrue();
-  //
-  //     // expect([ ...actGraph(myGame) ][0][0].player).toBe(dick.id);
-  //   });
-  // });
+  describe('togglePlayers', () => {
+    it('switches the games active player ', () => {
+      togglePlayers(myGame);
+      expect(active(myGame)).toBe(dick);
+    });
+  });
+
+  describe('playerNodes', () => {
+    it('returns an array of the nodes claimed by a player', () => {
+      colNodes(myGame).map(claim(dick));
+      expect(playerNodes(myGame)(dick)).toBeArray();
+      expect(playerNodes(myGame)(dick)[0].player).toBe(dick.id);
+    });
+  });
+
+  describe('actNodes', () => {
+    it('returns an array of the nodes belonging to the active player', () => {
+      colNodes(myGame).map(claim(dick));
+      expect(actNodes(myGame)).toBeArray();
+      expect(actNodes(myGame)[0].player).toBe(dick.id);
+    });
+  });
+
+  describe('passNodes', () => {
+    it('returns an array of the nodes belonging to the passive player', () => {
+      colNodes(myGame).map(claim(jane));
+      console.log(passNodes(myGame)[0]);
+      expect(passNodes(myGame)).toBeArray();
+  
+      // expect(passNodes(myGame)[0].player).toBe(jane.id);
+    });
+  });
+  
+  describe('playerGraph', () => {
+    it('returns a map of the nodes claime d by the specified player', () => {
+      colNodes(myGame).map(claim(dick));
+      expect(playerGraph(myGame)(dick) instanceof Map).toBeTrue();
+    });
+  });
+  
+  describe('actGraph', () => {
+    it('returns a Graph of the nodes belonging to the active player', () => {
+      colNodes(myGame).map(claim(dick));
+      console.log(actGraph(myGame));
+      expect(actGraph(myGame) instanceof Map).toBeTrue();
+  
+      expect([ ...actGraph(myGame) ][0][0].player).toBe(dick.id);
+    });
+  });
+
   // describe('passGraph', () => {
   //   it('returns  a Graph of the nodes  belonging to the passive player', () => {
   //     colNodes(myGame).map(claim(jane));

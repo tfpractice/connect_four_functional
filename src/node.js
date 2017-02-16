@@ -14,7 +14,8 @@ export const isFree = n => player(n) == null;
 
 export const copy = n => node(column(n), row(n), player(n));
 
-export const setPlayer = p => n =>
-  isFree(n) ? node(column(n), row(n), p) : copy(n);
+export const setPlayer = p => n => node(column(n), row(n), p);
+
+  // isFree(n) ? Object.assign(n, { player }) : n;
 
 export const samePlayer = n0 => n1 => player(n0) === player(n1);
