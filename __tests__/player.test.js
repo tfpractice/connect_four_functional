@@ -26,9 +26,12 @@ describe('Player', () => {
 // 		col1 = [c1r0, c1r1, c1r2, c1r3, c1r4, c1r5] = byCol(myBoard)(1);
 // 	});
 //
-  describe('default', () => {
-    it('returns an object with a name and score ', () => {
-      expect(dick).toBeObject();
+  describe('player', () => {
+    it('returns an object with a name, score, and id ', () => {
+      expect(player('Dick')).toBeObject();
+      expect(player('Dick').name).toBe('Dick');
+      expect(player('Dick').score).toBe(0);
+      expect(player('Dick').id).toBe('Dick');
     });
   });
 
