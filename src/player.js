@@ -1,3 +1,4 @@
+import { setPlayer, } from './node';
 export const playerInit = { name: '', score: 0, id: null };
 
 export const player = (name = '', score = 0, id = name) => ({ name, score, id });

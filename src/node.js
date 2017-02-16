@@ -2,7 +2,7 @@ import { Node, } from 'game_grid';
 import { id, } from './player';
 const { column, row, node: gNode } = Node;
 
-const defP = { player: null };
+const defP = Object.assign({}, gNode(), { player: null });
 
 export const node = (c = 0, r = 0, player = null) =>
   Object.assign({}, gNode(c, r), { player });
