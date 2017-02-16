@@ -1,9 +1,9 @@
 import { asMap, asSet, map, spreadKV, } from 'fenugreek-collections';
 import { Components, Filter, Grid, Node, } from 'game_grid';
-import { claim, id, player, } from './player';
+import { id, player, } from './player';
 import { genNodes, fromNodes as makeBoard, playerGraph as pGraph,
   playerNodes as pNodes, winComp, } from './board';
-import { samePlayer, setPlayer, } from './node';
+import { claim, samePlayer, setPlayer, } from './node';
 const { colNodes: gCols, colNodes: cNodes } = Grid;
 
 import * as Board from './board';
@@ -54,6 +54,8 @@ export const passGraph = g => playerGraph(g)(passive(g));
 export const actComps = game => omniComps(actGraph(game));
 export const passComps = game => omniComps(passGraph(game));
 
+// export const claimNext = game =>
+ // replace(setPlayer(active(game))(next(game)))(nodes(game));
 export const select = (game) => {
   setNodes(replace(setPlayer(active(game))(next(game)))(nodes(game)))(game);
 
