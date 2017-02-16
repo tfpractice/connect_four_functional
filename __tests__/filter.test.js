@@ -1,6 +1,6 @@
 import 'jasmine-expect';
-import { node, setPlayer, } from 'src/node';
-import { byPlayer, exceeds, hasFree, nextFree, } from 'src/filter';
+import { copy, node, setPlayer, } from 'src/node';
+import { byExcess, byPlayer, exceeds, hasFree, nextFree, } from 'src/filter';
 
 const c00 = node(0, 0);
 const c01 = node(0, 1);
@@ -33,6 +33,13 @@ describe('filters', () => {
     it('checks if a collections size is greater than the limit', () => {
       expect(exceeds(3)(myNodes)).toBeTrue();
       expect(exceeds(6)(myNodes)).toBeFalse();
+    });
+  });
+  describe('byExcess', () => {
+    it('filters an collections of collections by whose which exceed the limt', () => {
+      const concNodes = myNodes.map((n, id, arr) => id % 2 ? [ n ] : [ n, 1, 2, 3, 4 ]);
+
+      expect(byExcess(2)(concNodes).length).toEqual(3);
     });
   });
 });

@@ -6,7 +6,7 @@ import { Filter, Grid, } from 'game_grid';
 const { colNodes, } = Grid;
 const { cIDs, rIDs, } = Filter;
 
-import { board, genNodes, playerGraph, playerNodes, winComp, } from 'src/board';
+import { board, genNodes, hasWinComp, playerGraph, playerNodes, winComps, } from 'src/board';
 import { claim, player, } from 'src/player';
 
 const dick = player('Dick');
@@ -39,9 +39,13 @@ describe('Board', () => {
     });
   });
 
-  describe('winComp', () => {
-    it('checks if the players component has more than three', () => {
-      expect(winComp(myBoard, 3)).toBeTrue();
+  describe('hasWinComp', () => {
+    it('checks if any of the boards components exceeds a speacified limit', () => {
+      expect(hasWinComp(myBoard)).toBeTrue();
+    });
+  }); describe('hasWinComp', () => {
+    it('checks if any of the boards components exceeds a speacified limit', () => {
+      expect(winComps(myBoard)).toBeArray();
     });
   });
 });

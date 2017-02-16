@@ -1,8 +1,8 @@
-import { asSet, flattenBin, spread, } from 'fenugreek-collections';
+import { asSet, flattenBin, some, spread, } from 'fenugreek-collections';
 import { Graph, } from 'graph-curry';
 import { Components, Grid, } from 'game_grid';
 import { copy as copyN, isFree, node, samePlayer, setPlayer, } from './node';
-import { byPlayer, exceeds, hasFree, nextFree, } from './filter';
+import { byExcess, byPlayer, exceeds, hasFree, nextFree, } from './filter';
 import { id, } from './player';
 
 const { graph, nodes, } = Graph;
@@ -17,4 +17,5 @@ export const playerNodes = board => p => byPlayer(nodes(board))(id(p));
 
 export const playerGraph = b => p => graph(...playerNodes(b)(p));
 
-export const winComp = (g, n = 3) => spread(omniComps(g)).some(exceeds(n));
+export const hasWinComp = (g, n = 3) => some(omniComps(g))(exceeds(n));
+export const winComps = (g, n = 3) => byExcess(n)(omniComps(g));

@@ -7,3 +7,4 @@ export const byPlayer = nArr => (player = null) =>
   filter(nArr)(samePlayer({ player }));
 
 export const exceeds = lim => coll => asSet(coll).size > lim;
+export const byExcess = lim => arrays => filter(arrays)(exceeds(lim));
