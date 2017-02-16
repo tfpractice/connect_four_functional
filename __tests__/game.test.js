@@ -176,16 +176,16 @@ describe('Game', () => {
   // });
   //
   
-//
-// 	describe('select', () => {
-// 		describe('when the current column is available', () => {
-// 			it('assigns the currentNode to the current player', () => {
-// 				let prev = active(myGame);
-// 				let node = next(myGame);
-// 				let gBoard = myGame.board;
-// 				select(myGame);
-// 				expect(Board.nodesByPlayer(gBoard)(prev)).toContain(node);
-// 			});
+
+  describe('select', () => {
+    describe('when the current column is available', () => {
+      it('assigns the currentNode to the current player', () => {
+        let prev = active(myGame);
+        let node = next(myGame);
+        let gBoard = myGame.board;
+        select(myGame);
+        expect(Board.nodesByPlayer(gBoard)(prev)).toContain(node);
+      });
 // 			it('toggles the players', () => {
 // 				let prev = active(myGame);
 // 				select(myGame);
