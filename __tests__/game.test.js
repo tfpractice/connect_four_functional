@@ -109,7 +109,6 @@ describe('Game', () => {
   describe('playerGraph', () => {
     it('returns a map of the nodes claime d by the specified player', () => {
       colNodes(myGame).map(claim(dick));
-
       expect(playerGraph(myGame)(dick) instanceof Map).toBeTrue();
     });
   });
@@ -117,15 +116,15 @@ describe('Game', () => {
     it('returns a Graph of the nodes belonging to the active player', () => {
       colNodes(myGame).map(claim(dick));
       
-      // expect(actGraph(myGame) instanceof Map).toBeTrue();
-      // expect([ ...actGraph(myGame) ][0][0].player).toBe(dick.id);
+      expect(actGraph(myGame) instanceof Map).toBeTrue();
+      expect([ ...actGraph(myGame) ][0][0].player).toBe(dick.id);
     });
   });
   describe('passGraph', () => {
     it('returns  a Graph of the nodes  belonging to the passive player', () => {
       colNodes(myGame).map(claim(jane));
       
-      // expect(passGraph(myGame) instanceof Map).toBeTrue();
+      expect(passGraph(myGame) instanceof Map).toBeTrue();
     });
   });
   describe('select', () => {
@@ -138,25 +137,26 @@ describe('Game', () => {
         expect(playerNodes(select(myGame))(active(myGame))).toContain(myNext);
       });
       
-      it('toggles the players', () => {
-        const prev = active(myGame);
-        
-        select(myGame);
-        expect(active(myGame)).not.toBe(prev);
-      });
+      // it('toggles the players', () => {
+      //   const prev = active(myGame);
+      //
+      //   select(myGame);
+      //   expect(active(myGame)).not.toBe(prev);
+      // });
     });
-    describe('when the current column is not available', () => {
-      it('returns undefined', () => {
-        column(myGame).map(claim(active(myGame)));
-        expect(select(myGame)).toBeUndefined();
-      });
-      it('does not toggle the players', () => {
-        column(myGame).map(claim(active(myGame)));
-        const prev = active(myGame);
-        
-        select(myGame);
-        expect(active(myGame)).toBe(prev);
-      });
-    });
+
+    // describe('when the current column is not available', () => {
+    //   it('returns undefined', () => {
+    //     column(myGame).map(claim(active(myGame)));
+    //     expect(select(myGame)).toBeUndefined();
+    //   });
+    //   it('does not toggle the players', () => {
+    //     column(myGame).map(claim(active(myGame)));
+    //     const prev = active(myGame);
+    //
+    //     select(myGame);
+    //     expect(active(myGame)).toBe(prev);
+    //   });
+    // });
   });
 });

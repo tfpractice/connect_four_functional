@@ -1,5 +1,5 @@
 import 'jasmine-expect';
-import { isFree, node, player, samePlayer, setPlayer, } from 'src/node';
+import { claim, isFree, node, player, samePlayer, setPlayer, unClaim, } from 'src/node';
 const dick = { name: 'Dick', id: 'Dick' };
 const jane = { name: 'Jane', id: 'Jane' };
 const myNode = node(2, 3);
@@ -16,13 +16,17 @@ describe('Node', () => {
       expect(myNode.player).toBe(null);
     });
   });
-  
   describe('player', () => {
     it('retrieves the player attribute', () => {
       expect(player(myNode)).toBeNull();
     });
   });
-  
+  describe('isFree', () => {
+    it('checks is player attr is falsy', () => {
+      expect(isFree(myNode)).toBeTrue();
+      expect(isFree(jN00)).toBeFalse();
+    });
+  });
   describe('samePlayer', () => {
     it('compares the player attributes', () => {
       expect(samePlayer(jN00)(dN55)).toBeFalse();
@@ -30,22 +34,25 @@ describe('Node', () => {
     });
   });
   describe('setPlayer', () => {
+    it('returns a copy of the node with a changed player attributes', () => {
+      expect(player(setPlayer(jane.id)(myNode))).toBe('Jane');
+    });
+  });
+  describe('claim', () => {
     describe('when the node is free', () => {
       it('returns a copy of the node with a changed player attributes', () => {
-        expect(player(setPlayer(jane.id)(myNode))).toBe('Jane');
+        expect(player(claim(jane.id)(myNode))).toBe('Jane');
       });
     });
     describe('when the node isNot free', () => {
       it('returns a copy of the node with unchanged properties', () => {
-        // expect(player(setPlayer(dick.id)(setPlayer(jane.id)(myNode)))).toBe('Jane');
+        expect(player(claim(dick.id)(claim(jane.id)(myNode)))).toBe('Jane');
       });
     });
   });
-  
-  describe('isFree', () => {
-    it('checks is player attr is falsy', () => {
-      expect(isFree(myNode)).toBeTrue();
-      expect(isFree(jN00)).toBeFalse();
+  describe('unClaim', () => {
+    it('sets the player to null', () => {
+      expect(player(unClaim(myNode))).toBeNull();
     });
   });
 });
