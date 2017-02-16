@@ -6,7 +6,7 @@ import { Filter, Grid, } from 'game_grid';
 const { colNodes, } = Grid;
 const { cIDs, rIDs, } = Filter;
 
-import { board, genNodes, nodesByPlayer, playerGraph, winComp, } from 'src/board';
+import { board, genNodes, playerGraph, playerNodes, winComp, } from 'src/board';
 import { claim, player, } from 'src/player';
 
 const dick = player('Dick');
@@ -27,9 +27,9 @@ describe('Board', () => {
     });
   });
 
-  describe('nodesByPlayer', () => {
+  describe('playerNodes', () => {
     it('returns an array of nodes with a speacified player', () => {
-      expect(nodesByPlayer(myBoard)()).toBeArray();
+      expect(playerNodes(myBoard)()).toBeArray();
     });
   });
 

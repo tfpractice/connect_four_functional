@@ -2,7 +2,7 @@ import { asMap, asSet, map, spreadKV, } from 'fenugreek-collections';
 import { Components, Grid, Node, } from 'game_grid';
 import { kvMap, } from './utils';
 import { claim, id, player, } from './player';
-import { genNodes, board as makeBoard, nodesByPlayer, playerGraph as pGraph, winComp, } from './board';
+import { genNodes, board as makeBoard, playerGraph as pGraph, playerNodes as pNodes, winComp, } from './board';
 import { samePlayer, } from './node';
 const { nodesByColumn, } = Grid;
 const { sameCol, } = Node;
@@ -37,7 +37,7 @@ export const next = game => bNext(colNodes(game));
 export const togglePlayers = g => setPlayers([ passive(g), active(g) ])(g);
 export const playerMap = players => asMap(asSet(players));
 
-export const playerNodes = g => p => nodesByPlayer(board(g))(id(p));
+export const playerNodes = g => p => pNodes(board(g))(id(p));
 export const actNodes = g => playerNodes(g)(active(g));
 export const passNodes = g => playerNodes(g)(passive(g));
 
