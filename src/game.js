@@ -54,17 +54,20 @@ export const passGraph = g => playerGraph(g)(passive(g));
 export const actComps = game => omniComps(actGraph(game));
 export const passComps = game => omniComps(passGraph(game));
 
-export const claimNext = game => claim(id(active(game)))(next(game));
-export const select = (game) => {
-  // setNodes(replace(setPlayer(active(game))(next(game)))(nodes(game)))(game);
-  // setNodes(replace(setPlayer(active(game))())(nodes(game)))(game);
+export const claimNext = g =>
+setNodes(replace(claim(id(active(g)))(next(g)))(nodes(g)))(g);
+export const select = game =>
+  next(game) ? togglePlayers(claimNext(game)) : claimNext(game);
 
-  setNodes(replace(claim(id(active(game)))(next(game)))(nodes(game)))(game);
+  // // setNodes(replace(setPlayer(active(game))(next(game)))(nodes(game)))(game);
+  // // setNodes(replace(setPlayer(active(game))())(nodes(game)))(game);
+  //
+  // setNodes(replace(claim(id(active(game)))(next(game)))(nodes(game)))(game);
+  //
+  // claim(active(game))(next(game));
+  //
+  // console.log(nodes(game));
+  // return togglePlayers(game);
 
-  claim(active(game))(next(game));
-
-  console.log(nodes(game));
-  return togglePlayers(game);
-};
 export const hasWinComp = brd => plr => winComp(pGraph(brd)(plr), 3);
 export const winner = ({ players, nodes }) => players.find(hasWinComp(board({ nodes })));

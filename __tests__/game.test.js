@@ -9,12 +9,12 @@ import { claim, } from 'src/node';
 
 const dick = player('Dick', 0, 0);
 const jane = player('Jane', 0, 1);
-const myPlayers = [ dick, jane ];
+const myPlayers = [dick, jane];
 const myGame = game(myPlayers);
 const col0 = colNodes(myGame);
 const col1 = colNodes(setColumn(1)(myGame));
-const [ c0r0, c0r1, c0r2, c0r3, c0r4, c0r5 ] = col0;
-const [ c1r0, c1r1, c1r2, c1r3, c1r4, c1r5 ] = col1;
+const [c0r0, c0r1, c0r2, c0r3, c0r4, c0r5] = col0;
+const [c1r0, c1r1, c1r2, c1r3, c1r4, c1r5] = col1;
 
 describe('Game', () => {
   describe('game', () => {
@@ -68,10 +68,12 @@ describe('Game', () => {
     });
   });
   describe('claimNext', () => {
-    it('retuns a modified version of the next available node', () => {
+    it('retuns a modified version of the game with claimed nodes available node', () => {
+      const myNext = next(myGame);
+      
       expect(claimNext(myGame)).toBeObject();
-      console.log(claimNext(myGame));
-      expect((claimNext(myGame)).player).toBe(active(myGame).id);
+      
+      expect(playerNodes(claimNext(myGame))(active(myGame))).toContain(myNext);
     });
   });
   describe('board', () => {
@@ -97,8 +99,9 @@ describe('Game', () => {
     it('returns an array of the nodes claimed by a player', () => {
       colNodes(myGame).map(claim(id(dick)));
       expect(playerNodes(myGame)(dick)).toBeArray();
-      console.log(playerNodes(myGame)(dick));
-
+      
+      // console.log(playerNodes(myGame)(dick));
+      
       // expect(playerNodes(myGame)(dick)[0].player).toBe(dick.id);
     });
   });
@@ -106,7 +109,7 @@ describe('Game', () => {
     it('returns an array of the nodes belonging to the active player', () => {
       colNodes(myGame).map(claim(id(dick)));
       expect(actNodes(myGame)).toBeArray();
-
+      
       // expect(actNodes(myGame)[0].player).toBe(dick.id);
     });
   });
@@ -128,7 +131,7 @@ describe('Game', () => {
       colNodes(myGame).map(claim(id(dick)));
       
       expect(actGraph(myGame) instanceof Map).toBeTrue();
-
+      
       // expect([ ...actGraph(myGame) ][0][0].player).toBe(dick.id);
     });
   });
@@ -145,7 +148,7 @@ describe('Game', () => {
         const prev = active(myGame);
         const myNext = next(myGame);
         const gBoard = board(myGame);
-
+        
         expect(playerNodes(select(myGame))(active(myGame))).toContain(myNext);
       });
       
@@ -156,7 +159,7 @@ describe('Game', () => {
       //   expect(active(myGame)).not.toBe(prev);
       // });
     });
-
+    
     // describe('when the current column is not available', () => {
     //   it('returns undefined', () => {
     //     column(myGame).map(claim(id(active)(myGame)));
