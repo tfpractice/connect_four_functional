@@ -14,4 +14,4 @@ export const setScore = score => p => player(name(p), score, id(p));
 export const resetScore = setScore(0);
 export const incrementScore = p => setScore(score(p) + 1)(p);
 export const decrementScore = p => setScore(score(p) - 1)(p);
-export const claim = p => n => n && Object.assign(n, { player: id(p) });
+export const claim = p => setPlayer(id(p));

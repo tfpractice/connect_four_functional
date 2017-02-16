@@ -32,12 +32,12 @@ describe('Node', () => {
   describe('setPlayer', () => {
     describe('when the node is free', () => {
       it('returns a copy of the node with a changed player attributes', () => {
-        expect(player(setPlayer(jane)(myNode))).toBe('Jane');
+        expect(player(setPlayer(jane.id)(myNode))).toBe('Jane');
       });
     });
     describe('when the node isNot free', () => {
       it('returns a copy of the node with unchanged properties', () => {
-        expect(player(setPlayer(dick)(setPlayer(jane)(myNode)))).toBe('Jane');
+        expect(player(setPlayer(dick.id)(setPlayer(jane.id)(myNode)))).toBe('Jane');
       });
     });
   });
