@@ -91,6 +91,7 @@ describe('Game', () => {
 
   describe('next', () => {
     it('returns the next free node in the games current column', () => {
+      // console.log(next(myGame));
       expect(next(myGame)).toBeObject();
     });
   });
@@ -180,14 +181,18 @@ describe('Game', () => {
 
   describe('select', () => {
     describe('when the current column is available', () => {
-      // it('assigns the currentNode to the current player', () => {
-      //   const prev = active(myGame);
-      //   const node = next(myGame);
-      //   const gBoard = board(myGame);
-      //
-      //   select(myGame);
-      //   expect(Board.nodesByPlayer(gBoard)(prev)).toContain(node);
-    });
+      it('assigns the currentNode to the current player', () => {
+        const prev = active(myGame);
+        const myNext = next(myGame);
+
+        // console.log(myNext);
+        const gBoard = board(myGame);
+      
+        // console.log(playerNodes(select(myGame)));
+        expect(playerNodes(select(myGame))(active(myGame))).toContain(myNext);
+
+        // expect(Board.nodesByPlayer(gBoard)(prev)).toContain(node);
+      });
 
 // 			it('toggles the players', () => {
 // 				let prev = active(myGame);
@@ -206,6 +211,6 @@ describe('Game', () => {
 // 				select(myGame);
 // 				expect(active(myGame)).toBe(prev);
 // 			});
-    // });
+    });
   });
 });

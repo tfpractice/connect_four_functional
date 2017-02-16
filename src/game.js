@@ -3,7 +3,7 @@ import { Components, Filter, Grid, Node, } from 'game_grid';
 import { claim, id, player, } from './player';
 import { genNodes, fromNodes as makeBoard, playerGraph as pGraph,
   playerNodes as pNodes, winComp, } from './board';
-import { samePlayer, } from './node';
+import { samePlayer, setPlayer, } from './node';
 const { colNodes: gCols, colNodes: cNodes } = Grid;
 
 import * as Board from './board';
@@ -14,7 +14,7 @@ const {
 generate, negAdj, posAdj, rIDs, rowAdj,
 } = Filter;
 
-import { byExcess, byPlayer, exceeds, hasFree, nextFree, } from './filter';
+import { byExcess, byPlayer, exceeds, hasFree, nextFree, replace, } from './filter';
 
 const dCol = 0;
 const dPlr = [ player('player0', 0, 0), player('player1', 0, 1) ];
@@ -55,8 +55,10 @@ export const actComps = game => omniComps(actGraph(game));
 export const passComps = game => omniComps(passGraph(game));
 
 export const select = (game) => {
-  claim(active(game))(next(game));
-  console.log(nodes(g));
+  setNodes(replace(setPlayer(active(game))(next(game)))(nodes(game)))(game);
+
+  // claim(active(game))(next(game));
+  console.log(nodes(game));
   return togglePlayers(game);
 };
 export const hasWinComp = brd => plr => winComp(pGraph(brd)(plr), 3);
