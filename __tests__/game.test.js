@@ -144,7 +144,8 @@ describe('Game', () => {
   describe('actGraph', () => {
     it('returns a Graph of the nodes belonging to the active player', () => {
       colNodes(myGame).map(claim(dick));
-      console.log(actGraph(myGame));
+
+      // console.log(actGraph(myGame));
       expect(actGraph(myGame) instanceof Map).toBeTrue();
   
       expect([ ...actGraph(myGame) ][0][0].player).toBe(dick.id);
@@ -175,17 +176,18 @@ describe('Game', () => {
   //   });
   // });
   //
-  
 
   describe('select', () => {
     describe('when the current column is available', () => {
       it('assigns the currentNode to the current player', () => {
-        let prev = active(myGame);
-        let node = next(myGame);
-        let gBoard = myGame.board;
+        const prev = active(myGame);
+        const node = next(myGame);
+        const gBoard = board(myGame);
+
         select(myGame);
         expect(Board.nodesByPlayer(gBoard)(prev)).toContain(node);
       });
+
 // 			it('toggles the players', () => {
 // 				let prev = active(myGame);
 // 				select(myGame);
@@ -203,6 +205,6 @@ describe('Game', () => {
 // 				select(myGame);
 // 				expect(active(myGame)).toBe(prev);
 // 			});
-// 		});
-// 	});
+    });
+  });
 });
