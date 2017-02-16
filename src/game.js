@@ -1,14 +1,20 @@
 import { asMap, asSet, map, spreadKV, } from 'fenugreek-collections';
-import { Components, Grid, Node, } from 'game_grid';
-import { kvMap, } from './utils';
+import { Components, Filter, Grid, Node, } from 'game_grid';
+
+// import { kvMap, } from './utils';
 import { claim, id, player, } from './player';
-import { genNodes, board as makeBoard, playerGraph as pGraph, playerNodes as pNodes, winComp, } from './board';
+import { genNodes, fromNodes as makeBoard, playerGraph as pGraph,
+  playerNodes as pNodes, winComp, } from './board';
 import { samePlayer, } from './node';
-const { nodesByColumn, } = Grid;
+const { colNodes: gCols, } = Grid;
 const { sameCol, } = Node;
 const { omniComps, splitComps } = Components;
+const {
+ byAdj, byCol, byNVec, byPosition, byPVec, byRow, cIDs, colAdj,
+generate, negAdj, posAdj, rIDs, rowAdj,
+} = Filter;
 
-import { byPlayer, hasFree, nextFree, } from './filter';
+import { byExcess, byPlayer, exceeds, hasFree, nextFree, } from './filter';
 
 const dCol = 0;
 const dPlr = [ player('player0', 0, 0), player('player1', 0, 1) ];
@@ -30,14 +36,15 @@ export const setColumn = cID => g => game(players(g), nodes(g), cID);
 export const setPlayers = pArr => g => game(pArr, nodes(g), cID(g));
 
 export const board = g => makeBoard(...nodes(g));
-export const colNodes = g => nodesByColumn(board(g))(cID(g));
-export const column = ({ cID, nodes }) => nodesByColumn(board({ nodes }))(cID);
-export const next = game => bNext(colNodes(game));
+export const colNodes = g => byCol(nodes(g))(cID(g));
+
+// export const column = ({ cID, nodes }) => nodesByColumn(board({ nodes }))(cID);
+export const next = game => nextFree(colNodes(game));
 
 export const togglePlayers = g => setPlayers([ passive(g), active(g) ])(g);
 export const playerMap = players => asMap(asSet(players));
 
-export const playerNodes = g => p => pNodes(board(g))(id(p));
+export const playerNodes = g => p => byPlayer(nodes(g))(id(p));
 export const actNodes = g => playerNodes(g)(active(g));
 export const passNodes = g => playerNodes(g)(passive(g));
 
@@ -48,7 +55,7 @@ export const passGraph = g => playerGraph(g)(passive(g));
 export const graphs = g =>
  map(playerMap(players(g)))(([ p, v ]) => asMap([ p, playerGraph(g)(p) ]));
     
-export const components = game => kvMap(graphs(game))(splitComps);
+export const components = game => map(graphs(game))(splitComps);
 export const actComps = game => omniComps(actGraph(game));
 export const passComps = game => omniComps(passGraph(game));
 
