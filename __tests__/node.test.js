@@ -28,9 +28,17 @@ describe('Node', () => {
       expect(samePlayer(jN00)(dN55)).toBeFalse();
       expect(samePlayer(jN00)(jN01)).toBeTrue();
     });
-  }); describe('setPlayer', () => {
-    it('compares the player attributes', () => {
-      expect(player(setPlayer(jane)(myNode))).toBe('Jane');
+  });
+  describe('setPlayer', () => {
+    describe('when the node is free', () => {
+      it('returns a copy of the node with a changed player attributes', () => {
+        expect(player(setPlayer(jane)(myNode))).toBe('Jane');
+      });
+    });
+    describe('when the node isNot free', () => {
+      it('returns a copy of the node with unchanged properties', () => {
+        expect(player(setPlayer(dick)(setPlayer(jane)(myNode)))).toBe('Jane');
+      });
     });
   });
   
