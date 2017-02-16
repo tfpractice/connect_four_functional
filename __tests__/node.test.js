@@ -22,9 +22,17 @@ describe('Node', () => {
     });
   });
   describe('isFree', () => {
-    it('checks is player attr is falsy', () => {
-      expect(isFree(myNode)).toBeTrue();
-      expect(isFree(jN00)).toBeFalse();
+    describe('when given a node object', () => {
+      it('checks if player attr is falsy', () => {
+        expect(isFree(myNode)).toBeTrue();
+        expect(isFree(jN00)).toBeFalse();
+      });
+    });
+    describe('when given null or undefined', () => {
+      it('return false', () => {
+        expect(isFree()).toBeFalsy();
+        expect(isFree(0)).toBeFalsy();
+      });
     });
   });
   describe('samePlayer', () => {

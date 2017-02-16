@@ -13,9 +13,9 @@ export const copy = n => node(column(n), row(n), player(n));
 
 export const setPlayer = p => n => node(column(n), row(n), p);
 
-export const isFree = n => player(n) == null;
+export const isFree = n => !!n && player(n) == null;
 
-export const claim = p => n => isFree(n) ? setPlayer(p)(n) : copy(n);
+export const claim = p => n => isFree(n) ? setPlayer(p)(n) : n;
 export const unClaim = n => setPlayer(null)(n);
 
 export const samePlayer = n0 => n1 => player(n0) === player(n1);
