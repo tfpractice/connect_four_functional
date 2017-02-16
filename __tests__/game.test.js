@@ -73,7 +73,8 @@ describe('Game', () => {
       
       expect(claimNext(myGame)).toBeObject();
       
-      expect(playerNodes(claimNext(myGame))(active(myGame))).toContain(myNext);
+      expect(playerNodes(claimNext(myGame))(active(myGame))[0].row).toBe(myNext.row);
+      expect(playerNodes(claimNext(myGame))(active(myGame))[0].column).toBe(myNext.column);
     });
   });
   describe('board', () => {
@@ -145,19 +146,18 @@ describe('Game', () => {
   describe('select', () => {
     describe('when the games next node is Free', () => {
       it('assigns the currentNode to the current player', () => {
-        const prev = active(myGame);
         const myNext = next(myGame);
-        const gBoard = board(myGame);
-        
-        expect(playerNodes(select(myGame))(active(myGame))).toContain(myNext);
+
+        expect(playerNodes(select(myGame))(active(myGame))[0].row).toBe(myNext.row);
+        expect(playerNodes(select(myGame))(active(myGame))[0].column).toBe(myNext.column);
       });
       
-      // it('toggles the players', () => {
-      //   const prev = active(myGame);
-      //
-      //   select(myGame);
-      //   expect(active(myGame)).not.toBe(prev);
-      // });
+      it('toggles the players', () => {
+        const prev = active(myGame);
+      
+        // select(myGame);
+        expect(active(select(myGame))).not.toBe(prev);
+      });
     });
     
     // describe('when the current column is not available', () => {
