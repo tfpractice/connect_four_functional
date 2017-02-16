@@ -4,8 +4,8 @@ const { column, row, node: gNode } = Node;
 
 const defP = Object.assign({}, gNode(), { player: null });
 
-export const node = (c = 0, r = 0, player = null) =>
-  Object.assign({}, gNode(c, r), { player });
+export const node = (c, r, player = null) =>
+    Object.assign({}, gNode(c, r), { player });
 
 export const player = ({ player } = defP) => player;
 
