@@ -1,4 +1,4 @@
-import { isFree, setPlayer, } from './node';
+import { claim as claimNode, isFree, setPlayer, } from './node';
 export const playerInit = { name: '', score: 0, id: null };
 
 export const player = (name = '', score = 0, id = name) => ({ name, score, id });
@@ -14,4 +14,4 @@ export const setScore = score => p => player(name(p), score, id(p));
 export const resetScore = setScore(0);
 export const incrementScore = p => setScore(score(p) + 1)(p);
 export const decrementScore = p => setScore(score(p) - 1)(p);
-export const claim = p => n => isFree(n) ? Object.assign(n, { player: id(p) }) : n;
+export const claim = p => claimNode(id(p));
