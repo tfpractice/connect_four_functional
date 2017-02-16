@@ -127,7 +127,8 @@ describe('Game', () => {
   describe('passNodes', () => {
     it('returns an array of the nodes belonging to the passive player', () => {
       colNodes(myGame).map(claim(jane));
-      console.log(passNodes(myGame)[0]);
+
+      // console.log(passNodes(myGame)[0]);
       expect(passNodes(myGame)).toBeArray();
   
       // expect(passNodes(myGame)[0].player).toBe(jane.id);
@@ -179,14 +180,14 @@ describe('Game', () => {
 
   describe('select', () => {
     describe('when the current column is available', () => {
-      it('assigns the currentNode to the current player', () => {
-        const prev = active(myGame);
-        const node = next(myGame);
-        const gBoard = board(myGame);
-
-        select(myGame);
-        expect(Board.nodesByPlayer(gBoard)(prev)).toContain(node);
-      });
+      // it('assigns the currentNode to the current player', () => {
+      //   const prev = active(myGame);
+      //   const node = next(myGame);
+      //   const gBoard = board(myGame);
+      //
+      //   select(myGame);
+      //   expect(Board.nodesByPlayer(gBoard)(prev)).toContain(node);
+    });
 
 // 			it('toggles the players', () => {
 // 				let prev = active(myGame);
@@ -205,6 +206,6 @@ describe('Game', () => {
 // 				select(myGame);
 // 				expect(active(myGame)).toBe(prev);
 // 			});
-    });
+    // });
   });
 });

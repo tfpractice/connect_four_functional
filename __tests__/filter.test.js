@@ -1,6 +1,7 @@
 import 'jasmine-expect';
 import { copy, node, setPlayer, } from 'src/node';
-import { byExcess, byPlayer, exceeds, hasFree, nextFree, } from 'src/filter';
+import { byExcess, byPlayer, exceeds, hasFree, nextFree, repIf, replace, repPos,
+ } from 'src/filter';
 
 const c00 = node(0, 0);
 const c01 = node(0, 1);
@@ -19,7 +20,6 @@ describe('filters', () => {
   });
   describe('hasFree', () => {
     it('checks the array for unclaimed nodes', () => {
-      console.log(myNodes);
       expect(hasFree(myNodes)).toBeTrue();
 
       // expect(hasFree(myNodes.map(setPlayer(0)))).toBeFalse();
@@ -42,6 +42,23 @@ describe('filters', () => {
       const concNodes = myNodes.map((n, id, arr) => id % 2 ? [ n ] : [ n, 1, 2, 3, 4 ]);
 
       expect(byExcess(2)(concNodes).length).toEqual(3);
+    });
+  });
+  describe('repIf', () => {
+    it('returns an object if the boolean function called on the original is true', () => {
+      expect(repIf(3)(x => x % 2 === 0)(4)).toBe(3);
+      expect(repIf(3)(x => x % 2 === 0)(5)).toBe(5);
+    });
+  });
+  describe('repPos', () => {
+    it('replaces a node if it matches position', () => {
+      expect(repPos(c00)(c00)).toEqual(c00);
+      expect(repPos(c00)(c01)).toEqual(c01);
+    });
+  });
+  describe('replace', () => {
+    it('returns a copy of an array with a modified matching element', () => {
+      expect(replace(setPlayer('rep')(c00))(myNodes)).toBeArray();
     });
   });
 });

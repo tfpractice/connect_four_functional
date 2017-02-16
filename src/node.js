@@ -1,7 +1,6 @@
 import { Node, } from 'game_grid';
 
-// import { id, } from './player';
-const { column, row, node: gNode } = Node;
+const { column, row, node: gNode, id } = Node;
 
 const defP = Object.assign({}, gNode(), { player: null });
 
@@ -16,6 +15,6 @@ export const copy = n => node(column(n), row(n), player(n));
 
 export const setPlayer = p => n => node(column(n), row(n), p);
 
-  // isFree(n) ? Object.assign(n, { player }) : n;
-
 export const samePlayer = n0 => n1 => player(n0) === player(n1);
+
+export const sameID = a => b => id(a) === id(b);
