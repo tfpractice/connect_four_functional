@@ -5,8 +5,7 @@ const { fromElements, nodes, } = Graph;
 import { Grid, } from 'game_grid';
 const { cIDs, nodesByColumn, rIDs, } = Grid;
 
-import { board, genNodes, hasFree, initNodes, next, nodesByPlayer,
-   playerGraph, winComp, } from 'src/board';
+import { board, genNodes, initNodes, nodesByPlayer, playerGraph, winComp, } from 'src/board';
 import { claim, player, } from 'src/player';
 
 const dick = player('Dick');
@@ -36,20 +35,6 @@ describe('Board', () => {
   describe('playerGraph', () => {
     it('returns a graph of all nodes claimed by a player', () => {
       expect(playerGraph(myBoard)(jane) instanceof Map).toBeTrue();
-    });
-  });
-
-  describe('next', () => {
-    it('returns the next free node', () => {
-      expect(next(col0)).toBe(c0r0);
-    });
-  });
-
-  describe('hasFree', () => {
-    it('checks if any of the nodes are free', () => {
-      col1.map(claim(dick));
-      expect(hasFree(col0)).toBeTrue();
-      expect(hasFree(col1)).toBeFalse();
     });
   });
 
