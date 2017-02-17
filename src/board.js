@@ -12,7 +12,6 @@ const { omniComps, } = Components;
 export const genNodes = (c = 7, r = 6) => gen(c, r).map(copyN);
 export const board = (c = 7, r = 6) => graph(...genNodes(c, r));
 export const copy = b => graph(...nodes(b).map(copyN));
-export const fromNodes = graph;
 export const playerNodes = b => p => byPlayer(nodes(b))(id(p));
 export const playerGraph = b => p => graph(...playerNodes(b)(p));
 

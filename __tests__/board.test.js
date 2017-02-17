@@ -1,13 +1,12 @@
 import 'jasmine-expect';
 import { Graph, } from 'graph-curry';
-const { fromElements, nodes, } = Graph;
-
 import { Filter, Grid, } from 'game_grid';
-const { colNodes, } = Grid;
-const { cIDs, rIDs, } = Filter;
-
 import { board, genNodes, hasWinComp, playerGraph, playerNodes, winComps, } from 'src/board';
 import { claim, player, } from 'src/player';
+
+const { nodes, } = Graph;
+const { colNodes, } = Grid;
+const { cIDs, rIDs, } = Filter;
 
 const dick = player('Dick');
 const jane = player('Jane');

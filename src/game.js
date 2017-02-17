@@ -1,13 +1,14 @@
+import { Graph, } from 'graph-curry';
 import { asMap, asSet, map, spreadKV, } from 'fenugreek-collections';
 import { Components, Filter, Grid, Node, } from 'game_grid';
 import { id, player, } from './player';
-import { genNodes, fromNodes as makeBoard, playerGraph as pGraph,
+import { genNodes, playerGraph as pGraph,
   playerNodes as pNodes, winComp, } from './board';
 import { claim, samePlayer, setPlayer, } from './node';
 const { colNodes: gCols, colNodes: cNodes } = Grid;
 
 import * as Board from './board';
-
+const { graph } = Graph;
 const { omniComps, splitComps } = Components;
 const { byCol, } = Filter;
 
@@ -38,7 +39,7 @@ export const start = g => setPlayState(true)(g);
 export const stop = g => setPlayState(false)(g);
 export const toggleState = g => setPlayState(!inPlay(g))(g);
 
-export const board = g => makeBoard(...nodes(g));
+export const board = g => graph(...nodes(g));
 export const colNodes = g => byCol(nodes(g))(column(g));
 export const next = game => nextFree(colNodes(game));
 
@@ -48,10 +49,11 @@ export const playerNodes = g => p => byPlayer(nodes(g))(id(p));
 export const actNodes = g => playerNodes(g)(active(g));
 export const passNodes = g => playerNodes(g)(passive(g));
 
-export const playerGraph = g => p => makeBoard(...playerNodes(g)(p));
+export const playerGraph = g => p => graph(...playerNodes(g)(p));
 export const actGraph = g => playerGraph(g)(active(g));
 export const passGraph = g => playerGraph(g)(passive(g));
 
+export const playerComps = g => p => omniComps(graph(...playerNodes(g)(p)));
 export const actComps = game => omniComps(actGraph(game));
 export const passComps = game => omniComps(passGraph(game));
 
