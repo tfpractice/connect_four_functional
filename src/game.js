@@ -9,10 +9,7 @@ const { colNodes: gCols, colNodes: cNodes } = Grid;
 import * as Board from './board';
 
 const { omniComps, splitComps } = Components;
-const {
- byAdj, byCol, byNVec, byPosition, byPVec, byRow, columns, colAdj,
-generate, negAdj, posAdj, rIDs, rowAdj,
-} = Filter;
+const { byCol, } = Filter;
 
 import { byExcess, byPlayer, exceeds, hasFree, nextFree, replace, } from './filter';
 
@@ -63,5 +60,6 @@ setNodes(replace(claim(id(active(g)))(next(g)))(nodes(g)))(g);
 export const select = game =>
   next(game) ? togglePlayers(claimNext(game)) : claimNext(game);
 
-export const hasWinComp = brd => plr => winComp(pGraph(brd)(plr), 3);
+// export const isWinner=g=p=> hasWinComp(playerGraph(b))
+// export const hasWinComp = brd => plr => winComp(pGraph(brd)(plr), 3);
 export const winner = ({ players, nodes }) => players.find(hasWinComp(board({ nodes })));
