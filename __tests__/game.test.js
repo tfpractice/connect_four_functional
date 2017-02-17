@@ -1,8 +1,9 @@
 import 'jasmine-expect';
 import { actComps, actGraph, active, actNodes, board, claimNext, colNodes,
-   column, game, hasWinComp, inPlay, next, nodes, passComps, passGraph, passive, passNodes,
-   playerComps, playerGraph, playerNodes, players, select, setColumn, setNodes, setPlayers, setPlayState,
-  start, stop, togglePlayers, toggleState, winner, } from 'src/game';
+   column, game, hasWinComp, inPlay, isWinner, next, nodes, passComps, passGraph, passive,
+   passNodes, playerComps, playerGraph, playerNodes, players, select, setColumn, setNodes, setPlayers,
+  setPlayState, start, stop, togglePlayers, toggleState, winner,
+   } from 'src/game';
 
 import { id, player, } from 'src/player';
 import { claim, } from 'src/node';
@@ -122,36 +123,37 @@ describe('Game', () => {
       expect(active(myGame)).toBe(dick);
     });
   });
-  describe('playerNodes', () => {
-    it('returns an array of the nodes claimed by a player', () => {
-      colNodes(myGame).map(claim(id(dick)));
-      expect(playerNodes(myGame)(dick)).toBeArray();
-      
-      // console.log(playerNodes(myGame)(dick));
-      
-      // expect(playerNodes(myGame)(dick)[0].player).toBe(dick.id);
-    });
-  });
-  describe('actNodes', () => {
-    it('returns an array of the nodes belonging to the active player', () => {
-      colNodes(myGame).map(claim(id(dick)));
-      expect(actNodes(myGame)).toBeArray();
-      
-      // expect(actNodes(myGame)[0].player).toBe(dick.id);
-    });
-  });
-  describe('passNodes', () => {
-    it('returns an array of the nodes belonging to the passive player', () => {
-      colNodes(myGame).map(claim(id(jane)));
-      
-      expect(passNodes(myGame)).toBeArray();
-    });
-  });
   
   describe('graphs', () => {
     const evenJane = nodes(myGame).filter((e, i) => i % 2 === 0).map(claim(id(jane)));
     const oddDick = nodes(myGame).filter((e, i) => i % 2 === 1).map(claim(id(dick)));
     const rowGame = setNodes([ ...evenJane, ...oddDick ])(myGame);
+
+    describe('playerNodes', () => {
+      it('returns an array of the nodes claimed by a player', () => {
+        colNodes(myGame).map(claim(id(dick)));
+        expect(playerNodes(myGame)(dick)).toBeArray();
+      
+      // console.log(playerNodes(myGame)(dick));
+      
+      // expect(playerNodes(myGame)(dick)[0].player).toBe(dick.id);
+      });
+    });
+    describe('actNodes', () => {
+      it('returns an array of the nodes belonging to the active player', () => {
+        colNodes(myGame).map(claim(id(dick)));
+        expect(actNodes(myGame)).toBeArray();
+      
+      // expect(actNodes(myGame)[0].player).toBe(dick.id);
+      });
+    });
+    describe('passNodes', () => {
+      it('returns an array of the nodes belonging to the passive player', () => {
+        colNodes(myGame).map(claim(id(jane)));
+      
+        expect(passNodes(myGame)).toBeArray();
+      });
+    });
 
     describe('playerGraph', () => {
       it('returns a map of the nodes claime d by the specified player', () => {
@@ -167,15 +169,31 @@ describe('Game', () => {
       });
     });
     describe('passGraph', () => {
-      it('returns  a Graph of the nodes  belonging to the passive player', () => {
+      it('returns a Graph of the nodes  belonging to the passive player', () => {
         expect(passGraph(rowGame) instanceof Map).toBeTrue();
         expect(passGraph(rowGame).size).toBe(21);
       });
     });
     describe('playerComps', () => {
       it('returns all the players Components', () => {
-        console.log(playerComps(rowGame)(dick));
         expect(playerComps(rowGame)(dick)).toBeArray();
+        expect(playerComps(rowGame)(dick).length).toBe(3);
+      });
+    });
+    describe('actComps', () => {
+      it('returns the active player Components', () => {
+        expect(actComps(rowGame)).toBeArray();
+        expect(actComps(rowGame).length).toBe(3);
+      });
+    });
+    describe('isWinner', () => {
+      it('checks if a player has connected any components exceeding 3', () => {
+        expect(isWinner(rowGame)(dick)).toBeTrue();
+      });
+    });
+    describe('winner', () => {
+      it('returns the first user wtih more than 3 connected', () => {
+        expect(winner(rowGame)).toBe(dick);
       });
     });
   });

@@ -12,7 +12,7 @@ const { graph } = Graph;
 const { omniComps, splitComps } = Components;
 const { byCol, } = Filter;
 
-import { byExcess, byPlayer, exceeds, hasFree, nextFree, replace, } from './filter';
+import { anyExceed, byExcess, byPlayer, hasFree, nextFree, replace, } from './filter';
 
 const dCol = 0;
 const dPlr = [ player('player0', 0, 0), player('player1', 0, 1) ];
@@ -54,8 +54,11 @@ export const actGraph = g => playerGraph(g)(active(g));
 export const passGraph = g => playerGraph(g)(passive(g));
 
 export const playerComps = g => p => byExcess(1)(omniComps(playerGraph(g)(p)));
-export const actComps = game => omniComps(actGraph(game));
-export const passComps = game => omniComps(passGraph(game));
+export const actComps = g => playerComps(g)(active(g));
+export const passComps = g => playerComps(g)(passive(g));
+
+export const isWinner = g => p => anyExceed(3)(playerComps(g)(p));
+export const winner = g => players(g).find(isWinner(g));
 
 export const claimNext = g =>
 setNodes(replace(claim(id(active(g)))(next(g)))(nodes(g)))(g);
@@ -64,4 +67,4 @@ export const select = game =>
 
 // export const isWinner=g=p=> hasWinComp(playerGraph(b))
 // export const hasWinComp = brd => plr => winComp(pGraph(brd)(plr), 3);
-export const winner = ({ players, nodes }) => players.find(hasWinComp(board({ nodes })));
+// export const winner = ({ players, nodes }) => players.find(hasWinComp(board({ nodes })));
