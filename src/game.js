@@ -31,9 +31,15 @@ export const players = ({ players } = init) => players;
 export const active = ({ players: [ active, passive ] } = init) => active;
 export const passive = ({ players: [ active, passive ] } = init) => passive;
 export const inPlay = ({ inPlay } = init) => inPlay;
-export const setNodes = nArr => g => game(players(g), nArr, column(g));
-export const setColumn = col => g => game(players(g), nodes(g), col);
-export const setPlayers = pArr => g => game(pArr, nodes(g), column(g));
+
+export const setNodes = nArr => g => game(players(g), nArr, column(g), inPlay(g));
+export const setColumn = col => g => game(players(g), nodes(g), col, inPlay(g));
+export const setPlayState = bool => g => game(players(g), nodes(g), column(g), !!bool);
+export const setPlayers = pArr => g => game(pArr, nodes(g), column(g), inPlay(g));
+
+export const start = g => setPlayState(true)(g);
+export const stop = g => setPlayState(false)(g);
+export const toggleState = g => setPlayState(!inPlay(g))(g);
 
 export const board = g => makeBoard(...nodes(g));
 export const colNodes = g => byCol(nodes(g))(column(g));

@@ -1,8 +1,8 @@
 import 'jasmine-expect';
 import { actComps, actGraph, active, actNodes, board, claimNext, colNodes,
    column, game, hasWinComp, inPlay, next, nodes, passComps, passGraph, passive,
-   passNodes, playerGraph, playerNodes, players, select, setColumn, setNodes,
-  setPlayers, togglePlayers, winner, } from 'src/game';
+   passNodes, playerGraph, playerNodes, players, select, setColumn, setNodes, setPlayers, setPlayState, start,
+  stop, togglePlayers, toggleState, winner, } from 'src/game';
 
 import { id, player, } from 'src/player';
 import { claim, } from 'src/node';
@@ -68,6 +68,11 @@ describe('Game', () => {
       expect(column(setColumn(3)(myGame))).toBe(3);
     });
   });
+  describe('setPlayState', () => {
+    it('returns a copy of the game with a new PlayState', () => {
+      expect(inPlay(setPlayState(true)(myGame))).toBeTruthy();
+    });
+  });
   describe('setPlayers', () => {
     it('returns a new game with the specified players', () => {
       expect(players(setPlayers([])(myGame))).toBeArray();
@@ -94,6 +99,21 @@ describe('Game', () => {
   describe('next', () => {
     it('returns the next free node in the games current column', () => {
       expect(next(myGame)).toBeObject();
+    });
+  });
+  describe('start', () => {
+    it('sets inPlay to true', () => {
+      expect(inPlay(start(myGame))).toBeTrue();
+    });
+  });
+  describe('stop', () => {
+    it('sets inPlay to false', () => {
+      expect(inPlay(stop(myGame))).toBeFalse();
+    });
+  });
+  describe('toggleState', () => {
+    it('returns a copy of the game with a negated play state', () => {
+      expect(inPlay(toggleState(myGame))).toBeTrue();
     });
   });
   describe('togglePlayers', () => {
