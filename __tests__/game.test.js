@@ -1,7 +1,7 @@
 import 'jasmine-expect';
 import { actComps, actGraph, active, actNodes, board, claimNext, colNodes,
-   column, game, hasWinComp, next, nodes, passComps, passGraph, passive, passNodes,
-   playerGraph, playerNodes, players, select, setColumn, setNodes,
+   column, game, hasWinComp, inPlay, next, nodes, passComps, passGraph, passive,
+   passNodes, playerGraph, playerNodes, players, select, setColumn, setNodes,
   setPlayers, togglePlayers, winner, } from 'src/game';
 
 import { id, player, } from 'src/player';
@@ -23,6 +23,7 @@ describe('Game', () => {
       expect(myGame.players).toBeArray();
       expect(myGame.nodes).toBeArray();
       expect(myGame.column).toBe(0);
+      expect(myGame.inPlay).toBe(false);
     });
   });
   describe('nodes', () => {
@@ -33,6 +34,11 @@ describe('Game', () => {
   describe('column', () => {
     it('returns the games column ID', () => {
       expect(column(myGame)).toBe(0);
+    });
+  });
+  describe('inPlay', () => {
+    it('returns the games play state', () => {
+      expect(inPlay(myGame)).toBeFalse();
     });
   });
   describe('players', () => {

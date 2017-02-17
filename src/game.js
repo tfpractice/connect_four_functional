@@ -20,17 +20,17 @@ const dCol = 0;
 const dPlr = [ player('player0', 0, 0), player('player1', 0, 1) ];
 const dNodes = genNodes();
 
-const init = ({ column: 0, nodes: genNodes(), players: dPlr, });
+const init = ({ column: 0, nodes: genNodes(), players: dPlr, inPlay: false });
 
-export const game = (players = dPlr, nodes = dNodes, column = 0) =>
-  ({ players, nodes, column });
+export const game = (players = dPlr, nodes = dNodes, column = 0, inPlay = false) =>
+  ({ players, nodes, column, inPlay });
 
 export const column = ({ column } = init) => column;
 export const nodes = ({ nodes } = init) => nodes;
 export const players = ({ players } = init) => players;
 export const active = ({ players: [ active, passive ] } = init) => active;
 export const passive = ({ players: [ active, passive ] } = init) => passive;
-
+export const inPlay = ({ inPlay } = init) => inPlay;
 export const setNodes = nArr => g => game(players(g), nArr, column(g));
 export const setColumn = col => g => game(players(g), nodes(g), col);
 export const setPlayers = pArr => g => game(pArr, nodes(g), column(g));
@@ -40,8 +40,6 @@ export const colNodes = g => byCol(nodes(g))(column(g));
 export const next = game => nextFree(colNodes(game));
 
 export const togglePlayers = g => setPlayers([ passive(g), active(g) ])(g);
-
-// export const playerMap = players => asMap(asSet(players));
 
 export const playerNodes = g => p => byPlayer(nodes(g))(id(p));
 export const actNodes = g => playerNodes(g)(active(g));
@@ -58,16 +56,6 @@ export const claimNext = g =>
 setNodes(replace(claim(id(active(g)))(next(g)))(nodes(g)))(g);
 export const select = game =>
   next(game) ? togglePlayers(claimNext(game)) : claimNext(game);
-
-  // // setNodes(replace(setPlayer(active(game))(next(game)))(nodes(game)))(game);
-  // // setNodes(replace(setPlayer(active(game))())(nodes(game)))(game);
-  //
-  // setNodes(replace(claim(id(active(game)))(next(game)))(nodes(game)))(game);
-  //
-  // claim(active(game))(next(game));
-  //
-  // console.log(nodes(game));
-  // return togglePlayers(game);
 
 export const hasWinComp = brd => plr => winComp(pGraph(brd)(plr), 3);
 export const winner = ({ players, nodes }) => players.find(hasWinComp(board({ nodes })));
