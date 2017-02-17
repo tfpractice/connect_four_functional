@@ -1,6 +1,6 @@
 import 'jasmine-expect';
 import { copy, node, setPlayer, } from 'src/node';
-import { byExcess, byPlayer, exceeds, hasFree, nextFree, repIf, replace, repPos,
+import { anyExceed, byExcess, byPlayer, exceeds, hasFree, nextFree, repIf, replace, repPos,
  } from 'src/filter';
 
 const c00 = node(0, 0);
@@ -31,17 +31,25 @@ describe('filters', () => {
       expect(nextFree(myNodes.map(setPlayer(0)))).toBeUndefined();
     });
   });
-  describe('exceeds', () => {
-    it('checks if a collections size is greater than the limit', () => {
-      expect(exceeds(3)(myNodes)).toBeTrue();
-      expect(exceeds(6)(myNodes)).toBeFalse();
-    });
-  });
-  describe('byExcess', () => {
-    it('filters an collections of collections by whose which exceed the limt', () => {
-      const concNodes = myNodes.map((n, id, arr) => id % 2 ? [ n ] : [ n, 1, 2, 3, 4 ]);
+  describe('excessOps', () => {
+    const concNodes = myNodes.map((n, id, arr) => id % 2 ? [ n ] : [ n, 1, 2, 3, 4 ]);
 
-      expect(byExcess(2)(concNodes).length).toEqual(3);
+    describe('exceeds', () => {
+      it('checks if a collections size is greater than the limit', () => {
+        expect(exceeds(3)(myNodes)).toBeTrue();
+        expect(exceeds(6)(myNodes)).toBeFalse();
+      });
+    });
+    describe('byExcess', () => {
+      it('filters an collections of collections by whose which exceed the limt', () => {
+        expect(byExcess(2)(concNodes).length).toEqual(3);
+      });
+    });
+    describe('anyExceed', () => {
+      it('checks if any element of a collection exceeds a limit', () => {
+        expect(anyExceed(3)(concNodes)).toBeTrue();
+        expect(anyExceed(7)(concNodes)).toBeFalse();
+      });
     });
   });
   describe('repIf', () => {
