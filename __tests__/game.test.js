@@ -1,8 +1,8 @@
 import 'jasmine-expect';
 import { actComps, actGraph, active, actNodes, board, claimNext, colNodes,
-   column, game, hasWinComp, inPlay, next, nodes, passComps, passGraph, passive,
-   passNodes, playerGraph, playerNodes, players, select, setColumn, setNodes, setPlayers, setPlayState, start,
-  stop, togglePlayers, toggleState, winner, } from 'src/game';
+   column, game, hasWinComp, inPlay, next, nodes, passComps, passGraph, passive, passNodes,
+   playerComps, playerGraph, playerNodes, players, select, setColumn, setNodes, setPlayers, setPlayState,
+  start, stop, togglePlayers, toggleState, winner, } from 'src/game';
 
 import { id, player, } from 'src/player';
 import { claim, } from 'src/node';
@@ -147,26 +147,36 @@ describe('Game', () => {
       expect(passNodes(myGame)).toBeArray();
     });
   });
-  describe('playerGraph', () => {
-    it('returns a map of the nodes claime d by the specified player', () => {
-      colNodes(myGame).map(claim(id(dick)));
-      expect(playerGraph(myGame)(dick) instanceof Map).toBeTrue();
+  
+  describe('graphs', () => {
+    const evenJane = nodes(myGame).filter((e, i) => i % 2 === 0).map(claim(id(jane)));
+    const oddDick = nodes(myGame).filter((e, i) => i % 2 === 1).map(claim(id(dick)));
+    const rowGame = setNodes([ ...evenJane, ...oddDick ])(myGame);
+
+    describe('playerGraph', () => {
+      it('returns a map of the nodes claime d by the specified player', () => {
+        expect(playerGraph(rowGame)(dick) instanceof Map).toBeTrue();
+        expect(playerGraph(rowGame)(dick).size).toBe(21);
+        expect(playerGraph(rowGame)(jane).size).toBe(21);
+      });
     });
-  });
-  describe('actGraph', () => {
-    it('returns a Graph of the nodes belonging to the active player', () => {
-      colNodes(myGame).map(claim(id(dick)));
-      
-      expect(actGraph(myGame) instanceof Map).toBeTrue();
-      
-      // expect([ ...actGraph(myGame) ][0][0].player).toBe(dick.id);
+    describe('actGraph', () => {
+      it('returns a Graph of the nodes belonging to the active player', () => {
+        expect(actGraph(rowGame) instanceof Map).toBeTrue();
+        expect(actGraph(rowGame).size).toBe(21);
+      });
     });
-  });
-  describe('passGraph', () => {
-    it('returns  a Graph of the nodes  belonging to the passive player', () => {
-      colNodes(myGame).map(claim(id(jane)));
-      
-      expect(passGraph(myGame) instanceof Map).toBeTrue();
+    describe('passGraph', () => {
+      it('returns  a Graph of the nodes  belonging to the passive player', () => {
+        expect(passGraph(rowGame) instanceof Map).toBeTrue();
+        expect(passGraph(rowGame).size).toBe(21);
+      });
+    });
+    describe('playerComps', () => {
+      it('returns all the players Components', () => {
+        console.log(playerComps(rowGame)(dick));
+        expect(playerComps(rowGame)(dick)).toBeArray();
+      });
     });
   });
   describe('select', () => {

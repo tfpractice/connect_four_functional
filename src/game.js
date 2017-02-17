@@ -1,5 +1,5 @@
 import { Graph, } from 'graph-curry';
-import { asMap, asSet, map, spreadKV, } from 'fenugreek-collections';
+import { asMap, asSet, filter, map, } from 'fenugreek-collections';
 import { Components, Filter, Grid, Node, } from 'game_grid';
 import { id, player, } from './player';
 import { genNodes, playerGraph as pGraph,
@@ -53,7 +53,7 @@ export const playerGraph = g => p => graph(...playerNodes(g)(p));
 export const actGraph = g => playerGraph(g)(active(g));
 export const passGraph = g => playerGraph(g)(passive(g));
 
-export const playerComps = g => p => omniComps(graph(...playerNodes(g)(p)));
+export const playerComps = g => p => byExcess(1)(omniComps(playerGraph(g)(p)));
 export const actComps = game => omniComps(actGraph(game));
 export const passComps = game => omniComps(passGraph(game));
 
