@@ -17,7 +17,7 @@ export default {
   moduleName: 'connect_four_functional',
   sourceMap: true,
   exports: 'named',
-  external: [ 'game_grid', 'turmeric-utils' ],
+  external: [ 'game_grid', 'fenugreek-collections' ],
   plugins: [
     progress({ clearLine: false, }),
     filesize(),
