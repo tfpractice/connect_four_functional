@@ -1,7 +1,7 @@
 import 'jasmine-expect';
-import { actComps, actGraph, active, actNodes, board, claimNext, colNodes,
-   column, game, hasWinComp, inPlay, isWinner, next, nodes, passComps, passGraph, passive,
-   passNodes, playerComps, playerGraph, playerNodes, players, select, setColumn, setNodes, setPlayers,
+import { actComps, actGraph, active, actNodes, board, canPlay, claimNext,
+   colNodes, column, game, hasWinComp, inPlay, isWinner, next, nodes, passComps, passGraph,
+   passive, passNodes, playerComps, playerGraph, playerNodes, players, select, setColumn, setNodes, setPlayers,
   setPlayState, start, stop, togglePlayers, toggleState, winner,
    } from 'src/game';
 
@@ -95,6 +95,16 @@ describe('Game', () => {
     it('returns an array of nodes in the current column', () => {
       expect(colNodes(myGame)).toBeArray();
       expect(colNodes(myGame)[0].column).toBe(0);
+    });
+  });
+  describe('canPlay', () => {
+    it('checks if the game is inPlay and there is an available node', () => {
+      const locked = setPlayState(false)(myGame);
+      const noNext = setNodes([])(myGame);
+
+      expect(canPlay(locked)).toBeFalsy();
+      expect(canPlay(noNext)).toBeFalsy();
+      expect(canPlay(setPlayState(true)(myGame))).toBeTrue();
     });
   });
   describe('next', () => {

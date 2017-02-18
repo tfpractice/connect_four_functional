@@ -43,7 +43,7 @@ export const board = g => graph(...nodes(g));
 export const colNodes = g => byCol(nodes(g))(column(g));
 export const next = game => nextFree(colNodes(game));
 
-export const canPlay = g => inPlay(g) && next(g);
+export const canPlay = g => inPlay(g) && !!next(g);
 
 export const togglePlayers = g => setPlayers([ passive(g), active(g) ])(g);
 
@@ -62,9 +62,13 @@ export const passComps = g => playerComps(g)(passive(g));
 export const isWinner = g => p => anyExceed(3)(playerComps(g)(p));
 export const winner = g => players(g).find(isWinner(g));
 
-export const claimNext = g => 
+export const claimNext = g =>
+
 // canPlay(g) ?
-  setNodes(replace(claim(id(active(g)))(next(g)))(nodes(g)))(g) : g;
+  setNodes(replace(claim(id(active(g)))(next(g)))(nodes(g)))(g);
+
+  // : g;
 export const select = game =>
+
 // canPlay(g) ?
   next(game) ? togglePlayers(claimNext(game)) : game;
