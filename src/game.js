@@ -61,10 +61,11 @@ export const passComps = g => playerComps(g)(passive(g));
 
 export const isWinner = g => p => anyExceed(3)(playerComps(g)(p));
 export const winner = g => players(g).find(isWinner(g));
+export const endIfWon = g => winner(g) ? stop(g) : g;
 
 export const claimNext = g => locked(g) ? g :
   setNodes(replace(claim(id(active(g)))(next(g)))(nodes(g)))(g);
-  
+
 export const select = game =>
 
 // canPlay(g) ?

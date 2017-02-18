@@ -1,7 +1,7 @@
 import 'jasmine-expect';
 import { actComps, actGraph, active, actNodes, board, canPlay, claimNext,
-   colNodes, column, game, hasWinComp, inPlay, isWinner, locked, next, nodes, passComps, passGraph,
-   passive, passNodes, playerComps, playerGraph, playerNodes, players, select, setColumn, setNodes, setPlayers,
+   colNodes, column, endIfWon, game, hasWinComp, inPlay, isWinner, locked, next, nodes, passComps,
+   passGraph, passive, passNodes, playerComps, playerGraph, playerNodes, players, select, setColumn, setNodes, setPlayers,
   setPlayState, start, stop, togglePlayers, toggleState, winner,
    } from 'src/game';
 
@@ -16,6 +16,9 @@ const col0 = colNodes(myGame);
 const col1 = colNodes(setColumn(1)(myGame));
 const [ c0r0, c0r1, c0r2, c0r3, c0r4, c0r5 ] = col0;
 const [ c1r0, c1r1, c1r2, c1r3, c1r4, c1r5 ] = col1;
+const evenJane = nodes(myGame).filter((e, i) => i % 2 === 0).map(claim(id(jane)));
+const oddDick = nodes(myGame).filter((e, i) => i % 2 === 1).map(claim(id(dick)));
+const rowGame = setNodes([ ...evenJane, ...oddDick ])(myGame);
 
 describe('Game', () => {
   describe('game', () => {
@@ -131,6 +134,12 @@ describe('Game', () => {
       expect(locked(setPlayState(true)(myGame))).toBeFalse();
     });
   });
+  describe('endIfWon', () => {
+    it('locks the game if theere is a winner', () => {
+      expect(locked(endIfWon(rowGame))).toBeTrue();
+      expect(locked(endIfWon(start(myGame)))).toBeFalse();
+    });
+  });
   describe('next', () => {
     it('returns the next free node in the games current column', () => {
       expect(next(myGame)).toBeObject();
@@ -159,10 +168,6 @@ describe('Game', () => {
   });
   
   describe('graphs', () => {
-    const evenJane = nodes(myGame).filter((e, i) => i % 2 === 0).map(claim(id(jane)));
-    const oddDick = nodes(myGame).filter((e, i) => i % 2 === 1).map(claim(id(dick)));
-    const rowGame = setNodes([ ...evenJane, ...oddDick ])(myGame);
-
     describe('playerNodes', () => {
       it('returns an array of the nodes claimed by a player', () => {
         colNodes(myGame).map(claim(id(dick)));
@@ -232,7 +237,7 @@ describe('Game', () => {
     });
   });
   describe('select', () => {
-    describe('when the games next node is Free', () => {
+    describe('when the games is playable', () => {
       it('assigns the currentNode to the current player', () => {
         const myNext = next(start(myGame));
 
