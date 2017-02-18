@@ -64,10 +64,7 @@ export const winner = g => players(g).find(isWinner(g));
 
 export const claimNext = g => locked(g) ? g :
   setNodes(replace(claim(id(active(g)))(next(g)))(nodes(g)))(g);
-
-  // : g;
-
-  // : g;
+  
 export const select = game =>
 
 // canPlay(g) ?

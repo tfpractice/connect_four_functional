@@ -82,23 +82,24 @@ describe('Game', () => {
   describe('claimNext', () => {
     describe('when game is playable', () => {
       it('retuns a modified version of the game with next available node claimed ', () => {
-        const myNext = next(myGame);
+        const myNext = next(start(myGame));
 
-        console.log(inPlay(myGame));
-        expect(claimNext(myGame)).toBeObject();
-        console.log(playerNodes(claimNext(myGame))(active(myGame)));
-        expect(playerNodes(claimNext(myGame))(active(myGame))[0].row).toBe(myNext.row);
-        expect(playerNodes(claimNext(myGame))(active(myGame))[0].column).toBe(myNext.column);
+        // console.log(inPlay(start(myGame)));
+        expect(claimNext(start(myGame))).not.toBe(myGame);
+
+        // console.log(playerNodes(claimNext(start(myGame)))(active((myGame))));
+        expect(playerNodes(claimNext(start(myGame)))(active((myGame)))[0].row).toBe(myNext.row);
+        expect(playerNodes(claimNext(start(myGame)))(active((myGame)))[0].column).toBe(myNext.column);
       });
     });
     describe('when game is locked', () => {
       it('retuns the unmodified game', () => {
         const myNext = next(myGame);
         
-        expect(claimNext(myGame)).toBeObject();
+        expect(claimNext(myGame)).toBe(myGame);
         
-        expect(playerNodes(claimNext(myGame))(active(myGame))[0].row).toBe(myNext.row);
-        expect(playerNodes(claimNext(myGame))(active(myGame))[0].column).toBe(myNext.column);
+        // expect(playerNodes(claimNext(myGame))(active(myGame))[0].row).toBe(myNext.row);
+        // expect(playerNodes(claimNext(myGame))(active(myGame))[0].column).toBe(myNext.column);
       });
     });
   });
@@ -233,31 +234,30 @@ describe('Game', () => {
   describe('select', () => {
     describe('when the games next node is Free', () => {
       it('assigns the currentNode to the current player', () => {
-        const myNext = next(myGame);
+        const myNext = next(start(myGame));
 
-        expect(playerNodes(select(myGame))(active(myGame))[0].row).toBe(myNext.row);
-        expect(playerNodes(select(myGame))(active(myGame))[0].column).toBe(myNext.column);
+        expect(playerNodes(select(start(myGame)))(active(start(myGame)))[0].row).toBe(myNext.row);
+        expect(playerNodes(select(start(myGame)))(active(start(myGame)))[0].column).toBe(myNext.column);
       });
       
       it('toggles the players', () => {
-        const prev = active(myGame);
-      
-        // select(myGame);
-        expect(active(select(myGame))).not.toBe(prev);
+        const prev = active(start(myGame));
+
+        expect(active(select(start(myGame)))).not.toBe(prev);
       });
     });
     
     // describe('when the current column is not available', () => {
     //   it('returns undefined', () => {
-    //     column(myGame).map(claim(id(active)(myGame)));
-    //     expect(select(myGame)).toBeUndefined();
+    //     column(start(myGame)).map(claim(id(active)(start(myGame))));
+    //     expect(select(start(myGame))).toBeUndefined();
     //   });
     //   it('does not toggle the players', () => {
-    //     column(myGame).map(claim(id(active)(myGame)));
-    //     const prev = active(myGame);
+    //     column(start(myGame)).map(claim(id(active)(start(myGame))));
+    //     const prev = active(start(myGame));
     //
-    //     select(myGame);
-    //     expect(active(myGame)).toBe(prev);
+    //     select(start(myGame));
+    //     expect(active(start(myGame))).toBe(prev);
     //   });
     // });
   });
