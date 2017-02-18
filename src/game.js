@@ -25,10 +25,10 @@ export const game = (players = dPlr, nodes = dNodes, column = 0, inPlay = false)
 
 export const column = ({ column } = init) => column;
 export const nodes = ({ nodes } = init) => nodes;
+export const inPlay = ({ inPlay } = init) => inPlay;
 export const players = ({ players } = init) => players;
 export const active = ({ players: [ active, passive ] } = init) => active;
 export const passive = ({ players: [ active, passive ] } = init) => passive;
-export const inPlay = ({ inPlay } = init) => inPlay;
 
 export const setNodes = nArr => g => game(players(g), nArr, column(g), inPlay(g));
 export const setColumn = col => g => game(players(g), nodes(g), col, inPlay(g));
@@ -61,6 +61,6 @@ export const isWinner = g => p => anyExceed(3)(playerComps(g)(p));
 export const winner = g => players(g).find(isWinner(g));
 
 export const claimNext = g =>
-setNodes(replace(claim(id(active(g)))(next(g)))(nodes(g)))(g);
+  setNodes(replace(claim(id(active(g)))(next(g)))(nodes(g)))(g);
 export const select = game =>
   next(game) ? togglePlayers(claimNext(game)) : claimNext(game);
