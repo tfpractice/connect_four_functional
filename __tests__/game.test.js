@@ -1,6 +1,6 @@
 import 'jasmine-expect';
 import { actComps, actGraph, active, actNodes, board, canPlay, claimNext,
-   colNodes, column, game, hasWinComp, inPlay, isWinner, next, nodes, passComps, passGraph,
+   colNodes, column, game, hasWinComp, inPlay, isWinner, locked, next, nodes, passComps, passGraph,
    passive, passNodes, playerComps, playerGraph, playerNodes, players, select, setColumn, setNodes, setPlayers,
   setPlayState, start, stop, togglePlayers, toggleState, winner,
    } from 'src/game';
@@ -83,9 +83,10 @@ describe('Game', () => {
     describe('when game is playable', () => {
       it('retuns a modified version of the game with next available node claimed ', () => {
         const myNext = next(myGame);
-        
+
+        console.log(inPlay(myGame));
         expect(claimNext(myGame)).toBeObject();
-        console.log(playerNodes(claimNext(myGame))(active(myGame))
+        console.log(playerNodes(claimNext(myGame))(active(myGame)));
         expect(playerNodes(claimNext(myGame))(active(myGame))[0].row).toBe(myNext.row);
         expect(playerNodes(claimNext(myGame))(active(myGame))[0].column).toBe(myNext.column);
       });
@@ -117,6 +118,16 @@ describe('Game', () => {
       expect(canPlay(locked)).toBeFalsy();
       expect(canPlay(noNext)).toBeFalsy();
       expect(canPlay(setPlayState(true)(myGame))).toBeTrue();
+    });
+  });
+  describe('locked', () => {
+    it('checks if the game is not inPlay or there is no available node', () => {
+      const lockedGame = setPlayState(false)(myGame);
+      const noNext = setNodes([])(myGame);
+
+      expect(locked(lockedGame)).toBeTrue();
+      expect(locked(noNext)).toBeTrue();
+      expect(locked(setPlayState(true)(myGame))).toBeFalse();
     });
   });
   describe('next', () => {

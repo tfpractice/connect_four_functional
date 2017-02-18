@@ -35,15 +35,15 @@ export const setColumn = col => g => game(players(g), nodes(g), col, inPlay(g));
 export const setPlayState = bool => g => game(players(g), nodes(g), column(g), !!bool);
 export const setPlayers = pArr => g => game(pArr, nodes(g), column(g), inPlay(g));
 
-export const start = g => setPlayState(true)(g);
-export const stop = g => setPlayState(false)(g);
-export const toggleState = g => setPlayState(!inPlay(g))(g);
-
 export const board = g => graph(...nodes(g));
 export const colNodes = g => byCol(nodes(g))(column(g));
 export const next = game => nextFree(colNodes(game));
 
+export const start = g => setPlayState(true)(g);
+export const stop = g => setPlayState(false)(g);
+export const toggleState = g => setPlayState(!inPlay(g))(g);
 export const canPlay = g => inPlay(g) && !!next(g);
+export const locked = g => !canPlay(g);
 
 export const togglePlayers = g => setPlayers([ passive(g), active(g) ])(g);
 
@@ -66,6 +66,8 @@ export const claimNext = g =>
 
 // canPlay(g) ?
   setNodes(replace(claim(id(active(g)))(next(g)))(nodes(g)))(g);
+
+  // : g;
 
   // : g;
 export const select = game =>
