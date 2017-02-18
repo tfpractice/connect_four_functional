@@ -1,8 +1,8 @@
 import { Graph, } from 'graph-curry';
 import { Components, Filter, } from 'game_grid';
-import { id, player, } from './player';
-import { genNodes, } from './board';
 import { claim, } from './node';
+import { genNodes, } from './board';
+import { id, player, } from './player';
 import { anyExceed, byExcess, byPlayer, nextFree, replace, } from './filter';
 
 const { graph } = Graph;
@@ -11,27 +11,39 @@ const { byCol, } = Filter;
 
 const dCol = 0;
 const dPlr = [ player('player0', 0, 0), player('player1', 0, 1) ];
-const dNodes = genNodes(7, 6);
-const init = ({ column: 0, nodes: genNodes(), players: dPlr, inPlay: false });
+const dNod = genNodes(7, 6);
+const init = ({ column: 0, nodes: genNodes(), players: dPlr, inPlay: false, min: 3 });
 
-export const game = (players = dPlr, nodes = dNodes, column = 0, inPlay = false) =>
-  ({ players, nodes, column, inPlay });
+export const game =
+ (players = dPlr, nodes = dNod, column = 0, inPlay = false, min = 3) =>
+  ({ players, nodes, column, inPlay, min });
 
 export const column = ({ column } = init) => column;
 export const nodes = ({ nodes } = init) => nodes;
 export const inPlay = ({ inPlay } = init) => inPlay;
+export const min = ({ min } = init) => min;
 export const players = ({ players } = init) => players;
 export const active = ({ players: [ active, passive ] } = init) => active;
 export const passive = ({ players: [ active, passive ] } = init) => passive;
 
-export const setNodes = nArr => g => game(players(g), nArr, column(g), inPlay(g));
-export const setColumn = col => g => game(players(g), nodes(g), col, inPlay(g));
-export const setPlayState = bool => g => game(players(g), nodes(g), column(g), !!bool);
-export const setPlayers = pArr => g => game(pArr, nodes(g), column(g), inPlay(g));
+export const setNodes = nArr => g =>
+  game(players(g), nArr, column(g), inPlay(g), min(g));
+
+export const setColumn = col => g =>
+  game(players(g), nodes(g), col, inPlay(g), min(g));
+
+export const setPlayState = bool => g =>
+  game(players(g), nodes(g), column(g), !!bool, min(g));
+
+export const setPlayers = pArr => g =>
+  game(pArr, nodes(g), column(g), inPlay(g), min(g));
+
+export const setMin = m => g =>
+  game(players(g), nodes(g), column(g), inPlay(g), m);
 
 export const board = g => graph(...nodes(g));
 export const colNodes = g => byCol(nodes(g))(column(g));
-export const next = game => nextFree(colNodes(game));
+export const next = g => nextFree(colNodes(g));
 
 export const start = g => setPlayState(true)(g);
 export const stop = g => setPlayState(false)(g);
@@ -53,7 +65,7 @@ export const playerComps = g => p => byExcess(1)(omniComps(playerGraph(g)(p)));
 export const actComps = g => playerComps(g)(active(g));
 export const passComps = g => playerComps(g)(passive(g));
 
-export const isWinner = g => p => anyExceed(3)(playerComps(g)(p));
+export const isWinner = g => p => anyExceed(min(g))(playerComps(g)(p));
 export const winner = g => players(g).find(isWinner(g));
 export const endIfWon = g => winner(g) ? stop(g) : g;
 

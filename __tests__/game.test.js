@@ -1,7 +1,7 @@
 import 'jasmine-expect';
 import { actComps, actGraph, active, actNodes, board, canPlay, claimNext,
-   claimSwap, colNodes, column, endIfWon, game, hasWinComp, inPlay, isWinner, locked, next, nodes,
-   passComps, passGraph, passive, passNodes, playerComps, playerGraph, playerNodes, players, select, setColumn, setNodes, setPlayers,
+   claimSwap, colNodes, column, endIfWon, game, hasWinComp, inPlay, isWinner, locked, min, next, nodes, passComps,
+   passGraph, passive, passNodes, playerComps, playerGraph, playerNodes, players, select, setColumn, setMin, setNodes, setPlayers,
   setPlayState, start, stop, togglePlayers, toggleState, winner,
    } from 'src/game';
 
@@ -45,6 +45,11 @@ describe('Game', () => {
       expect(inPlay(myGame)).toBeFalse();
     });
   });
+  describe('min', () => {
+    it('retrieves the minimum size which a winning component must exceed ', () => {
+      expect(min(myGame)).toEqual(3);
+    });
+  });
   describe('players', () => {
     it('returns the players attribute of the', () => {
       expect(players(myGame)).toBeArray();
@@ -77,6 +82,11 @@ describe('Game', () => {
       expect(inPlay(setPlayState(true)(myGame))).toBeTruthy();
     });
   });
+  describe('setMin', () => {
+    it('returns a copy of the game with amodified min prop', () => {
+      expect(min(setMin(4)(myGame))).toEqual(4);
+    });
+  });
   describe('setPlayers', () => {
     it('returns a new game with the specified players', () => {
       expect(players(setPlayers([])(myGame))).toBeArray();
@@ -92,10 +102,10 @@ describe('Game', () => {
     describe('when game is playable', () => {
       it('retuns a modified version of the game with next available node claimed ', () => {
         const myNext = next(start(myGame));
-
+        
         // //console.log(inPlay(start(myGame)));
         expect(claimNext(start(myGame))).not.toBe(myGame);
-
+        
         // //console.log(playerNodes(claimNext(start(myGame)))(active((myGame))));
         expect(playerNodes(claimNext(start(myGame)))(active((myGame)))[0].row).toBe(myNext.row);
         expect(playerNodes(claimNext(start(myGame)))(active((myGame)))[0].column).toBe(myNext.column);
@@ -107,7 +117,7 @@ describe('Game', () => {
       });
     });
   });
-
+  
   describe('colNodes', () => {
     it('returns an array of nodes in the current column', () => {
       expect(colNodes(myGame)).toBeArray();
@@ -118,7 +128,7 @@ describe('Game', () => {
     it('checks if the game is inPlay and there is an available node', () => {
       const locked = setPlayState(false)(myGame);
       const noNext = setNodes([])(myGame);
-
+      
       expect(canPlay(locked)).toBeFalsy();
       expect(canPlay(noNext)).toBeFalsy();
       expect(canPlay(setPlayState(true)(myGame))).toBeTrue();
@@ -128,7 +138,7 @@ describe('Game', () => {
     it('checks if the game is not inPlay or there is no available node', () => {
       const lockedGame = setPlayState(false)(myGame);
       const noNext = setNodes([])(myGame);
-
+      
       expect(locked(lockedGame)).toBeTrue();
       expect(locked(noNext)).toBeTrue();
       expect(locked(setPlayState(true)(myGame))).toBeFalse();
@@ -171,7 +181,7 @@ describe('Game', () => {
     describe('playerNodes', () => {
       it('returns an array of the nodes claimed by a player', () => {
         expect(playerNodes(rowGame)(dick)).toBeArray();
-
+        
         // //console.log(playerNodes(rowGame)(dick))
         expect(playerNodes(rowGame)(dick).length).toBe(21);
       });
@@ -188,7 +198,7 @@ describe('Game', () => {
         expect(passNodes(rowGame).length).toBe(21);
       });
     });
-
+    
     describe('playerGraph', () => {
       it('returns a map of the nodes claime d by the specified player', () => {
         expect(playerGraph(rowGame)(dick) instanceof Map).toBeTrue();
@@ -221,12 +231,12 @@ describe('Game', () => {
       });
     });
     describe('isWinner', () => {
-      it('checks if a player has connected any components exceeding 3', () => {
+      it('checks if a player has connected any components exceeding min', () => {
         expect(isWinner(rowGame)(dick)).toBeTrue();
       });
     });
     describe('winner', () => {
-      it('returns the first user wtih more than 3 connected', () => {
+      it('returns the first user wtih more than min connected', () => {
         expect(winner(rowGame)).toBe(dick);
       });
     });
@@ -235,14 +245,14 @@ describe('Game', () => {
     describe('when the games is playable', () => {
       it('assigns the currentNode to the current player', () => {
         const myNext = next(start(myGame));
-
+        
         expect(playerNodes(select(start(myGame)))(active(myGame))[0].row).toBe(myNext.row);
         expect(playerNodes(select(start(myGame)))(active(myGame))[0].column).toBe(myNext.column);
       });
       
       it('toggles the players', () => {
         // const prev = ;
-
+        
         expect(active(select(start(myGame)))).not.toBe(active(myGame));
       });
     });

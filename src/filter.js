@@ -1,8 +1,8 @@
 import { asSet, filter, map, some, spread, } from 'fenugreek-collections';
-import { Compare, Node, } from 'game_grid';
+import { Compare, } from 'game_grid';
 import { isFree, samePlayer, } from './node';
+
 const { samePos } = Compare;
-const { id } = Node;
 
 export const nextFree = nArr => spread(nArr).find(isFree);
 export const hasFree = nArr => some(nArr)(isFree);
