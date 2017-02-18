@@ -64,7 +64,3 @@ export const claimNext = g =>
 setNodes(replace(claim(id(active(g)))(next(g)))(nodes(g)))(g);
 export const select = game =>
   next(game) ? togglePlayers(claimNext(game)) : claimNext(game);
-
-// export const isWinner=g=p=> hasWinComp(playerGraph(b))
-// export const hasWinComp = brd => plr => winComp(pGraph(brd)(plr), 3);
-// export const winner = ({ players, nodes }) => players.find(hasWinComp(board({ nodes })));
