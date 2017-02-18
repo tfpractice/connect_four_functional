@@ -1,7 +1,7 @@
 import 'jasmine-expect';
 import { actComps, actGraph, active, actNodes, board, canPlay, claimNext,
-   colNodes, column, endIfWon, game, hasWinComp, inPlay, isWinner, locked, next, nodes, passComps,
-   passGraph, passive, passNodes, playerComps, playerGraph, playerNodes, players, select, setColumn, setNodes, setPlayers,
+   claimSwap, colNodes, column, endIfWon, game, hasWinComp, inPlay, isWinner, locked, next, nodes,
+   passComps, passGraph, passive, passNodes, playerComps, playerGraph, playerNodes, players, select, setColumn, setNodes, setPlayers,
   setPlayState, start, stop, togglePlayers, toggleState, winner,
    } from 'src/game';
 
@@ -83,6 +83,12 @@ describe('Game', () => {
     });
   });
   describe('claimNext', () => {
+    describe('claimSwap', () => {
+      it('claims the next node and return a new array of Nodes', () => {
+        console.log(claimSwap(g));
+        expect(claimSwap(g)).toBeArray();
+      });
+    });
     describe('when game is playable', () => {
       it('retuns a modified version of the game with next available node claimed ', () => {
         const myNext = next(start(myGame));
