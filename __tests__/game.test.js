@@ -85,35 +85,29 @@ describe('Game', () => {
   describe('claimNext', () => {
     describe('claimSwap', () => {
       it('claims the next node and return a new array of Nodes', () => {
-        console.log(claimSwap(g));
-        expect(claimSwap(g)).toBeArray();
+        // console.log(claimSwap(myGame));
+        expect(claimSwap(myGame)).toBeArray();
       });
     });
     describe('when game is playable', () => {
       it('retuns a modified version of the game with next available node claimed ', () => {
         const myNext = next(start(myGame));
 
-        // console.log(inPlay(start(myGame)));
+        // //console.log(inPlay(start(myGame)));
         expect(claimNext(start(myGame))).not.toBe(myGame);
 
-        // console.log(playerNodes(claimNext(start(myGame)))(active((myGame))));
+        // //console.log(playerNodes(claimNext(start(myGame)))(active((myGame))));
         expect(playerNodes(claimNext(start(myGame)))(active((myGame)))[0].row).toBe(myNext.row);
         expect(playerNodes(claimNext(start(myGame)))(active((myGame)))[0].column).toBe(myNext.column);
       });
     });
     describe('when game is locked', () => {
       it('retuns the unmodified game', () => {
-        const myNext = next(myGame);
-        
         expect(claimNext(myGame)).toBe(myGame);
-        
-        // expect(playerNodes(claimNext(myGame))(active(myGame))[0].row).toBe(myNext.row);
-        // expect(playerNodes(claimNext(myGame))(active(myGame))[0].column).toBe(myNext.column);
       });
     });
   });
-  describe('board', () => {
-  });
+
   describe('colNodes', () => {
     it('returns an array of nodes in the current column', () => {
       expect(colNodes(myGame)).toBeArray();
@@ -176,27 +170,22 @@ describe('Game', () => {
   describe('graphs', () => {
     describe('playerNodes', () => {
       it('returns an array of the nodes claimed by a player', () => {
-        colNodes(myGame).map(claim(id(dick)));
-        expect(playerNodes(myGame)(dick)).toBeArray();
-      
-      // console.log(playerNodes(myGame)(dick));
-      
-      // expect(playerNodes(myGame)(dick)[0].player).toBe(dick.id);
+        expect(playerNodes(rowGame)(dick)).toBeArray();
+
+        // //console.log(playerNodes(rowGame)(dick))
+        expect(playerNodes(rowGame)(dick).length).toBe(21);
       });
     });
     describe('actNodes', () => {
       it('returns an array of the nodes belonging to the active player', () => {
-        colNodes(myGame).map(claim(id(dick)));
-        expect(actNodes(myGame)).toBeArray();
-      
-      // expect(actNodes(myGame)[0].player).toBe(dick.id);
+        expect(actNodes(rowGame)).toBeArray();
+        expect(actNodes(rowGame).length).toBe(21);
       });
     });
     describe('passNodes', () => {
       it('returns an array of the nodes belonging to the passive player', () => {
-        colNodes(myGame).map(claim(id(jane)));
-      
-        expect(passNodes(myGame)).toBeArray();
+        expect(passNodes(rowGame)).toBeArray();
+        expect(passNodes(rowGame).length).toBe(21);
       });
     });
 
@@ -247,14 +236,14 @@ describe('Game', () => {
       it('assigns the currentNode to the current player', () => {
         const myNext = next(start(myGame));
 
-        expect(playerNodes(select(start(myGame)))(active(start(myGame)))[0].row).toBe(myNext.row);
-        expect(playerNodes(select(start(myGame)))(active(start(myGame)))[0].column).toBe(myNext.column);
+        expect(playerNodes(select(start(myGame)))(active(myGame))[0].row).toBe(myNext.row);
+        expect(playerNodes(select(start(myGame)))(active(myGame))[0].column).toBe(myNext.column);
       });
       
       it('toggles the players', () => {
-        const prev = active(start(myGame));
+        // const prev = ;
 
-        expect(active(select(start(myGame)))).not.toBe(prev);
+        expect(active(select(start(myGame)))).not.toBe(active(myGame));
       });
     });
     

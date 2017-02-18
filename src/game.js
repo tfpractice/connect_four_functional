@@ -1,23 +1,17 @@
 import { Graph, } from 'graph-curry';
-import { asMap, asSet, filter, map, } from 'fenugreek-collections';
-import { Components, Filter, Grid, Node, } from 'game_grid';
+import { Components, Filter, } from 'game_grid';
 import { id, player, } from './player';
-import { genNodes, playerGraph as pGraph,
-  playerNodes as pNodes, winComp, } from './board';
-import { claim, samePlayer, setPlayer, } from './node';
-const { colNodes: gCols, colNodes: cNodes } = Grid;
+import { genNodes, } from './board';
+import { claim, } from './node';
+import { anyExceed, byExcess, byPlayer, nextFree, replace, } from './filter';
 
-import * as Board from './board';
 const { graph } = Graph;
-const { omniComps, splitComps } = Components;
+const { omniComps } = Components;
 const { byCol, } = Filter;
-
-import { anyExceed, byExcess, byPlayer, callIf, hasFree, nextFree, replace, } from './filter';
 
 const dCol = 0;
 const dPlr = [ player('player0', 0, 0), player('player1', 0, 1) ];
-const dNodes = genNodes();
-
+const dNodes = genNodes(7, 6);
 const init = ({ column: 0, nodes: genNodes(), players: dPlr, inPlay: false });
 
 export const game = (players = dPlr, nodes = dNodes, column = 0, inPlay = false) =>
@@ -41,9 +35,9 @@ export const next = game => nextFree(colNodes(game));
 
 export const start = g => setPlayState(true)(g);
 export const stop = g => setPlayState(false)(g);
-export const toggleState = g => setPlayState(!inPlay(g))(g);
 export const canPlay = g => inPlay(g) && !!next(g);
 export const locked = g => !canPlay(g);
+export const toggleState = g => setPlayState(!inPlay(g))(g);
 
 export const togglePlayers = g => setPlayers([ passive(g), active(g) ])(g);
 
@@ -64,10 +58,6 @@ export const winner = g => players(g).find(isWinner(g));
 export const endIfWon = g => winner(g) ? stop(g) : g;
 
 export const claimSwap = g => replace(claim(id(active(g)))(next(g)))(nodes(g));
-export const claimNext = g => locked(g) ? g :
-  endIfWon(setNodes(replace(claim(id(active(g)))(next(g)))(nodes(g)))(g));
+export const claimNext = g => locked(g) ? g : endIfWon(setNodes(claimSwap(g))(g));
 
-export const select = g => locked(g) ? g : (togglePlayers(claimNext(g)));
-
-// canPlay(g) ?
-next(g) ? togglePlayers(claimNext(g)) : g;
+export const select = g => locked(g) ? g : togglePlayers(claimNext(g));
