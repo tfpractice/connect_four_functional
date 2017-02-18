@@ -80,13 +80,25 @@ describe('Game', () => {
     });
   });
   describe('claimNext', () => {
-    it('retuns a modified version of the game with claimed nodes available node', () => {
-      const myNext = next(myGame);
-      
-      expect(claimNext(myGame)).toBeObject();
-      
-      expect(playerNodes(claimNext(myGame))(active(myGame))[0].row).toBe(myNext.row);
-      expect(playerNodes(claimNext(myGame))(active(myGame))[0].column).toBe(myNext.column);
+    describe('when game is playable', () => {
+      it('retuns a modified version of the game with next available node claimed ', () => {
+        const myNext = next(myGame);
+        
+        expect(claimNext(myGame)).toBeObject();
+        console.log(playerNodes(claimNext(myGame))(active(myGame))
+        expect(playerNodes(claimNext(myGame))(active(myGame))[0].row).toBe(myNext.row);
+        expect(playerNodes(claimNext(myGame))(active(myGame))[0].column).toBe(myNext.column);
+      });
+    });
+    describe('when game is locked', () => {
+      it('retuns the unmodified game', () => {
+        const myNext = next(myGame);
+        
+        expect(claimNext(myGame)).toBeObject();
+        
+        expect(playerNodes(claimNext(myGame))(active(myGame))[0].row).toBe(myNext.row);
+        expect(playerNodes(claimNext(myGame))(active(myGame))[0].column).toBe(myNext.column);
+      });
     });
   });
   describe('board', () => {
