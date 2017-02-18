@@ -6,13 +6,13 @@ import progress from 'rollup-plugin-progress';
 import visualizer from 'rollup-plugin-visualizer';
 
 export default {
-    entry: 'index.js',
+    entry: 'src/index.js',
     dest: 'dist/bundle.es6.js',
     format: 'es',
     moduleId: 'connect_four_functional',
     moduleName: 'connect_four_functional',
     exports: 'named',
-    external: [ 'game_grid', 'fenugreek-collections' ],
+    external: [ 'game_grid', 'graph-curry', 'fenugreek-collections' ],
     sourceMap: true,
     plugins: [
       progress({ clearLine: false, }),

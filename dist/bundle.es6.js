@@ -1,61 +1,220 @@
-import { collections } from 'turmeric-utils';
-import { colComponents, genNodes, negComponents, node, nodesByColumn, posComponents, rowComponents } from 'game_grid';
+import { asSet, filter, map, some, spread } from 'fenugreek-collections';
+import { Graph } from 'graph-curry';
+import { Compare, Components, Filter, Grid, Node } from 'game_grid';
 
-var addMap = collections.addMap;
-var get$$1 = collections.get;
-var addNodeBin = function addNodeBin(edges, src) {
-  return addMap(edges)(src)(new Map(get$$1(edges)(src)));
+var column = Node.column;
+var row = Node.row;
+var gNode = Node.node;
+var id$1 = Node.id;
+
+
+var defP = Object.assign({}, gNode(), { player: null });
+
+var node = function node(c, r) {
+    var player = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+    return Object.assign({}, gNode(c, r), { player: player });
 };
 
-var spreadK = collections.spreadK;
-var spawn = function spawn(edges) {
-  return new Map(edges);
-};
-var copy = spawn;
-var fromElements = function fromElements() {
-  for (var _len = arguments.length, elems = Array(_len), _key = 0; _key < _len; _key++) {
-    elems[_key] = arguments[_key];
-  }
+var player$2 = function player() {
+    var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defP,
+        player = _ref.player;
 
-  return elems.reduce(addNodeBin, copy());
-};
-var nodes = function nodes(edges) {
-  return spreadK(copy(edges));
+    return player;
 };
 
-var node$1 = (function () {
-  var c = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-  var r = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-  var player = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
-  return Object.assign(node(c, r), { player: player });
+var copy$1 = function copy(n) {
+    return node(column(n), row(n), player$2(n));
+};
+
+var setPlayer = function setPlayer(p) {
+    return function (n) {
+        return node(column(n), row(n), p);
+    };
+};
+
+var isFree = function isFree(n) {
+    return !!n && player$2(n) == null;
+};
+
+var claim$1 = function claim(p) {
+    return function (n) {
+        return isFree(n) ? setPlayer(p)(n) : n;
+    };
+};
+var unClaim = function unClaim(n) {
+    return setPlayer(null)(n);
+};
+
+var samePlayer = function samePlayer(n0) {
+    return function (n1) {
+        return player$2(n0) === player$2(n1);
+    };
+};
+
+var sameID = function sameID(a) {
+    return function (b) {
+        return id$1(a) === id$1(b);
+    };
+};
+
+var node$1 = Object.freeze({
+	node: node,
+	player: player$2,
+	copy: copy$1,
+	setPlayer: setPlayer,
+	isFree: isFree,
+	claim: claim$1,
+	unClaim: unClaim,
+	samePlayer: samePlayer,
+	sameID: sameID
 });
 
-var player = function player(_ref) {
-  var _ref$player = _ref.player,
-      player = _ref$player === undefined ? null : _ref$player;
-  return player;
+var playerInit = { name: '', score: 0, id: null };
+
+var player$$1 = function player$$1() {
+  var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+  var score = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+  var id = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : name;
+  return { name: name, score: score, id: id };
 };
-var isFree = function isFree(_ref2) {
-  var _ref2$player = _ref2.player,
-      player = _ref2$player === undefined ? null : _ref2$player;
-  return player === null;
+var name = function name() {
+  var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : playerInit,
+      name = _ref.name;
+
+  return name;
 };
-var samePlayer = function samePlayer(_ref3) {
-  var p0 = _ref3.player;
-  return function (_ref4) {
-    var p1 = _ref4.player;
-    return p0 === p1;
+var score = function score() {
+  var _ref2 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : playerInit,
+      score = _ref2.score;
+
+  return score;
+};
+var id = function id() {
+  var _ref3 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : playerInit,
+      id = _ref3.id;
+
+  return id;
+};
+var copy$$1 = function copy$$1(p) {
+  return player$$1(name(p), score(p), id(p));
+};
+
+var setName = function setName(name) {
+  return function (p) {
+    return player$$1(name, score(p), id(p));
+  };
+};
+var setID = function setID(id) {
+  return function (p) {
+    return player$$1(name(p), score(p), id);
+  };
+};
+var setScore = function setScore(score) {
+  return function (p) {
+    return player$$1(name(p), score, id(p));
   };
 };
 
-var node$2 = Object.freeze({
-	default: node$1,
-	player: player,
-	isFree: isFree,
-	samePlayer: samePlayer
+var resetScore = setScore(0);
+var incrementScore = function incrementScore(p) {
+  return setScore(score(p) + 1)(p);
+};
+var decrementScore = function decrementScore(p) {
+  return setScore(score(p) - 1)(p);
+};
+var claim$$1 = function claim$$1(p) {
+  return claim$1(id(p));
+};
+
+var player$1 = Object.freeze({
+	playerInit: playerInit,
+	player: player$$1,
+	name: name,
+	score: score,
+	id: id,
+	copy: copy$$1,
+	setName: setName,
+	setID: setID,
+	setScore: setScore,
+	resetScore: resetScore,
+	incrementScore: incrementScore,
+	decrementScore: decrementScore,
+	claim: claim$$1
 });
 
-var slicedToArray$1 = function () {
+var samePos = Compare.samePos;
+
+
+var nextFree = function nextFree(nArr) {
+  return spread(nArr).find(isFree);
+};
+var hasFree = function hasFree(nArr) {
+  return some(nArr)(isFree);
+};
+var byPlayer = function byPlayer(nArr) {
+  return function () {
+    var player$$1 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+    return filter(nArr)(samePlayer({ player: player$$1 }));
+  };
+};
+
+var exceeds = function exceeds(lim) {
+  return function (coll) {
+    return asSet(coll).size > lim;
+  };
+};
+var anyExceed = function anyExceed(lim) {
+  return function (coll) {
+    return some(coll)(exceeds(lim));
+  };
+};
+var byExcess = function byExcess(lim) {
+  return function (arrays) {
+    return filter(arrays)(exceeds(lim));
+  };
+};
+
+var callIf = function callIf(fn) {
+  return function (boolFn) {
+    return function (n) {
+      return boolFn(n) ? fn(n) : n;
+    };
+  };
+};
+var repIf = function repIf(next) {
+  return function (boolFn) {
+    return function (n) {
+      return boolFn(n) ? next : n;
+    };
+  };
+};
+var repPos = function repPos(next) {
+  return repIf(next)(samePos(next));
+};
+var repID = function repID(next) {
+  return repIf(next)(samePos(next));
+};
+var replace = function replace(next) {
+  return function (nArr) {
+    return map(nArr)(repPos(next));
+  };
+};
+
+var filter$1 = Object.freeze({
+	nextFree: nextFree,
+	hasFree: hasFree,
+	byPlayer: byPlayer,
+	exceeds: exceeds,
+	anyExceed: anyExceed,
+	byExcess: byExcess,
+	callIf: callIf,
+	repIf: repIf,
+	repPos: repPos,
+	repID: repID,
+	replace: replace
+});
+
+var slicedToArray = function () {
   function sliceIterator(arr, i) {
     var _arr = [];
     var _n = true;
@@ -115,312 +274,279 @@ var toConsumableArray = function (arr) {
   }
 };
 
-var flatten = collections.flatten;
+var graph = Graph.graph;
+var nodes = Graph.nodes;
+var gen = Grid.genNodes;
+var omniComps = Components.omniComps;
 
 
-var flattenBin = function flattenBin() {
-  var a = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-  var b = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
-  return flatten(a)(b);
-};
-
-var genNodes$1 = function genNodes$$1() {
-  var cols = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 7;
-  var rows = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 6;
-  return genNodes(cols, rows).map(function (n) {
-    return node$1(n.column, n.row);
-  });
-};
-
-var initNodes = function initNodes() {
+var genNodes = function genNodes() {
   var c = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 7;
   var r = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 6;
-  return fromElements.apply(undefined, toConsumableArray(genNodes$1(c, r)));
+  return gen(c, r).map(copy$1);
 };
-var next = function next(nodes$$1) {
-  return nodes$$1.find(isFree);
-};
-var hasFree = function hasFree(nodes$$1) {
-  return nodes$$1.some(isFree);
-};
-
-var nodesByPlayer = function nodesByPlayer(graph) {
-  return function () {
-    var player$$1 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-    return nodes(graph).filter(samePlayer({ player: player$$1 }));
-  };
+var board = function board() {
+  var c = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 7;
+  var r = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 6;
+  return graph.apply(undefined, toConsumableArray(genNodes(c, r)));
 };
 
-var playerGraph = function playerGraph() {
-  var gr = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new Map();
+var playerNodes = function playerNodes(b) {
   return function (p) {
-    return fromElements.apply(undefined, toConsumableArray(nodesByPlayer(gr)(p)));
+    return byPlayer(nodes(b))(id(p));
+  };
+};
+var playerGraph = function playerGraph(b) {
+  return function (p) {
+    return graph.apply(undefined, toConsumableArray(playerNodes(b)(p)));
   };
 };
 
-var allComps = function allComps(graph) {
-  return [colComponents, negComponents, posComponents, rowComponents].map(function (f) {
-    return f(graph);
-  }).reduce(flattenBin, []);
-};
-
-var splitComps = function splitComps(g) {
-  return new Map().set('row', rowComponents(g)).set('col', colComponents(g)).set('pos', posComponents(g)).set('neg', negComponents(g));
-};
-
-var moreThan = function moreThan(num) {
-  return function () {
-    var coll = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new Set();
-    return coll.size > num;
-  };
-};
-var winComp = function winComp(graph) {
+var hasWinComp = function hasWinComp(g) {
   var n = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 3;
-  return allComps(graph).some(moreThan(n));
+  return some(omniComps(g))(exceeds(n));
+};
+var winComps = function winComps(g) {
+  var n = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 3;
+  return byExcess(n)(omniComps(g));
 };
 
 
 
-var board = Object.freeze({
-	default: fromElements,
-	genNodes: genNodes$1,
-	initNodes: initNodes,
-	next: next,
-	hasFree: hasFree,
-	nodesByPlayer: nodesByPlayer,
+var board$1 = Object.freeze({
+	genNodes: genNodes,
+	board: board,
+	playerNodes: playerNodes,
 	playerGraph: playerGraph,
-	allComps: allComps,
-	splitComps: splitComps,
-	moreThan: moreThan,
-	winComp: winComp
+	hasWinComp: hasWinComp,
+	winComps: winComps
 });
 
-var playerInit = { name: '', score: 0 };
-var player$1 = (function () {
-  var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-  var score = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-  return { name: name, score: score };
-});
-var name = function name(_ref) {
-  var name = _ref.name;
-  return name;
-};
-var score = function score(_ref2) {
-  var score = _ref2.score;
-  return score;
-};
-var resetScore = function resetScore(player) {
-  return player.wins = 0;
-};
-var incrementScore = function incrementScore(_ref3) {
-  var score = _ref3.score;
-  return ++score;
-};
-var decrementScore = function decrementScore(_ref4) {
-  var score = _ref4.score;
-  return --score;
-};
-var claim = function claim() {
-  var player = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-  return function (n) {
-    return n && Object.assign(n, { player: player });
-  };
-};
-
-var player$2 = Object.freeze({
-	playerInit: playerInit,
-	default: player$1,
-	name: name,
-	score: score,
-	resetScore: resetScore,
-	incrementScore: incrementScore,
-	decrementScore: decrementScore,
-	claim: claim
-});
-
-var addBinMap$1$1 = collections.addBinMap;
-var spread$1$1 = collections.spread;
+var graph$1 = Graph.graph;
+var omniComps$1 = Components.omniComps;
+var byCol = Filter.byCol;
 
 
-var kvMap = function kvMap() {
-  var map = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new Map();
-  return function (fn) {
-    return spread$1$1(map).map(function (_ref) {
-      var _ref2 = slicedToArray$1(_ref, 2),
-          k = _ref2[0],
-          _ref2$ = _ref2[1],
-          v = _ref2$ === undefined ? k : _ref2$;
+var dPlr = [player$$1('player0', 0, 0), player$$1('player1', 0, 1)];
+var dNod = genNodes(7, 6);
+var init = { column: 0, nodes: genNodes(), players: dPlr, inPlay: false, min: 3 };
 
-      return [k, fn(v)];
-    }).reduce(addBinMap$1$1, new Map());
-  };
+var game = function game() {
+  var players = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : dPlr;
+  var nodes = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : dNod;
+  var column = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+  var inPlay = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
+  var min = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 3;
+  return { players: players, nodes: nodes, column: column, inPlay: inPlay, min: min };
 };
 
-var spreadKV$1 = collections.spreadKV;
+var column$1 = function column() {
+  var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : init,
+      column = _ref.column;
 
+  return column;
+};
+var nodes$1 = function nodes() {
+  var _ref2 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : init,
+      nodes = _ref2.nodes;
 
-var initGame = function initGame() {
-  return {
-    cID: 0,
-    nodes: genNodes$1(),
-    players: [player$1('player0'), player$1('player1')]
-  };
+  return nodes;
 };
+var inPlay = function inPlay() {
+  var _ref3 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : init,
+      inPlay = _ref3.inPlay;
 
-var game = (function (_ref) {
-  var _ref$cID = _ref.cID,
-      cID = _ref$cID === undefined ? 0 : _ref$cID,
-      _ref$nodes = _ref.nodes,
-      nodes = _ref$nodes === undefined ? genNodes$1() : _ref$nodes,
-      _ref$players = _ref.players,
-      players = _ref$players === undefined ? initGame().players : _ref$players;
-  return { cID: cID, nodes: nodes, players: players };
-});
+  return inPlay;
+};
+var min = function min() {
+  var _ref4 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : init,
+      min = _ref4.min;
 
-var setPlayers = function setPlayers(players) {
-  return function () {
-    var g = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initGame();
-    return Object.assign({}, g, players);
-  };
+  return min;
 };
-var cID = function cID(_ref2) {
-  var _ref2$cID = _ref2.cID,
-      cID = _ref2$cID === undefined ? 0 : _ref2$cID;
-  return cID;
-};
-var board$1 = function board(_ref3) {
-  var nodes = _ref3.nodes;
-  return fromElements.apply(undefined, toConsumableArray(nodes));
-};
-var players = function players(_ref4) {
-  var players = _ref4.players;
+var players = function players() {
+  var _ref5 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : init,
+      players = _ref5.players;
+
   return players;
 };
-var active = function active(_ref5) {
-  var _ref5$players = slicedToArray$1(_ref5.players, 2),
-      active = _ref5$players[0],
-      passive = _ref5$players[1];
+var active = function active() {
+  var _ref6 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : init,
+      _ref6$players = slicedToArray(_ref6.players, 2),
+      active = _ref6$players[0],
+      passive = _ref6$players[1];
 
   return active;
 };
-var passive = function passive(_ref6) {
-  var _ref6$players = slicedToArray$1(_ref6.players, 2),
-      active = _ref6$players[0],
-      passive = _ref6$players[1];
+var passive = function passive() {
+  var _ref7 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : init,
+      _ref7$players = slicedToArray(_ref7.players, 2),
+      active = _ref7$players[0],
+      passive = _ref7$players[1];
 
   return passive;
 };
 
-var column = function column(_ref7) {
-  var cID = _ref7.cID,
-      nodes = _ref7.nodes;
-  return nodesByColumn(board$1({ nodes: nodes }))(cID);
-};
-var next$1 = function next$$1(game) {
-  return next(column(game));
-};
-var playerMap = function playerMap(players) {
-  return new Map(spreadKV$1(new Set(players)));
-};
-
-var graphs = function graphs(_ref8) {
-  var p = _ref8.players,
-      nodes = _ref8.nodes;
-  return kvMap(playerMap(p))(playerGraph(board$1({ nodes: nodes })));
-};
-var actGraph = function actGraph(_ref9) {
-  var _ref9$players = slicedToArray$1(_ref9.players, 2),
-      act = _ref9$players[0],
-      pass = _ref9$players[1],
-      nodes = _ref9.nodes;
-
-  return playerGraph(board$1({ nodes: nodes }))(act);
-};
-var passGraph = function passGraph(_ref10) {
-  var _ref10$players = slicedToArray$1(_ref10.players, 2),
-      act = _ref10$players[0],
-      pass = _ref10$players[1],
-      nodes = _ref10.nodes;
-
-  return playerGraph(board$1({ nodes: nodes }))(pas);
-};
-
-var components$1 = function components(game) {
-  return kvMap(graphs(game))(splitComps);
-};
-var actComps = function actComps(game) {
-  return allComps(actGraph(game));
-};
-var passComps = function passComps(game) {
-  return allComps(passGraph(game));
-};
-
-var togglePlayers = function togglePlayers(_ref11) {
-  var _ref12;
-
-  var arr = _ref11.players;
-  return _ref12 = [arr[0], arr[1]], arr[1] = _ref12[0], arr[0] = _ref12[1], _ref12;
-};
-
-var setColumn = function setColumn(game) {
-  return function () {
-    var cID = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-    return Object.assign(game, { cID: cID });
+var setNodes = function setNodes(nArr) {
+  return function (g) {
+    return game(players(g), nArr, column$1(g), inPlay(g), min(g));
   };
 };
-var select = function select(game) {
-  return claim(active(game))(next$1(game)) && togglePlayers(game);
-};
-var hasWinComp = function hasWinComp(brd) {
-  return function (plr) {
-    return winComp(playerGraph(brd)(plr), 3);
+
+var setColumn = function setColumn(col) {
+  return function (g) {
+    return game(players(g), nodes$1(g), col, inPlay(g), min(g));
   };
 };
-var winner = function winner(_ref13) {
-  var players = _ref13.players,
-      nodes = _ref13.nodes;
-  return players.find(hasWinComp(board$1({ nodes: nodes })));
+
+var setPlayState = function setPlayState(bool) {
+  return function (g) {
+    return game(players(g), nodes$1(g), column$1(g), !!bool, min(g));
+  };
+};
+
+var setPlayers = function setPlayers(pArr) {
+  return function (g) {
+    return game(pArr, nodes$1(g), column$1(g), inPlay(g), min(g));
+  };
+};
+
+var setMin = function setMin(m) {
+  return function (g) {
+    return game(players(g), nodes$1(g), column$1(g), inPlay(g), m);
+  };
+};
+
+var board$2 = function board$$1(g) {
+  return graph$1.apply(undefined, toConsumableArray(nodes$1(g)));
+};
+var colNodes = function colNodes(g) {
+  return byCol(nodes$1(g))(column$1(g));
+};
+var next = function next(g) {
+  return nextFree(colNodes(g));
+};
+
+var start = function start(g) {
+  return setPlayState(true)(g);
+};
+var stop = function stop(g) {
+  return setPlayState(false)(g);
+};
+var canPlay = function canPlay(g) {
+  return inPlay(g) && !!next(g);
+};
+var locked = function locked(g) {
+  return !canPlay(g);
+};
+var toggleState = function toggleState(g) {
+  return setPlayState(!inPlay(g))(g);
+};
+
+var togglePlayers = function togglePlayers(g) {
+  return setPlayers([passive(g), active(g)])(g);
+};
+
+var playerNodes$1 = function playerNodes$$1(g) {
+  return function (p) {
+    return byPlayer(nodes$1(g))(id(p));
+  };
+};
+var actNodes = function actNodes(g) {
+  return playerNodes$1(g)(active(g));
+};
+var passNodes = function passNodes(g) {
+  return playerNodes$1(g)(passive(g));
+};
+
+var playerGraph$1 = function playerGraph$$1(g) {
+  return function (p) {
+    return graph$1.apply(undefined, toConsumableArray(playerNodes$1(g)(p)));
+  };
+};
+var actGraph = function actGraph(g) {
+  return playerGraph$1(g)(active(g));
+};
+var passGraph = function passGraph(g) {
+  return playerGraph$1(g)(passive(g));
+};
+
+var playerComps = function playerComps(g) {
+  return function (p) {
+    return byExcess(1)(omniComps$1(playerGraph$1(g)(p)));
+  };
+};
+var actComps = function actComps(g) {
+  return playerComps(g)(active(g));
+};
+var passComps = function passComps(g) {
+  return playerComps(g)(passive(g));
+};
+
+var isWinner = function isWinner(g) {
+  return function (p) {
+    return anyExceed(min(g))(playerComps(g)(p));
+  };
+};
+var winner = function winner(g) {
+  return players(g).find(isWinner(g));
+};
+var endIfWon = function endIfWon(g) {
+  return winner(g) ? stop(g) : g;
+};
+
+var claimSwap = function claimSwap(g) {
+  return replace(claim$1(id(active(g)))(next(g)))(nodes$1(g));
+};
+var claimNext = function claimNext(g) {
+  return locked(g) ? g : endIfWon(setNodes(claimSwap(g))(g));
+};
+
+var select = function select(g) {
+  return locked(g) ? g : togglePlayers(claimNext(g));
 };
 
 
 
 var game$1 = Object.freeze({
-	default: game,
-	setPlayers: setPlayers,
-	cID: cID,
-	board: board$1,
+	game: game,
+	column: column$1,
+	nodes: nodes$1,
+	inPlay: inPlay,
+	min: min,
 	players: players,
 	active: active,
 	passive: passive,
-	column: column,
-	next: next$1,
-	playerMap: playerMap,
-	graphs: graphs,
+	setNodes: setNodes,
+	setColumn: setColumn,
+	setPlayState: setPlayState,
+	setPlayers: setPlayers,
+	setMin: setMin,
+	board: board$2,
+	colNodes: colNodes,
+	next: next,
+	start: start,
+	stop: stop,
+	canPlay: canPlay,
+	locked: locked,
+	toggleState: toggleState,
+	togglePlayers: togglePlayers,
+	playerNodes: playerNodes$1,
+	actNodes: actNodes,
+	passNodes: passNodes,
+	playerGraph: playerGraph$1,
 	actGraph: actGraph,
 	passGraph: passGraph,
-	components: components$1,
+	playerComps: playerComps,
 	actComps: actComps,
 	passComps: passComps,
-	togglePlayers: togglePlayers,
-	setColumn: setColumn,
-	select: select,
-	hasWinComp: hasWinComp,
-	winner: winner
+	isWinner: isWinner,
+	winner: winner,
+	endIfWon: endIfWon,
+	claimSwap: claimSwap,
+	claimNext: claimNext,
+	select: select
 });
 
-
-
-var src$1 = Object.freeze({
-	Board: board,
-	Game: game$1,
-	Node: node$2,
-	Player: player$2,
-	board: fromElements,
-	node: node$1,
-	player: player$1,
-	game: game,
-	kvMap: kvMap
-});
-
-export { board as Board, game$1 as Game, node$2 as Node, player$2 as Player, fromElements as board, node$1 as node, player$1 as player, game, kvMap };export default src$1;
+export { board$1 as Board, filter$1 as Filter, game$1 as Game, node$1 as Node, player$1 as Player };
 //# sourceMappingURL=bundle.es6.js.map

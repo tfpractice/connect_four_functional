@@ -8,7 +8,7 @@ import progress from 'rollup-plugin-progress';
 import visualizer from 'rollup-plugin-visualizer';
 
 export default {
-  entry: 'index.js',
+  entry: 'src/index.js',
   targets: [
   { dest: 'dist/bundle.cjs.js', format: 'cjs', },
   { dest: 'dist/bundle.umd.js', format: 'umd', },
@@ -17,7 +17,12 @@ export default {
   moduleName: 'connect_four_functional',
   sourceMap: true,
   exports: 'named',
-  external: [ 'game_grid', 'fenugreek-collections' ],
+  external: [ 'game_grid', 'graph-curry', 'fenugreek-collections' ],
+  globals: {
+    game_grid: 'game_grid',
+    'graph-curry': 'graph-curry',
+    'fenugreek-collections': 'fenugreek-collections',
+  },
   plugins: [
     progress({ clearLine: false, }),
     filesize(),
