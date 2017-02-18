@@ -12,7 +12,7 @@ const { graph } = Graph;
 const { omniComps, splitComps } = Components;
 const { byCol, } = Filter;
 
-import { anyExceed, byExcess, byPlayer, hasFree, nextFree, replace, } from './filter';
+import { anyExceed, byExcess, byPlayer, callIf, hasFree, nextFree, replace, } from './filter';
 
 const dCol = 0;
 const dPlr = [ player('player0', 0, 0), player('player1', 0, 1) ];
@@ -43,6 +43,8 @@ export const board = g => graph(...nodes(g));
 export const colNodes = g => byCol(nodes(g))(column(g));
 export const next = game => nextFree(colNodes(game));
 
+export const canPlay = g => inPlay(g) && next(g);
+
 export const togglePlayers = g => setPlayers([ passive(g), active(g) ])(g);
 
 export const playerNodes = g => p => byPlayer(nodes(g))(id(p));
@@ -60,7 +62,9 @@ export const passComps = g => playerComps(g)(passive(g));
 export const isWinner = g => p => anyExceed(3)(playerComps(g)(p));
 export const winner = g => players(g).find(isWinner(g));
 
-export const claimNext = g =>
-  setNodes(replace(claim(id(active(g)))(next(g)))(nodes(g)))(g);
+export const claimNext = g => 
+// canPlay(g) ?
+  setNodes(replace(claim(id(active(g)))(next(g)))(nodes(g)))(g) : g;
 export const select = game =>
-  next(game) ? togglePlayers(claimNext(game)) : claimNext(game);
+// canPlay(g) ?
+  next(game) ? togglePlayers(claimNext(game)) : game;
