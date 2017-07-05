@@ -11,6 +11,7 @@ export const setName = name => p => player(name, score(p), id(p));
 export const setID = id => p => player(name(p), score(p), id);
 export const setScore = score => p => player(name(p), score, id(p));
 
+export const sameID = p0 => p1 => id(p0) === id(p1);
 export const resetScore = setScore(0);
 export const incrementScore = p => setScore(score(p) + 1)(p);
 export const decrementScore = p => setScore(score(p) - 1)(p);

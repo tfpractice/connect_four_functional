@@ -1,8 +1,9 @@
 import 'jasmine-expect';
-import { actComps, actGraph, active, actNodes, board, canPlay, claimNext,
-   claimSwap, colNodes, column, endIfWon, game, hasWinComp, inPlay, isWinner, locked, min, next, nodes, passComps,
-   passGraph, passive, passNodes, playerComps, playerGraph, playerNodes, players, select, setColumn, setMin, setNodes, setPlayers,
-  setPlayState, start, stop, togglePlayers, toggleState, winner,
+import { actComps, actGraph, active, actNodes, canPlay, claimNext,
+   claimSwap, colNodes, column, endIfWon, game, inPlay, isWinner, locked, min,
+    next, nodes, passComps, passGraph, passive, passNodes, playerComps,
+     playerGraph, playerNodes, players, select, setColumn, setMin, setNodes,
+     setPlayers, setPlayState, start, stop, togglePlayers, toggleState, winner,
    } from 'src/game';
 
 import { id, player, } from 'src/player';
@@ -102,7 +103,10 @@ describe('Game', () => {
     describe('when game is playable', () => {
       it('retuns a modified version of the game with next available node claimed ', () => {
         const myNext = next(start(myGame));
-        
+
+        console.log('myGame', myGame);
+        console.log('claimNext(start(myGame))', claimNext(start(myGame)));
+
         // //console.log(inPlay(start(myGame)));
         expect(claimNext(start(myGame))).not.toBe(myGame);
         
