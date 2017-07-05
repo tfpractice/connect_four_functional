@@ -13,11 +13,11 @@ export default {
   { dest: 'dist/bundle.cjs.js', format: 'cjs', },
   { dest: 'dist/bundle.umd.js', format: 'umd', },
   ],
-  moduleId: 'connect_four_functional',
+  amd: { id: 'connect_four_functional' },
   moduleName: 'connect_four_functional',
   sourceMap: true,
   exports: 'named',
-  external: [ 'game_grid', 'graph-curry', 'fenugreek-collections' ],
+  external: ['game_grid', 'graph-curry', 'fenugreek-collections'],
   globals: {
     game_grid: 'game_grid',
     'graph-curry': 'graph-curry',
@@ -30,10 +30,10 @@ export default {
     commonjs(),
     babel({
         exclude: 'node_modules/**',
-        plugins:  [ 'external-helpers' ],
-    }),
+        plugins:  ['external-helpers'],
+      }),
     visualizer({ filename: 'stats.html', }),
     replace({ ENV: JSON.stringify(process.env.NODE_ENV || 'development'), }),
-    (process.env.NODE_ENV === 'production' && uglify({ beautify: true, })),
+    (process.env.NODE_ENV === 'production' && uglify()),
   ],
 };

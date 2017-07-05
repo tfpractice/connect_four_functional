@@ -9,7 +9,7 @@ export default {
     entry: 'src/index.js',
     dest: 'dist/bundle.es6.js',
     format: 'es',
-    moduleId: 'connect_four_functional',
+    amd: { id: 'connect_four_functional' },
     moduleName: 'connect_four_functional',
     exports: 'named',
     external: [ 'game_grid', 'graph-curry', 'fenugreek-collections' ],

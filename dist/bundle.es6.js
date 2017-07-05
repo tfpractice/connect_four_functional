@@ -51,7 +51,7 @@ var samePlayer = function samePlayer(n0) {
     };
 };
 
-var sameID = function sameID(a) {
+var sameID$1 = function sameID(a) {
     return function (b) {
         return id$1(a) === id$1(b);
     };
@@ -66,12 +66,12 @@ var node$1 = Object.freeze({
 	claim: claim$1,
 	unClaim: unClaim,
 	samePlayer: samePlayer,
-	sameID: sameID
+	sameID: sameID$1
 });
 
 var playerInit = { name: '', score: 0, id: null };
 
-var player$$1 = function player$$1() {
+var player = function player() {
   var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
   var score = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
   var id = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : name;
@@ -95,26 +95,31 @@ var id = function id() {
 
   return id;
 };
-var copy$$1 = function copy$$1(p) {
-  return player$$1(name(p), score(p), id(p));
+var copy = function copy(p) {
+  return player(name(p), score(p), id(p));
 };
 
 var setName = function setName(name) {
   return function (p) {
-    return player$$1(name, score(p), id(p));
+    return player(name, score(p), id(p));
   };
 };
 var setID = function setID(id) {
   return function (p) {
-    return player$$1(name(p), score(p), id);
+    return player(name(p), score(p), id);
   };
 };
 var setScore = function setScore(score) {
   return function (p) {
-    return player$$1(name(p), score, id(p));
+    return player(name(p), score, id(p));
   };
 };
 
+var sameID = function sameID(p0) {
+  return function (p1) {
+    return id(p0) === id(p1);
+  };
+};
 var resetScore = setScore(0);
 var incrementScore = function incrementScore(p) {
   return setScore(score(p) + 1)(p);
@@ -122,24 +127,25 @@ var incrementScore = function incrementScore(p) {
 var decrementScore = function decrementScore(p) {
   return setScore(score(p) - 1)(p);
 };
-var claim$$1 = function claim$$1(p) {
+var claim = function claim(p) {
   return claim$1(id(p));
 };
 
 var player$1 = Object.freeze({
 	playerInit: playerInit,
-	player: player$$1,
+	player: player,
 	name: name,
 	score: score,
 	id: id,
-	copy: copy$$1,
+	copy: copy,
 	setName: setName,
 	setID: setID,
 	setScore: setScore,
+	sameID: sameID,
 	resetScore: resetScore,
 	incrementScore: incrementScore,
 	decrementScore: decrementScore,
-	claim: claim$$1
+	claim: claim
 });
 
 var samePos = Compare.samePos;
@@ -153,8 +159,8 @@ var hasFree = function hasFree(nArr) {
 };
 var byPlayer = function byPlayer(nArr) {
   return function () {
-    var player$$1 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-    return filter(nArr)(samePlayer({ player: player$$1 }));
+    var player = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+    return filter(nArr)(samePlayer({ player: player }));
   };
 };
 
@@ -327,7 +333,7 @@ var omniComps$1 = Components.omniComps;
 var byCol = Filter.byCol;
 
 
-var dPlr = [player$$1('player0', 0, 0), player$$1('player1', 0, 1)];
+var dPlr = [player('player0', 0, 0), player('player1', 0, 1)];
 var dNod = genNodes(7, 6);
 var init = { column: 0, nodes: genNodes(), players: dPlr, inPlay: false, min: 3 };
 
@@ -505,6 +511,8 @@ var claimNext = function claimNext(g) {
 var select = function select(g) {
   return locked(g) ? g : togglePlayers(claimNext(g));
 };
+
+// export const isActive=player=>game=>id
 
 
 
