@@ -1,7 +1,7 @@
 import 'jasmine-expect';
 import { node, } from 'src/node';
 import { claim, decrementScore, id, incrementScore, name, player, resetScore,
-   score, setID, setName, setScore, } from 'src/player';
+   sameID, score, setID, setName, setScore, } from 'src/player';
 
 const dick = player('Dick');
 const jane = player('Jane');
@@ -48,6 +48,12 @@ describe('Player', () => {
   describe('claim', () => {
     it('sets the object player attribute to the Player', () => {
       expect(claim(dick)(node(0, 0)).player).toBe(dick.id);
+    });
+  });
+  describe('sameID', () => {
+    it('compares the id attr of two players', () => {
+      expect(sameID(dick)(dick)).toBeTruthy();
+      expect(sameID(dick)(jane)).toBeFalsy();
     });
   });
 });
