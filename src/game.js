@@ -2,7 +2,7 @@ import { Graph, } from 'graph-curry';
 import { Components, Filter, } from 'game_grid';
 import { claim, } from './node';
 import { genNodes, } from './board';
-import { id, player, } from './player';
+import { id, player, sameID, } from './player';
 import { anyExceed, byExcess, byPlayer, nextFree, replace, } from './filter';
 
 const { graph } = Graph;
@@ -16,7 +16,7 @@ const init = ({ column: 0, nodes: genNodes(), players: dPlr, inPlay: false, min:
 
 export const game =
  (players = dPlr, nodes = dNod, column = 0, inPlay = false, min = 3) =>
-  ({ players, nodes, column, inPlay, min });
+   ({ players, nodes, column, inPlay, min });
 
 export const column = ({ column } = init) => column;
 export const nodes = ({ nodes } = init) => nodes;
@@ -52,7 +52,7 @@ export const locked = g => !canPlay(g);
 export const toggleState = g => setPlayState(!inPlay(g))(g);
 
 export const togglePlayers = g => setPlayers([ passive(g), active(g) ])(g);
-
+export const isActive = p => g => sameID(p)(active(g));
 export const playerNodes = g => p => byPlayer(nodes(g))(id(p));
 export const actNodes = g => playerNodes(g)(active(g));
 export const passNodes = g => playerNodes(g)(passive(g));

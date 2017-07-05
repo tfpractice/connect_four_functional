@@ -1,10 +1,10 @@
 import 'jasmine-expect';
 import { actComps, actGraph, active, actNodes, canPlay, claimNext,
-   claimSwap, colNodes, column, endIfWon, game, inPlay, isWinner, locked, min,
-    next, nodes, passComps, passGraph, passive, passNodes, playerComps,
-     playerGraph, playerNodes, players, select, setColumn, setMin, setNodes,
-     setPlayers, setPlayState, start, stop, togglePlayers, toggleState, winner,
-   } from 'src/game';
+  claimSwap, colNodes, column, endIfWon, game, inPlay, isActive, isWinner, locked,
+  min, next, nodes, passComps, passGraph, passive, passNodes,
+  playerComps, playerGraph, playerNodes, players, select, setColumn, setMin,
+  setNodes, setPlayers, setPlayState, start, stop, togglePlayers, toggleState,
+  winner, } from 'src/game';
 
 import { id, player, } from 'src/player';
 import { claim, } from 'src/node';
@@ -274,5 +274,11 @@ describe('Game', () => {
     //     expect(active(start(myGame))).toBe(prev);
     //   });
     // });
+  });
+  describe('isActive', () => {
+    it('checks if the selected player is active', () => {
+      expect(isActive(dick)(myGame)).toBeTruthy();
+      expect(isActive(jane)(myGame)).toBeFalsy();
+    });
   });
 });
