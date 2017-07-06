@@ -3,8 +3,9 @@ import { actComps, actGraph, active, actNodes, addPlr, canPlay,
   claimNext, claimSwap, colNodes, column, copy, endIfWon, findPlr, game, hasPlr,
   inPlay, isActive, isWinner, locked, mendPlr, min, next,
   nodes, passComps, passGraph, passive, passNodes, playerByID, playerComps,
-  playerGraph, playerNodes, players, pushPlr, resetGame, rmPlr, select,
-  setColumn, setMin, setNodes,
+  playerGraph, playerNodes, players, pSelect, pushPlr, resetGame, rmPlr,
+  select, setColumn, setMin,
+  setNodes,
   setPlayers,
   setPlayState,
   start,
@@ -332,6 +333,13 @@ describe('Game', () => {
   describe('rmPlr', () => {
     it('removes a player if they are in the game', () => {
       expect(hasPlr(jane)(rmPlr(jane)(myGame))).toBeFalsy();
+    });
+  });
+  describe('pSelect', () => {
+    it('allows a player to place a token if theyre active', () => {
+      expect(active(pSelect(passive(myGame))(start(myGame)))).toBe(active(myGame));
+    
+      expect(active(pSelect(active(myGame))(start(myGame)))).toBe(passive(myGame));
     });
   });
 });

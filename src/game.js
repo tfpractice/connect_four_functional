@@ -77,6 +77,7 @@ export const claimSwap = g => replace(claim(id(active(g)))(next(g)))(nodes(g));
 export const claimNext = g => locked(g) ? g : endIfWon(setNodes(claimSwap(g))(g));
 
 export const select = g => locked(g) ? g : togglePlayers(claimNext(g));
+export const pSelect = p => g => isActive(p)(g) ? select(g) : g;
 
 export const playerByID = i => g => players(g).find(hasID(i));
 export const findPlr = p => g => players(g).find(sameID(p));
