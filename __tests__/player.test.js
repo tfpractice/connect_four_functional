@@ -1,7 +1,7 @@
 import 'jasmine-expect';
 import { node, } from 'src/node';
 import { claim, decrementScore, hasID, id, incrementScore, name, player,
-  resetScore, sameID, score, setID, setName, setScore, updatePlayer, } from 'src/player';
+  resetScore, sameID, score, setID, setName, setScore, updatePlayer, xMatches, } from 'src/player';
 
 const dick = player('Dick');
 const jane = player('Jane');
@@ -64,6 +64,11 @@ describe('Player', () => {
   describe('updatePlayer', () => {
     it('assigns new properties to a player', () => {
       expect(updatePlayer(setName('john')(dick))(dick).name).toEqual('john');
+    });
+  });
+  describe('xMatches', () => {
+    it('returns true if the ids are different', () => {
+      expect(xMatches(jane)(dick)).toBeTruthy();
     });
   });
 });

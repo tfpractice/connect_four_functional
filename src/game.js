@@ -2,7 +2,7 @@ import { Graph, } from 'graph-curry';
 import { Components, Filter, } from 'game_grid';
 import { claim, } from './node';
 import { genNodes, } from './board';
-import { hasID, id, player, sameID, updatePlayer, } from './player';
+import { hasID, id, player, sameID, updatePlayer, xMatches, } from './player';
 import { anyExceed, byExcess, byPlayer, lastFree, replace, } from './filter';
 
 const { graph } = Graph;
@@ -77,6 +77,7 @@ export const claimSwap = g => replace(claim(id(active(g)))(next(g)))(nodes(g));
 export const claimNext = g => locked(g) ? g : endIfWon(setNodes(claimSwap(g))(g));
 
 export const select = g => locked(g) ? g : togglePlayers(claimNext(g));
+export const pSelect = p => g => isActive(p)(g) ? select(g) : g;
 
 export const playerByID = i => g => players(g).find(hasID(i));
 export const findPlr = p => g => players(g).find(sameID(p));
@@ -84,6 +85,10 @@ export const hasPlr = p => g => players(g).some(sameID(p));
 export const mendPlr = p => g => setPlayers(players(g).map(updatePlayer(p)))(g);
 export const pushPlr = p => g => setPlayers(players(g).concat(p))(g);
 
+export const addPlr = p => g => hasPlr(p)(g) ? mendPlr(p)(g) : pushPlr(p)(g);
+export const rmPlr = p => g => setPlayers((players(g)).filter(xMatches(p)))(g);
+
 // export const canPlay
 // export const claimNode = p=>g=> !isActive(p)(g)? g:setPlayers()
 // export const isActive=player=>game=>id
+// "playerByID findPlr hasPlr mendPlr pushPlr"
