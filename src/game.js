@@ -2,7 +2,7 @@ import { Graph, } from 'graph-curry';
 import { Components, Filter, } from 'game_grid';
 import { claim, } from './node';
 import { genNodes, } from './board';
-import { id, player, sameID, } from './player';
+import { hasID, id, player, sameID, updatePlayer, } from './player';
 import { anyExceed, byExcess, byPlayer, lastFree, replace, } from './filter';
 
 const { graph } = Graph;
@@ -77,6 +77,12 @@ export const claimSwap = g => replace(claim(id(active(g)))(next(g)))(nodes(g));
 export const claimNext = g => locked(g) ? g : endIfWon(setNodes(claimSwap(g))(g));
 
 export const select = g => locked(g) ? g : togglePlayers(claimNext(g));
+
+export const playerByID = i => g => players(g).find(hasID(i));
+export const findPlr = p => g => players(g).find(sameID(p));
+export const hasPlr = p => g => players(g).some(sameID(p));
+export const mendPlr = p => g => setPlayers(players(g).map(updatePlayer(p)))(g);
+export const pushPlr = p => g => setPlayers(players(g).concat(p))(g);
 
 // export const canPlay
 // export const claimNode = p=>g=> !isActive(p)(g)? g:setPlayers()

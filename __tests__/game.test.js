@@ -1,10 +1,15 @@
 import 'jasmine-expect';
 import { actComps, actGraph, active, actNodes, canPlay, claimNext,
-  claimSwap, colNodes, column, copy, endIfWon, game, inPlay, isActive, isWinner,
-  locked, min, next, nodes, passComps, passGraph, passive,
-  passNodes, playerComps, playerGraph, playerNodes, players, resetGame, select,
-  setColumn, setMin, setNodes, setPlayers, setPlayState, start, stop,
-  togglePlayers, toggleState, winner, } from 'src/game';
+  claimSwap, colNodes, column, copy, endIfWon, findPlr, game, hasPlr, inPlay,
+  isActive, isWinner, locked, mendPlr, min, next, nodes,
+  passComps, passGraph, passive, passNodes, playerByID, playerComps, playerGraph,
+  playerNodes, players, pushPlr, resetGame, select, setColumn, setMin,
+  setNodes, setPlayers, setPlayState,
+  start,
+  stop,
+  togglePlayers,
+  toggleState,
+  winner, } from 'src/game';
 
 import { id, player, } from 'src/player';
 import { claim, } from 'src/node';
@@ -289,6 +294,32 @@ describe('Game', () => {
   describe('resetGame', () => {
     it('returns a new game with the  same players', () => {
       expect(resetGame(myGame).players).toEqual(players(myGame));
+    });
+  });
+  
+  describe('playerByID', () => {
+    it('playerByID', () => {
+      expect(playerByID(id(dick))(myGame)).toBe(dick);
+    });
+  });
+  describe('findPlr', () => {
+    it('findPlr', () => {
+      expect(findPlr(dick)(myGame)).toBe(dick);
+    });
+  });
+  describe('hasPlr', () => {
+    it('hasPlr', () => {
+      expect(hasPlr(dick)(myGame)).toBeTruthy();
+    });
+  });
+  describe('mendPlr', () => {
+    it('mendPlr', () => {
+      expect(hasPlr(dick)(mendPlr(dick)(myGame))).toBeTruthy();
+    });
+  });
+  describe('pushPlr', () => {
+    it('pushPlr', () => {
+      expect(hasPlr(dick)(pushPlr(dick)(myGame))).toBeTruthy();
     });
   });
 });
