@@ -115,11 +115,23 @@ var setScore = function setScore(score) {
   };
 };
 
+var hasID = function hasID(i) {
+  return function (_ref4) {
+    var id = _ref4.id;
+    return id === i;
+  };
+};
 var sameID = function sameID(p0) {
   return function (p1) {
     return id(p0) === id(p1);
   };
 };
+var updatePlayer = function updatePlayer(next) {
+  return function (p) {
+    return sameID(next)(p) ? Object.assign({}, p, next) : p;
+  };
+};
+
 var resetScore = setScore(0);
 var incrementScore = function incrementScore(p) {
   return setScore(score(p) + 1)(p);
@@ -131,6 +143,8 @@ var claim = function claim(p) {
   return claim$1(id(p));
 };
 
+
+
 var player$1 = Object.freeze({
 	playerInit: playerInit,
 	player: player,
@@ -141,7 +155,9 @@ var player$1 = Object.freeze({
 	setName: setName,
 	setID: setID,
 	setScore: setScore,
+	hasID: hasID,
 	sameID: sameID,
+	updatePlayer: updatePlayer,
 	resetScore: resetScore,
 	incrementScore: incrementScore,
 	decrementScore: decrementScore,
@@ -153,6 +169,9 @@ var samePos = Compare.samePos;
 
 var nextFree = function nextFree(nArr) {
   return spread(nArr).find(isFree);
+};
+var lastFree = function lastFree(nArr) {
+  return spread(nArr).reverse().find(isFree);
 };
 var hasFree = function hasFree(nArr) {
   return some(nArr)(isFree);
@@ -208,6 +227,7 @@ var replace = function replace(next) {
 
 var filter$1 = Object.freeze({
 	nextFree: nextFree,
+	lastFree: lastFree,
 	hasFree: hasFree,
 	byPlayer: byPlayer,
 	exceeds: exceeds,
@@ -423,6 +443,13 @@ var setMin = function setMin(m) {
   };
 };
 
+var copy$2 = function copy$$1(g) {
+  return game(players(g), nodes$1(g), column$1(g), inPlay(g), min(g));
+};
+
+var resetGame = function resetGame(g) {
+  return game(players(g));
+};
 var board$2 = function board$$1(g) {
   return graph$1.apply(undefined, toConsumableArray(nodes$1(g)));
 };
@@ -430,7 +457,7 @@ var colNodes = function colNodes(g) {
   return byCol(nodes$1(g))(column$1(g));
 };
 var next = function next(g) {
-  return nextFree(colNodes(g));
+  return lastFree(colNodes(g));
 };
 
 var start = function start(g) {
@@ -452,7 +479,11 @@ var toggleState = function toggleState(g) {
 var togglePlayers = function togglePlayers(g) {
   return setPlayers([passive(g), active(g)])(g);
 };
-
+var isActive = function isActive(p) {
+  return function (g) {
+    return sameID(p)(active(g));
+  };
+};
 var playerNodes$1 = function playerNodes$$1(g) {
   return function (p) {
     return byPlayer(nodes$1(g))(id(p));
@@ -512,6 +543,34 @@ var select = function select(g) {
   return locked(g) ? g : togglePlayers(claimNext(g));
 };
 
+var playerByID = function playerByID(i) {
+  return function (g) {
+    return players(g).find(hasID(i));
+  };
+};
+var findPlr = function findPlr(p) {
+  return function (g) {
+    return players(g).find(sameID(p));
+  };
+};
+var hasPlr = function hasPlr(p) {
+  return function (g) {
+    return players(g).some(sameID(p));
+  };
+};
+var mendPlr = function mendPlr(p) {
+  return function (g) {
+    return setPlayers(players(g).map(updatePlayer(p)))(g);
+  };
+};
+var pushPlr = function pushPlr(p) {
+  return function (g) {
+    return setPlayers(players(g).concat(p))(g);
+  };
+};
+
+// export const canPlay
+// export const claimNode = p=>g=> !isActive(p)(g)? g:setPlayers()
 // export const isActive=player=>game=>id
 
 
@@ -530,6 +589,8 @@ var game$1 = Object.freeze({
 	setPlayState: setPlayState,
 	setPlayers: setPlayers,
 	setMin: setMin,
+	copy: copy$2,
+	resetGame: resetGame,
 	board: board$2,
 	colNodes: colNodes,
 	next: next,
@@ -539,6 +600,7 @@ var game$1 = Object.freeze({
 	locked: locked,
 	toggleState: toggleState,
 	togglePlayers: togglePlayers,
+	isActive: isActive,
 	playerNodes: playerNodes$1,
 	actNodes: actNodes,
 	passNodes: passNodes,
@@ -553,7 +615,12 @@ var game$1 = Object.freeze({
 	endIfWon: endIfWon,
 	claimSwap: claimSwap,
 	claimNext: claimNext,
-	select: select
+	select: select,
+	playerByID: playerByID,
+	findPlr: findPlr,
+	hasPlr: hasPlr,
+	mendPlr: mendPlr,
+	pushPlr: pushPlr
 });
 
 export { board$1 as Board, filter$1 as Filter, game$1 as Game, node$1 as Node, player$1 as Player };
