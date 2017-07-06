@@ -104,8 +104,8 @@ describe('Game', () => {
       it('retuns a modified version of the game with next available node claimed ', () => {
         const myNext = next(start(myGame));
 
-        console.log('myGame', myGame);
-        console.log('claimNext(start(myGame))', claimNext(start(myGame)));
+        // console.log('myGame', myGame);
+        // console.log('claimNext(start(myGame))', claimNext(start(myGame)));
 
         // //console.log(inPlay(start(myGame)));
         expect(claimNext(start(myGame))).not.toBe(myGame);
