@@ -1,6 +1,6 @@
 {
   "name": "connect_four_functional",
-  "version": "2.0.1",
+  "version": "2.0.2-0",
   "description": "a functional implementation of connect four",
   "main": "dist/bundle.cjs.js",
   "browser": "dist/bundle.umd.js",
