@@ -3,7 +3,7 @@ import { Components, Filter, } from 'game_grid';
 import { claim, } from './node';
 import { genNodes, } from './board';
 import { id, player, sameID, } from './player';
-import { anyExceed, byExcess, byPlayer, nextFree, replace, } from './filter';
+import { anyExceed, byExcess, byPlayer, lastFree, replace, } from './filter';
 
 const { graph } = Graph;
 const { omniComps } = Components;
@@ -43,7 +43,7 @@ export const setMin = m => g =>
 
 export const board = g => graph(...nodes(g));
 export const colNodes = g => byCol(nodes(g))(column(g));
-export const next = g => nextFree(colNodes(g));
+export const next = g => lastFree(colNodes(g));
 
 export const start = g => setPlayState(true)(g);
 export const stop = g => setPlayState(false)(g);
