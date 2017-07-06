@@ -1,10 +1,10 @@
 import 'jasmine-expect';
 import { actComps, actGraph, active, actNodes, canPlay, claimNext,
-  claimSwap, colNodes, column, endIfWon, game, inPlay, isActive, isWinner, locked,
-  min, next, nodes, passComps, passGraph, passive, passNodes,
-  playerComps, playerGraph, playerNodes, players, select, setColumn, setMin,
-  setNodes, setPlayers, setPlayState, start, stop, togglePlayers, toggleState,
-  winner, } from 'src/game';
+  claimSwap, colNodes, column, copy, endIfWon, game, inPlay, isActive, isWinner,
+  locked, min, next, nodes, passComps, passGraph, passive,
+  passNodes, playerComps, playerGraph, playerNodes, players, resetGame, select,
+  setColumn, setMin, setNodes, setPlayers, setPlayState, start, stop,
+  togglePlayers, toggleState, winner, } from 'src/game';
 
 import { id, player, } from 'src/player';
 import { claim, } from 'src/node';
@@ -279,6 +279,16 @@ describe('Game', () => {
     it('checks if the selected player is active', () => {
       expect(isActive(dick)(myGame)).toBeTruthy();
       expect(isActive(jane)(myGame)).toBeFalsy();
+    });
+  });
+  describe('copy', () => {
+    it('returns a game object with identitcal properties', () => {
+      expect(active(copy(myGame))).toEqual(active(myGame));
+    });
+  });
+  describe('resetGame', () => {
+    it('returns a new game with the  same players', () => {
+      expect(resetGame(myGame).players).toEqual(players(myGame));
     });
   });
 });

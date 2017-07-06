@@ -40,7 +40,11 @@ export const setPlayers = pArr => g =>
 
 export const setMin = m => g =>
   game(players(g), nodes(g), column(g), inPlay(g), m);
+  
+export const copy = g =>
+  game(players(g), nodes(g), column(g), inPlay(g), min(g));
 
+export const resetGame = g => game(players(g));
 export const board = g => graph(...nodes(g));
 export const colNodes = g => byCol(nodes(g))(column(g));
 export const next = g => lastFree(colNodes(g));
