@@ -1,10 +1,12 @@
 import 'jasmine-expect';
-import { actComps, actGraph, active, actNodes, canPlay, claimNext,
-  claimSwap, colNodes, column, copy, endIfWon, findPlr, game, hasPlr, inPlay,
-  isActive, isWinner, locked, mendPlr, min, next, nodes,
-  passComps, passGraph, passive, passNodes, playerByID, playerComps, playerGraph,
-  playerNodes, players, pushPlr, resetGame, select, setColumn, setMin,
-  setNodes, setPlayers, setPlayState,
+import { actComps, actGraph, active, actNodes, addPlr, canPlay,
+  claimNext, claimSwap, colNodes, column, copy, endIfWon, findPlr, game, hasPlr,
+  inPlay, isActive, isWinner, locked, mendPlr, min, next,
+  nodes, passComps, passGraph, passive, passNodes, playerByID, playerComps,
+  playerGraph, playerNodes, players, pushPlr, resetGame, rmPlr, select,
+  setColumn, setMin, setNodes,
+  setPlayers,
+  setPlayState,
   start,
   stop,
   togglePlayers,
@@ -320,6 +322,16 @@ describe('Game', () => {
   describe('pushPlr', () => {
     it('pushPlr', () => {
       expect(hasPlr(dick)(pushPlr(dick)(myGame))).toBeTruthy();
+    });
+  });
+  describe('addPlr', () => {
+    it('adds or updates a player', () => {
+      expect(hasPlr(dick)(addPlr(dick)())).toBeTruthy();
+    });
+  });
+  describe('rmPlr', () => {
+    it('removes a player if they are in the game', () => {
+      expect(hasPlr(jane)(rmPlr(jane)(myGame))).toBeFalsy();
     });
   });
 });
