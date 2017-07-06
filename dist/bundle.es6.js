@@ -126,6 +126,13 @@ var sameID = function sameID(p0) {
     return id(p0) === id(p1);
   };
 };
+var matches = sameID;
+var xMatches = function xMatches(p0) {
+  return function (p1) {
+    return !matches(p0)(p1);
+  };
+};
+
 var updatePlayer = function updatePlayer(next) {
   return function (p) {
     return sameID(next)(p) ? Object.assign({}, p, next) : p;
@@ -143,7 +150,7 @@ var claim = function claim(p) {
   return claim$1(id(p));
 };
 
-
+// const matches = p0 => p1 => hasID(p0.id)(p1);
 
 var player$1 = Object.freeze({
 	playerInit: playerInit,
@@ -157,6 +164,8 @@ var player$1 = Object.freeze({
 	setScore: setScore,
 	hasID: hasID,
 	sameID: sameID,
+	matches: matches,
+	xMatches: xMatches,
 	updatePlayer: updatePlayer,
 	resetScore: resetScore,
 	incrementScore: incrementScore,
@@ -542,6 +551,11 @@ var claimNext = function claimNext(g) {
 var select = function select(g) {
   return locked(g) ? g : togglePlayers(claimNext(g));
 };
+var pSelect = function pSelect(p) {
+  return function (g) {
+    return isActive(p)(g) ? select(g) : g;
+  };
+};
 
 var playerByID = function playerByID(i) {
   return function (g) {
@@ -569,9 +583,21 @@ var pushPlr = function pushPlr(p) {
   };
 };
 
+var addPlr = function addPlr(p) {
+  return function (g) {
+    return hasPlr(p)(g) ? mendPlr(p)(g) : pushPlr(p)(g);
+  };
+};
+var rmPlr = function rmPlr(p) {
+  return function (g) {
+    return setPlayers(players(g).filter(xMatches(p)))(g);
+  };
+};
+
 // export const canPlay
 // export const claimNode = p=>g=> !isActive(p)(g)? g:setPlayers()
 // export const isActive=player=>game=>id
+// "playerByID findPlr hasPlr mendPlr pushPlr"
 
 
 
@@ -616,11 +642,14 @@ var game$1 = Object.freeze({
 	claimSwap: claimSwap,
 	claimNext: claimNext,
 	select: select,
+	pSelect: pSelect,
 	playerByID: playerByID,
 	findPlr: findPlr,
 	hasPlr: hasPlr,
 	mendPlr: mendPlr,
-	pushPlr: pushPlr
+	pushPlr: pushPlr,
+	addPlr: addPlr,
+	rmPlr: rmPlr
 });
 
 export { board$1 as Board, filter$1 as Filter, game$1 as Game, node$1 as Node, player$1 as Player };
