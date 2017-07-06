@@ -1,7 +1,7 @@
 import 'jasmine-expect';
 import { node, } from 'src/node';
-import { claim, decrementScore, id, incrementScore, name, player, resetScore,
-   sameID, score, setID, setName, setScore, } from 'src/player';
+import { claim, decrementScore, hasID, id, incrementScore, name, player,
+  resetScore, sameID, score, setID, setName, setScore, updatePlayer, } from 'src/player';
 
 const dick = player('Dick');
 const jane = player('Jane');
@@ -50,10 +50,20 @@ describe('Player', () => {
       expect(claim(dick)(node(0, 0)).player).toBe(dick.id);
     });
   });
+  describe('hasID', () => {
+    it('checks if the player Id matches the argument', () => {
+      expect(hasID(id(dick))(dick)).toBeTruthy();
+    });
+  });
   describe('sameID', () => {
     it('compares the id attr of two players', () => {
       expect(sameID(dick)(dick)).toBeTruthy();
       expect(sameID(dick)(jane)).toBeFalsy();
+    });
+  });
+  describe('updatePlayer', () => {
+    it('assigns new properties to a player', () => {
+      expect(updatePlayer(setName('john')(dick))(dick).name).toEqual('john');
     });
   });
 });

@@ -4,7 +4,7 @@ import { isFree, samePlayer, } from './node';
 
 const { samePos } = Compare;
 
-export const nextFree = nArr => spread(nArr).find(isFree);
+export const nextFree = nArr => spread(nArr).reverse().find(isFree);
 export const hasFree = nArr => some(nArr)(isFree);
 export const byPlayer = nArr => (player = null) =>
   filter(nArr)(samePlayer({ player }));

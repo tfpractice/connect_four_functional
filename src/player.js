@@ -12,9 +12,14 @@ export const setName = name => p => player(name, score(p), id(p));
 export const setID = id => p => player(name(p), score(p), id);
 export const setScore = score => p => player(name(p), score, id(p));
 
+export const hasID = i => ({ id, }) => id === i;
 export const sameID = p0 => p1 => id(p0) === id(p1);
+export const updatePlayer = next => p => sameID(next)(p) ? Object.assign({}, p, next) : p;
 
 export const resetScore = setScore(0);
 export const incrementScore = p => setScore(score(p) + 1)(p);
 export const decrementScore = p => setScore(score(p) - 1)(p);
 export const claim = p => claimNode(id(p));
+
+// const matches = p0 => p1 => hasID(p0.id)(p1);
+const xMatches = p0 => p1 => !matches(p0)(p1);

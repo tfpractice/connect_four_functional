@@ -1,7 +1,7 @@
 import 'jasmine-expect';
 import { copy, node, setPlayer, } from 'src/node';
 import { anyExceed, byExcess, byPlayer, exceeds, hasFree, nextFree, repIf, replace, repPos,
- } from 'src/filter';
+} from 'src/filter';
 
 const c00 = node(0, 0);
 const c01 = node(0, 1);
@@ -27,6 +27,7 @@ describe('filters', () => {
   });
   describe('nextFree', () => {
     it('retrieves the next unclaimed node', () => {
+      console.log('c00', c00);
       expect(nextFree(myNodes)).toBe(c00);
       expect(nextFree(myNodes.map(setPlayer(0)))).toBeUndefined();
     });
